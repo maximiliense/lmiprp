@@ -1,0 +1,1067 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Une analyse de la régularisation Ridge ☕️☕️☕️ &#8212; Machine Learning</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet" />
+  <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.acff12b8f9c144ce68a297486a2fa670.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Content in Jupyter Book" href="../content.html" />
+    <link rel="prev" title="Les attaques adversaires ☕️" href="4_adversarial.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+      <img src="../_static/logo.jpg" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Machine Learning</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   Machine Learning
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../0_requisite/rappels_python.html">
+   Rappels de Python et Numpy
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../1_what_is_ml/0_propos_liminaire.html">
+   Le
+   <em>
+    Machine Learning
+   </em>
+   , c’est quoi ?
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../1_what_is_ml/1_introduction_ml.html">
+     <em>
+      Machine learning
+     </em>
+     et malédiction de la dimension
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../1_what_is_ml/2_regression_and_classification_trees.html">
+     Les arbres de régression et de classification
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../2_linear_regression/0_propos_liminaire.html">
+   La
+   <em>
+    régression
+   </em>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_linear_regression/1_linear_regression.html">
+     La régression linéaire ☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_linear_regression/2_optimization.html">
+     L’optimisation ☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_linear_regression/3_interpolation.html">
+     Interpolation ☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_linear_regression/4_algo_proximal_lasso.html">
+     Sous-différentiel et le cas du Lasso ☕️☕️☕️
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../3_logistic_regression/0_propos_liminaire.html">
+   La
+   <em>
+    classification
+   </em>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../3_logistic_regression/1_logistic_regression.html">
+     La Régression Logistique ☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../3_logistic_regression/2_fonctions_proxy.html">
+     Les fonctions proxy ☕️☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../3_logistic_regression/3_bayes_classifier.html">
+     Le classifieur de Bayes ☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../3_logistic_regression/4_VC_theory.html">
+     La théorie de Vapnik et Chervonenkis ☕️☕️☕️☕️ (💆‍♂️)
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../4_max_margin/0_propos_liminaire.html">
+   Les modèles
+   <em>
+    max-margin
+   </em>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../4_max_margin/1_max_margin.html">
+     Les modèles max-margin ☕️☕️
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../5_ensembles/0_propos_liminaire.html">
+   Les méthodes
+   <em>
+    ensemblistes
+   </em>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../5_ensembles/1_ensembles.html">
+     Les méthodes ensemblistes ☕️☕️
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../6_autodiff/0_propos_liminaire.html">
+   La différentiation automatique
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../6_autodiff/1_autodiff.html">
+     La différentiation automatique et un début de
+     <em>
+      deep learning
+     </em>
+     ☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../6_autodiff/2_filters_representation.html">
+     Filtres et espace de représentation des réseaux de neurones ☕️☕️
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="0_propos_liminaire.html">
+   La régularisation
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="1_regularization_deep.html">
+     Régularisation en deep learning ☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2_unsupervised_representation_learning.html">
+     Unsupervised representation learning ☕️☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="3_multitask.html">
+     L’apprentissage multi-tâches ☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="4_adversarial.html">
+     Les attaques adversaires ☕️
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Une analyse de la régularisation Ridge ☕️☕️☕️
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../content.html">
+   Content in Jupyter Book
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <label for="toctree-checkbox-8">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../markdown.html">
+     Markdown Files
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../notebooks.html">
+     Content with notebooks
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/7_regularization/5_ridge.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/maximiliense/lmiprp"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/maximiliense/lmiprp/issues/new?title=Issue%20on%20page%20%2F7_regularization/5_ridge.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/maximiliense/lmiprp/master?urlpath=tree/7_regularization/5_ridge.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#i-ridge-une-question-de-stabilite">
+   I. Ridge, une question de stabilité
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#ii-ridge-et-la-data-augmentation">
+   II. Ridge et la
+   <em>
+    data augmentation
+   </em>
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#a-rajouter-une-base-de-mathbb-r-n-dans-x">
+     a. Rajouter une base de
+     <span class="math notranslate nohighlight">
+      \(\mathbb{R}^n\)
+     </span>
+     dans
+     <span class="math notranslate nohighlight">
+      \(X\)
+     </span>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#b-rajouter-un-bruit-centre-en-0-de-covariance-lambda-i-n">
+     b. Rajouter un bruit centré en
+     <span class="math notranslate nohighlight">
+      \(0\)
+     </span>
+     de covariance
+     <span class="math notranslate nohighlight">
+      \(\lambda I_n\)
+     </span>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#c-enfin-de-la-vraie-data-augmentation">
+     c. Enfin de la vraie
+     <em>
+      data augmentation
+     </em>
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#iii-ridge-et-le-dropout">
+   III. Ridge et le
+   <em>
+    dropout
+   </em>
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="une-analyse-de-la-regularisation-ridge">
+<h1>Une analyse de la régularisation Ridge ☕️☕️☕️<a class="headerlink" href="#une-analyse-de-la-regularisation-ridge" title="Permalink to this headline">¶</a></h1>
+<p>La régularisation Ridge, aussi appelée <em>weight decay</em> en <em>deep learning</em> ou encore pénalité <span class="math notranslate nohighlight">\(\ell_2\)</span>, possède des propriétés fascinantes qui (1) expliquent ses performances et (2) permettent de la relier à d’autres stratégies de régularisation empiriques telles que la <em>data augmentation</em>, le ou encore le <em>dropout</em>.</p>
+<p>Nous nous concentrerons dans cette séquence sur les problèmes linéaires.</p>
+<div class="section" id="i-ridge-une-question-de-stabilite">
+<h2>I. Ridge, une question de stabilité<a class="headerlink" href="#i-ridge-une-question-de-stabilite" title="Permalink to this headline">¶</a></h2>
+<p>Soit <span class="math notranslate nohighlight">\(X\in\mathbb{R}^{p\times n}\)</span> la matrice de nos données avec <span class="math notranslate nohighlight">\(p\)</span> individus en dimension <span class="math notranslate nohighlight">\(n\)</span>. Soit <span class="math notranslate nohighlight">\(\boldsymbol{y}\in\mathbb{p}\)</span> nos labels. Notre objectif est de trouver un vecteur <span class="math notranslate nohighlight">\(\beta\in\mathbb{R}^n\)</span> tel que la quantité suivante soit minimisée :</p>
+<div class="math notranslate nohighlight">
+\[\hat{\beta}=\text{argmin}_{\beta\in\mathbb{R}^n}\lVert X\beta-\boldsymbol{y}\rVert_2^2.\]</div>
+<p>Nous avons pu constater que si <span class="math notranslate nohighlight">\(X^TX\)</span> était inversible, ce problème possédait une unique solution calculable en annulant le gradient :</p>
+<div class="math notranslate nohighlight">
+\[\hat{\beta}=(X^TX)^{-1}X^T\boldsymbol{y}.\]</div>
+<p>Lorsque <span class="math notranslate nohighlight">\(X^TX\)</span> n’est pas inversible, une solution (de norme minimale) est :</p>
+<div class="math notranslate nohighlight">
+\[\hat{\beta}=X^\dagger \boldsymbol{y},\]</div>
+<p>où <span class="math notranslate nohighlight">\(X^\dagger\)</span> est le pseudo-inverse de Moore-Penrose. Nous avons pu constater dans les séquences précédentes que le nombre d’individus dans <span class="math notranslate nohighlight">\(X\)</span> affectait considérablement notre estimation de <span class="math notranslate nohighlight">\(\hat{\beta}\)</span> et cela était visible au travers de l’effet <em>double descente</em>. Nous illustrons ce phénomène à nouveau ci-dessous. On génère un jeu de données synthétique en jouant sur le nombre d’invididus dans notre jeu d’apprentissage.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># dimension de l&#39;espace</span>
+<span class="n">d</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="c1"># repetition de l&#39;experience</span>
+<span class="n">redo</span> <span class="o">=</span> <span class="mi">50</span>
+
+<span class="c1"># vrai parametre utilise pour generer nos donnees</span>
+<span class="n">beta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+<span class="n">mu</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">d</span><span class="p">)]</span>
+<span class="n">cov</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">([</span><span class="mi">1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">d</span><span class="p">)])</span>
+
+<span class="n">test_size</span> <span class="o">=</span> <span class="mi">500</span>
+<span class="n">X_test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="n">mu</span><span class="p">,</span> <span class="n">cov</span><span class="o">=</span><span class="n">cov</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">test_size</span><span class="p">)</span>
+<span class="n">y_test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">beta</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">test_size</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+<span class="n">errors</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">train_errors</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">):</span>
+    <span class="n">error</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">train_error</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">redo</span><span class="p">):</span>
+        <span class="c1"># dataset construction</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="n">mu</span><span class="p">,</span> <span class="n">cov</span><span class="o">=</span><span class="n">cov</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">m</span><span class="p">)</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">beta</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        
+        <span class="c1"># param estimation</span>
+        <span class="n">beta_pinv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">pinv</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">y</span><span class="p">)</span>
+        
+        <span class="c1"># risk estimation</span>
+        <span class="n">error</span> <span class="o">+=</span> <span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">beta_pinv</span><span class="p">)</span><span class="o">-</span><span class="n">y_test</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="p">(</span><span class="n">test_size</span><span class="o">*</span><span class="n">redo</span><span class="p">)</span>
+        <span class="n">train_error</span> <span class="o">+=</span> <span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">beta_pinv</span><span class="p">)</span><span class="o">-</span><span class="n">y</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="p">(</span><span class="n">m</span><span class="o">*</span><span class="n">redo</span><span class="p">)</span>
+    <span class="n">train_errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_error</span><span class="p">)</span>
+    <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_losses</span><span class="p">(</span><span class="n">errors</span><span class="p">,</span> <span class="n">train_errors</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">errors</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)],</span> <span class="n">errors</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Risk estimation&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Dimension&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_errors</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)],</span> <span class="n">train_errors</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Train error&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Dimension&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_losses</span><span class="p">(</span><span class="n">errors</span><span class="p">,</span> <span class="n">train_errors</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/5_ridge_7_0.png" src="../_images/5_ridge_7_0.png" />
+</div>
+</div>
+<p>Nous avons un donc un double (sans jeu de mots) problème ici. Lorsque <span class="math notranslate nohighlight">\(X^TX\)</span> n’est pas inversible, nous devons en choisir une parmi une infinité : c’est la région à gauche de la ligne vertical en pointillé. La solution <span class="math notranslate nohighlight">\(X^\dagger\boldsymbol{y}\)</span> est celle de norme minimale, la préférable, mais le problème reste mal posé. Lorsque <span class="math notranslate nohighlight">\(X^TX\)</span> est presque inversible les performances de généralisation sont particulièrement mauvaises.</p>
+<p>Un autre problème apparaît. Lorsque <span class="math notranslate nohighlight">\(X^TX\)</span> est presque inversible (i.e. son déterminant est très proche de <span class="math notranslate nohighlight">\(0\)</span>), son inverse est très instable. De toutes petites perturbations de <span class="math notranslate nohighlight">\(X\)</span> affectent très significativement <span class="math notranslate nohighlight">\((X^TX)^{-1}\)</span>. L’exemple suivant illustre ce problème. Considérons le système d’équations suivant :</p>
+<div class="math notranslate nohighlight">
+\[Ax=y\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.98</span><span class="p">,</span> <span class="mf">2.</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">1.01</span><span class="p">]])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Soit une matrice A=</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Soit une matrice A=
+ [[1.98 2.  ]
+ [1.   1.01]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Nos données sont x=</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1"> et nos labels y=</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Nos données sont x=
+ [[1]
+ [1]] 
+ et nos labels y=
+ [[3.98]
+ [2.01]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Imaginons maintenant (comme c’est le cas en machine learning) que nous n’observons que <span class="math notranslate nohighlight">\(A\)</span> (la matrice qui contiendrait nos données) et <span class="math notranslate nohighlight">\(y\)</span> (les labels). Nous cherchons à déterminer l’inconnue <span class="math notranslate nohighlight">\(x\)</span>. C’est très facile car ici tout est déterministe et <span class="math notranslate nohighlight">\(A\)</span> est bien inversible (<span class="math notranslate nohighlight">\(\text{det}(A)\neq 0\)</span>) :</p>
+<div class="math notranslate nohighlight">
+\[\hat{x}=A^{-1}y\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x_hat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">A</span><span class="p">),</span> <span class="n">y</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Notre prédiction pour x, x_hat=</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">x_hat</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Notre prédiction pour x, x_hat=
+ [[1.]
+ [1.]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Tout marche très bien. Cependant, en pratique, nos données ne sont que rarement aussi propres. Imaginons que notre collecte soit entâchée d’un petit peu de bruit et arrondissons <span class="math notranslate nohighlight">\(y\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_round</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s1">&#39;Notre arrondi y_round=</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">y_round</span><span class="p">,</span> 
+    <span class="s1">&#39;</span><span class="se">\n</span><span class="s1"> On remarque que l</span><span class="se">\&#39;</span><span class="s1">écrat à y est très petit :</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">y_round</span><span class="o">-</span><span class="n">y</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Notre arrondi y_round=
+ [[4.]
+ [2.]] 
+ On remarque que l&#39;écrat à y est très petit :
+ [[ 0.02]
+ [-0.01]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Calculons maintenant l’inconnue <span class="math notranslate nohighlight">\(x\)</span> associée à ces nouvelles observations.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x_hat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">A</span><span class="p">),</span> <span class="n">y_round</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Notre prédiction pour x, x_hat=</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">x_hat</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Notre prédiction pour x, x_hat=
+ [[-200.]
+ [ 200.]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Le résultat est catastrophiquement mauvais. Un perturbation ridicule des <span class="math notranslate nohighlight">\(y\)</span> a entraîné un effet de très grande ampleur sur nos estimateurs <span class="math notranslate nohighlight">\(\hat{x}\)</span>. Ce problème qui apparaît dans l’effet double descente et ici est lié au conditionnement de la matrice <span class="math notranslate nohighlight">\(X^TX\)</span> (ici la matrice <span class="math notranslate nohighlight">\(A\)</span>). Son conditionnement est le ratio de sa plus grande valeur propre et de sa plus petite valeur propre. Elles sont ici :</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">eigenvalue</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">A</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">eigen_ratio</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">eigenvalue</span><span class="p">)</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">eigenvalue</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Le conditionnement donne :&#39;</span><span class="p">,</span> <span class="n">eigen_ratio</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Le conditionnement donne : -44702.49997761842
+</pre></div>
+</div>
+</div>
+</div>
+<p>La valeur semble déraisonnablement grande lorsqu’on la compare aux valeurs de nos données. L’idée est ainsi d’accroître les valeurs propres lors du calcul de l’inverse :</p>
+<div class="math notranslate nohighlight">
+\[X^+=(X^TX+\lambda I)^{-1}X^T,\]</div>
+<p>où <span class="math notranslate nohighlight">\(X^+\)</span> est une pseudo-inverse régularisée. En rajoutant <span class="math notranslate nohighlight">\(\lambda\)</span> dans la diagonale, le ratio de la plus grande valeur propre avec la plus petite devient :</p>
+<div class="math notranslate nohighlight">
+\[\frac{\gamma_{\text{max}}+\lambda}{\gamma_{\text{min}}+\lambda},\]</div>
+<p>où <span class="math notranslate nohighlight">\(\gamma\)</span> sont les dites valeurs propres. Reprenons notre exemple et calculons notre pseudo-inverse régularisée :</p>
+<hr class="docutils" />
+<p><span style="color:blue"><strong>Exercice :</strong></span> <strong>Proposez ci-dessous l’inverse régularisée de <span class="math notranslate nohighlight">\(A\)</span>.</strong></p>
+<hr class="docutils" />
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">I</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">lambda_</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="c1"># on calcule notre régularisation et la pseudo inverse</span>
+<span class="c1">####### Complete this part ######## or die ####################</span>
+<span class="n">A_inv_regularized</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span><span class="o">+</span><span class="n">lambda_</span><span class="o">*</span><span class="n">I</span><span class="p">),</span> <span class="n">A</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+<span class="c1">###############################################################</span>
+
+<span class="n">x_hat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A_inv_regularized</span><span class="p">,</span> <span class="n">y_round</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Notre prédiction pour x, x_hat=</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">x_hat</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Notre prédiction pour x, x_hat=
+ [[0.9879906]
+ [0.9979662]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>On retombe presque sur la valeur initiale qu’on aurait voulu obtenir. On constatera de plus que la valeur de la régularisation “<span class="math notranslate nohighlight">\(0.1\)</span>” est ridiculement faible.</p>
+<p>Nous avons certes pu obtenir une pseudo-inverse régularisée, mais notre objectif reste de minimiser une erreur de prédiction d’un modèle. Quel est le lien entre ce pseudo-inverse régularisé et notre problème intial ? Il se trouve que cela revient en fait à résoudre le problème d’optimisation suivant :</p>
+<div class="math notranslate nohighlight">
+\[\text{argmin}_{\beta\in\mathbb{R}^n}\lVert X\beta-\boldsymbol{y}\rVert_2^2,\text{ s.t. }\lVert\beta\rVert_2\leq c,\]</div>
+<p>pour une constante <span class="math notranslate nohighlight">\(c&gt;0\)</span>. En passant au Lagragien, on obtient ainsi :</p>
+<div class="math notranslate nohighlight">
+\[\text{argmin}_{\beta\in\mathbb{R}^n}\lVert X\beta-\boldsymbol{y}\rVert_2^2+\lambda\lVert\beta\rVert_2,\]</div>
+<p>pour <span class="math notranslate nohighlight">\(\lambda&gt;0\)</span>.</p>
+<p>Annulons le gradient afin de montrer que la solution de ce problème est-celle donnée plus haut.</p>
+<div class="math notranslate nohighlight">
+\[\nabla (\lVert X\beta-\boldsymbol{y}\rVert_2^2+\lambda\lVert\beta\rVert_2)=2X^TX\beta-2X^Ty+2\lambda\beta=2(X^TX+\lambda I)\beta-2X^T \boldsymbol{y},\]</div>
+<p>En annulant, on obtient :</p>
+<div class="math notranslate nohighlight">
+\[\hat{\beta}=(X^TX+\lambda I)^{-1}X^T\boldsymbol{y}=X^+\boldsymbol{y}.\]</div>
+<p>Si <span class="math notranslate nohighlight">\(X^TX\)</span> n’était pas inversible, <span class="math notranslate nohighlight">\(X^TX+\lambda I\)</span> l’est nécessairement. On retrouve bien la même solution. C’est bien ce problème des moindres carrés régularisés qu’on appelle Ridge. Reprenons maintenant l’effet double descente !</p>
+<hr class="docutils" />
+<p><span style="color:blue"><strong>Exercice :</strong></span> <strong>Proposez ci-dessous la pseudo-inverse régularisée de <span class="math notranslate nohighlight">\(X\)</span>.</strong></p>
+<hr class="docutils" />
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">redo</span> <span class="o">=</span> <span class="mi">50</span>
+
+<span class="n">lambda_</span><span class="o">=</span><span class="mf">0.1</span>
+
+<span class="n">beta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+<span class="n">mu</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">d</span><span class="p">)]</span>
+<span class="n">cov</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">([</span><span class="mi">1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">d</span><span class="p">)])</span>
+
+<span class="n">test_size</span> <span class="o">=</span> <span class="mi">500</span>
+<span class="n">X_test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="n">mu</span><span class="p">,</span> <span class="n">cov</span><span class="o">=</span><span class="n">cov</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">test_size</span><span class="p">)</span>
+<span class="n">y_test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">beta</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">test_size</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+<span class="n">errors</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">train_errors</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">):</span>
+    <span class="n">error</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">train_error</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">redo</span><span class="p">):</span>
+        <span class="c1"># dataset construction</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="n">mu</span><span class="p">,</span> <span class="n">cov</span><span class="o">=</span><span class="n">cov</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">m</span><span class="p">)</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">beta</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        
+        <span class="c1"># param estimation</span>
+        <span class="c1">####### Complete this part ######## or die ####################</span>
+        <span class="n">pseudo_reg_inv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span><span class="o">+</span><span class="n">lambda_</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">d</span><span class="p">)),</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+        <span class="c1">###############################################################</span>
+        
+        <span class="n">beta_pinv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">pseudo_reg_inv</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        
+        <span class="c1"># risk estimation</span>
+        <span class="n">error</span> <span class="o">+=</span> <span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">beta_pinv</span><span class="p">)</span><span class="o">-</span><span class="n">y_test</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="p">(</span><span class="n">test_size</span><span class="o">*</span><span class="n">redo</span><span class="p">)</span>
+        <span class="n">train_error</span> <span class="o">+=</span> <span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">beta_pinv</span><span class="p">)</span><span class="o">-</span><span class="n">y</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="p">(</span><span class="n">m</span><span class="o">*</span><span class="n">redo</span><span class="p">)</span>
+    <span class="n">train_errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_error</span><span class="p">)</span>
+    <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_losses</span><span class="p">(</span><span class="n">errors</span><span class="p">,</span> <span class="n">train_errors</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/5_ridge_25_0.png" src="../_images/5_ridge_25_0.png" />
+</div>
+</div>
+<p>La régularisation en rendant notre problème beaucoup plus stable a permis de gommer cet effet double descente. L’inversion la matrice <span class="math notranslate nohighlight">\(X^TX+\lambda I\)</span> est beaucoup moins sensible aux bruits présents dans la matrice <span class="math notranslate nohighlight">\(X\)</span>. Notre problème généralise mieux lorsque la taille du jeu de données est faible voire critique (proche de la dimension).</p>
+</div>
+<div class="section" id="ii-ridge-et-la-data-augmentation">
+<h2>II. Ridge et la <em>data augmentation</em><a class="headerlink" href="#ii-ridge-et-la-data-augmentation" title="Permalink to this headline">¶</a></h2>
+<p>Nous allons ici étudier la <em>data augmentation</em> du point de vue de Ridge.</p>
+<p>Les problèmes évoqués précédemment peuvent se résoudre assez facilement en augmentant le nombre d’invididus dans notre jeu d’apprentissage. En effet, le mauvais conditionnement de <span class="math notranslate nohighlight">\(X^TX\)</span> vient du fait que les vecteurs lignes de <span class="math notranslate nohighlight">\(X\)</span> ne sont pas générateurs (au sens de l’algèbre) de l’espace <span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span> ou, s’ils le sont, c’est via une composante orthogonale de taille très réduite. Plus le nombre d’individus dans <span class="math notranslate nohighlight">\(X\)</span> devient important, plus il est probable qu’une forte composante dans chaque dimension de l’espace existe.  Cependant, labéliser de nouvelles données peut être extrêmement couteux en temps de travail. Une alternative est de créer des données synthétiques. Nous allons étudiers quelques stratégies.</p>
+<p>Considérons dans un premier temps le problème Ridge ci-dessous :</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># on est en dimension 10</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="n">noise</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">lambda_</span><span class="o">=</span><span class="mf">2.</span>
+
+<span class="n">beta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+<span class="n">mu</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+<span class="n">cov</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">([</span><span class="mi">1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)])</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="mi">100</span>
+
+<span class="n">redo</span> <span class="o">=</span> <span class="mi">100</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">estimated_ridge_beta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">redo</span><span class="p">):</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="n">mu</span><span class="p">,</span> <span class="n">cov</span><span class="o">=</span><span class="n">cov</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">p</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">beta</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="o">*</span> <span class="n">noise</span>
+
+    <span class="n">estimated_ridge_beta</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span><span class="o">+</span><span class="n">lambda_</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">n</span><span class="p">)),</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">),</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">estimated_ridge_beta</span><span class="o">/=</span><span class="n">redo</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;E[beta_est]=</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">estimated_ridge_beta</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>E[beta_est]=
+ [[-0.08669146]
+ [-1.42121381]
+ [ 0.58835442]
+ [ 1.6196019 ]
+ [ 0.08655055]
+ [ 0.31406212]
+ [ 1.81390801]
+ [-1.58635569]
+ [-0.34974574]
+ [ 0.05904837]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="a-rajouter-une-base-de-mathbb-r-n-dans-x">
+<h3>a. Rajouter une base de <span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span> dans <span class="math notranslate nohighlight">\(X\)</span><a class="headerlink" href="#a-rajouter-une-base-de-mathbb-r-n-dans-x" title="Permalink to this headline">¶</a></h3>
+<p>Vu que le problème vient de l’absence ou du moins de la petite taille de certaines composantes de <span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span> construites à partir des vecteurs ligne de <span class="math notranslate nohighlight">\(N\)</span>, rajoutons dans <span class="math notranslate nohighlight">\(X\)</span> des individus fictifs représentants ces composantes :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\tilde{X}=\begin{pmatrix}X\\
+\sqrt{\lambda}I_n\end{pmatrix},\text{ et }\tilde{y}=\begin{pmatrix}\boldsymbol{y}\\0\end{pmatrix}.\end{split}\]</div>
+<p>Ici, <span class="math notranslate nohighlight">\(\sqrt{\lambda}I_n\)</span> est une base orthogonale de <span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span> dont la norme de chacun des vecteurs est <span class="math notranslate nohighlight">\(\sqrt{\lambda}\)</span>. Le label associé à ces nouvelles données est <span class="math notranslate nohighlight">\(0\)</span>. La solution du problème des moindres carrés est donnée par :</p>
+<div class="math notranslate nohighlight">
+\[\tilde{\beta}=(\tilde{X}^T\tilde{X})^{-1}\tilde{X}^T\tilde{y}.\]</div>
+<p>On vérifie assez rapidement que <span class="math notranslate nohighlight">\(\tilde{X}^T\tilde{X}\)</span> revient à faire <span class="math notranslate nohighlight">\(X^TX+\lambda I_n\)</span> (les <span class="math notranslate nohighlight">\(\sqrt{\lambda}\)</span> n’apparaisse que dans la diagonale et au carré) et que <span class="math notranslate nohighlight">\(\tilde{X}^T\tilde{y}=X^T\boldsymbol{y}\)</span>. Ainsi, <span class="math notranslate nohighlight">\(\tilde{\beta}=(X^TX+\lambda I_n)^{-1}X^T\boldsymbol{y}\)</span> (les <span class="math notranslate nohighlight">\(\sqrt{\lambda}\)</span> sont associés au label <span class="math notranslate nohighlight">\(0\)</span>). C’est la solution du problème des moindres carrés avec une pénalité <span class="math notranslate nohighlight">\(\ell_2\)</span> (Ridge) !</p>
+<p>La pénalité revient à nous garantir que les vecteurs lignes de <span class="math notranslate nohighlight">\(X\)</span> “remplissent” bien les directions de l’espace <span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">estimated_ridge_beta_2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">redo</span><span class="p">):</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="n">mu</span><span class="p">,</span> <span class="n">cov</span><span class="o">=</span><span class="n">cov</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">p</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">beta</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="o">*</span> <span class="n">noise</span>
+    
+    <span class="n">X_tilde</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">X</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">lambda_</span><span class="p">)],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">y_tilde</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">y</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="mi">1</span><span class="p">))],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">estimated_ridge_beta_2</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X_tilde</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">X_tilde</span><span class="p">)),</span> <span class="n">X_tilde</span><span class="o">.</span><span class="n">T</span><span class="p">),</span> <span class="n">y_tilde</span>
+    <span class="p">)</span>
+<span class="n">estimated_ridge_beta_2</span><span class="o">/=</span><span class="n">redo</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;E[beta_est_2]=</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">estimated_ridge_beta_2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Difference :</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">estimated_ridge_beta</span><span class="o">-</span><span class="n">estimated_ridge_beta_2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>E[beta_est_2]=
+ [[-0.06839217]
+ [-1.41636221]
+ [ 0.60532072]
+ [ 1.62470919]
+ [ 0.10558822]
+ [ 0.30973687]
+ [ 1.81925528]
+ [-1.57340233]
+ [-0.34294276]
+ [ 0.06851295]]
+Difference :
+ [[0.01829929]
+ [0.0048516 ]
+ [0.0169663 ]
+ [0.00510728]
+ [0.01903767]
+ [0.00432525]
+ [0.00534726]
+ [0.01295336]
+ [0.00680298]
+ [0.00946459]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Ça marche !</p>
+</div>
+<div class="section" id="b-rajouter-un-bruit-centre-en-0-de-covariance-lambda-i-n">
+<h3>b. Rajouter un bruit centré en <span class="math notranslate nohighlight">\(0\)</span> de covariance <span class="math notranslate nohighlight">\(\lambda I_n\)</span><a class="headerlink" href="#b-rajouter-un-bruit-centre-en-0-de-covariance-lambda-i-n" title="Permalink to this headline">¶</a></h3>
+<p>Soit <span class="math notranslate nohighlight">\(m\in\mathbb{N}^\star\)</span>. Tirons <span class="math notranslate nohighlight">\(m\)</span> vecteurs <span class="math notranslate nohighlight">\(x_r^{(i)}\)</span> selon <span class="math notranslate nohighlight">\(\mathcal{N}(0, \lambda I_n)\)</span>. Soit la matrice <span class="math notranslate nohighlight">\(X_r\)</span> construite comme suit :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}X_r=\begin{pmatrix}{x_r^{(1)}}^T\\ \vdots\\{x_r^{(i)}}^T\\ \vdots\\{x_r^{(m)}}^T\end{pmatrix}.\end{split}\]</div>
+<p>Calculons maintenant <span class="math notranslate nohighlight">\(\frac{1}{m}X_r^TX_r\)</span>. On remarque que dans la diagonales nous avons la somme de coordonnées au carrés : c’est un estimateur de la variance (i.e. <span class="math notranslate nohighlight">\(\lambda\)</span>). Dans les autres cellules c’est la somme du produit de variables aléatoires indépendantes, c’est un estimateur de <span class="math notranslate nohighlight">\(0\)</span>. Nous avons donc : <span class="math notranslate nohighlight">\(\frac{1}{m}X_r^TX_r=\lambda I_n\)</span>. Il suffit alors de rajouter ces échantillons à notre matrice <span class="math notranslate nohighlight">\(X\)</span> originale en les pondérant avec <span class="math notranslate nohighlight">\(\frac{1}{m}\)</span> et en leur associant le label <span class="math notranslate nohighlight">\(0\)</span> pour obtenir une approximation de Ridge.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">estimated_ridge_beta_3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+<span class="n">mu_tilde</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+<span class="n">cov_tilde</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">([</span><span class="n">lambda_</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)])</span>
+<span class="n">m</span><span class="o">=</span><span class="mi">1000</span>
+    
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">redo</span><span class="p">):</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="n">mu</span><span class="p">,</span> <span class="n">cov</span><span class="o">=</span><span class="n">cov</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">p</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">beta</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="o">*</span> <span class="n">noise</span>
+    
+
+    <span class="n">X_r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="n">mu_tilde</span><span class="p">,</span> <span class="n">cov</span><span class="o">=</span><span class="n">cov_tilde</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">m</span><span class="p">)</span><span class="o">/</span><span class="n">m</span>
+    <span class="n">y_r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">m</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    
+    <span class="n">X_tilde</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">X</span><span class="p">,</span> <span class="n">X_r</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">y_tilde</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">y</span><span class="p">,</span> <span class="n">y_r</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">estimated_ridge_beta_3</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X_tilde</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">X_tilde</span><span class="p">)),</span> <span class="n">X_tilde</span><span class="o">.</span><span class="n">T</span><span class="p">),</span> <span class="n">y_tilde</span>
+    <span class="p">)</span>
+<span class="n">estimated_ridge_beta_3</span><span class="o">/=</span><span class="n">redo</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;E[beta_est_3]=</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">estimated_ridge_beta_3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Difference :</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">estimated_ridge_beta</span><span class="o">-</span><span class="n">estimated_ridge_beta_3</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>E[beta_est_3]=
+ [[-0.0677147 ]
+ [-1.46693981]
+ [ 0.59043066]
+ [ 1.65091943]
+ [ 0.09705681]
+ [ 0.30260147]
+ [ 1.84747186]
+ [-1.59440898]
+ [-0.36343575]
+ [ 0.06854764]]
+Difference :
+ [[0.01897676]
+ [0.045726  ]
+ [0.00207624]
+ [0.03131753]
+ [0.01050625]
+ [0.01146065]
+ [0.03356384]
+ [0.00805329]
+ [0.01369   ]
+ [0.00949928]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Ça marche !</p>
+</div>
+<div class="section" id="c-enfin-de-la-vraie-data-augmentation">
+<h3>c. Enfin de la vraie <em>data augmentation</em><a class="headerlink" href="#c-enfin-de-la-vraie-data-augmentation" title="Permalink to this headline">¶</a></h3>
+<p>Intuitivement, on s’attend à ce qu’un nouveau <span class="math notranslate nohighlight">\(x_{\text{new}}\in\mathbb{R}^n\)</span> soit en réalité proche d’un <span class="math notranslate nohighlight">\(x\)</span>, vecteur colonne de <span class="math notranslate nohighlight">\(X\)</span> et que son label soit également proche. L’idée va être de virtuellement augmenter le nombre d’individus dans <span class="math notranslate nohighlight">\(X, y\)</span> en perturbant les individus existants. Plus rigoureusement, créeons <span class="math notranslate nohighlight">\(m\)</span> copies de nos vecteurs lignes de <span class="math notranslate nohighlight">\(X\)</span> de la manière suivante : <span class="math notranslate nohighlight">\(x_{ij}^\prime=x_i+\epsilon_{ij}, i=1\ldots p, j=1\ldots m\)</span> où le bruit est construit de la manière suivante : <span class="math notranslate nohighlight">\(\epsilon_{ij}\sim\mathcal{N}(0, \frac{\lambda}{m}I_n)\)</span>. Les labels sont quant à eux conservés.</p>
+<p>Notre nouvelle matrice <span class="math notranslate nohighlight">\(\tilde{X}\)</span> ne contient cette fois-ci QUE les versions perturbées de nos données. On vérifiera qu’on obtient :</p>
+<div class="math notranslate nohighlight">
+\[\sum_i\sum_j x_{ij}^\prime {x_{ij}^\prime}^T=m(X^TX+\lambda I_n).\]</div>
+</div>
+</div>
+<div class="section" id="iii-ridge-et-le-dropout">
+<h2>III. Ridge et le <em>dropout</em><a class="headerlink" href="#iii-ridge-et-le-dropout" title="Permalink to this headline">¶</a></h2>
+<p>Comme nous l’avons déjà vu, une manière de faire de la régularisation est ce qu’on appelle le <em>dropout</em>. Étudions cela dans le cas de l’apprentissage d’un modèle linéaire. Soit <span class="math notranslate nohighlight">\(\mathcal{X}\subseteq\mathbb{R}^d\)</span> et <span class="math notranslate nohighlight">\(\mathcal{Y}\subseteq\mathbb{R}\)</span>. L’objectif est donc de construire un modèle linéaire de <span class="math notranslate nohighlight">\(\mathcal{X}\)</span> dans <span class="math notranslate nohighlight">\(\mathcal{Y}\)</span> de la forme : <span class="math notranslate nohighlight">\(h:x\mapsto \langle \omega, x\rangle\)</span>, <span class="math notranslate nohighlight">\(\omega\in\mathbb{R}^d\)</span>, qui minimise l’erreur quadratique :</p>
+<div class="math notranslate nohighlight">
+\[L(h)=\mathbb{E}\big[(Y-h(X))^2\big],\]</div>
+<p>qu’on estime via un dataset <span class="math notranslate nohighlight">\(S_n\)</span> :</p>
+<div class="math notranslate nohighlight">
+\[L_n(h)=\frac{1}{n}\sum_i (y_i-h(x_i))^2.\]</div>
+<p>L’idée du <em>dropout</em> au moment de l’optimisation (i.e. de l’apprentissage), est de considérer la fonction <span class="math notranslate nohighlight">\(\phi\big(\frac{\delta\odot z}{1-p}\big)\)</span> où <span class="math notranslate nohighlight">\(\delta_i\)</span> est une variable aléatoire qui suit une loi de Bernoulli de paramètre <span class="math notranslate nohighlight">\(1-p\)</span> et est échantillonée pour chaque sample à chaque itération de l’optimiseur et <span class="math notranslate nohighlight">\(\odot\)</span> est la multiplication élément par élément. Le paramètre <span class="math notranslate nohighlight">\(p\)</span> donne l’importance du <em>dropout</em>. À <span class="math notranslate nohighlight">\(0\)</span>, il n’y a pas de régularisation, proche de <span class="math notranslate nohighlight">\(1\)</span> l’apprentissage ne fonctionne pas. Dans le cas d’une opération linéaire le biais n’est généralement pas touché par le <em>dropout</em> (tout comme pour la pénalité <span class="math notranslate nohighlight">\(\ell_2\)</span>). Nous omettrons ici les considérations relatives à ce dernier. Le facteur <span class="math notranslate nohighlight">\(1/(1-p)\)</span> implique que bien que certaines dimensions tombent à <span class="math notranslate nohighlight">\(0\)</span> notre vecteur conserve la même norme en espérance. Plus rigoureusement, nous avons :</p>
+<div class="math notranslate nohighlight">
+\[\mathbb{E}\big[\delta_j/(1-p)\big]=1.\]</div>
+<p>Le <em>dropout</em> est bien entendu “désactivé” une fois l’apprentissage terminé et le modèle utilisé pour faire des prédictions. Étudions l’espérance du gradient de notre modèle :</p>
+<div class="math notranslate nohighlight">
+\[\mathbb{E}\Big[\frac{\partial L_n(\omega)}{\partial \omega}\Big]=-X^Ty+X^TX\beta+\frac{p}{1-p}D\beta,\]</div>
+<p>où on a identifié la fonction <span class="math notranslate nohighlight">\(h\)</span> à ses paramètres <span class="math notranslate nohighlight">\(\omega\)</span> et où <span class="math notranslate nohighlight">\(D=\text{diag}(\lVert x_1\rVert_2^2, \ldots, \lVert x_n\rVert_2^2)\)</span>.</p>
+<p>En annulant le gradient en espérance, on obtient :</p>
+<div class="math notranslate nohighlight">
+\[\hat{\beta}=\big(X^TX+\frac{p}{1-p}D\big)^{-1}X^ty\]</div>
+<p>qui peut être vu comme une version généralisée de Ridge.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./7_regularization"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="4_adversarial.html" title="previous page">Les attaques adversaires ☕️</a>
+    <a class='right-next' id="next-link" href="../content.html" title="next page">Content in Jupyter Book</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By The LMIPR team<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>

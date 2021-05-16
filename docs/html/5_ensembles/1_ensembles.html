@@ -1,0 +1,1363 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Les méthodes ensemblistes ☕️☕️ &#8212; Machine Learning</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet" />
+  <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.acff12b8f9c144ce68a297486a2fa670.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="La différentiation automatique" href="../6_autodiff/0_propos_liminaire.html" />
+    <link rel="prev" title="Les méthodes ensemblistes" href="0_propos_liminaire.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+      <img src="../_static/logo.jpg" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Machine Learning</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   Machine Learning
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../0_requisite/rappels_python.html">
+   Rappels de Python et Numpy
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../1_what_is_ml/0_propos_liminaire.html">
+   Le
+   <em>
+    Machine Learning
+   </em>
+   , c’est quoi ?
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../1_what_is_ml/1_introduction_ml.html">
+     <em>
+      Machine learning
+     </em>
+     et malédiction de la dimension
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../1_what_is_ml/2_regression_and_classification_trees.html">
+     Les arbres de régression et de classification
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../2_linear_regression/0_propos_liminaire.html">
+   La
+   <em>
+    régression
+   </em>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_linear_regression/1_linear_regression.html">
+     La régression linéaire ☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_linear_regression/2_optimization.html">
+     L’optimisation ☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_linear_regression/3_interpolation.html">
+     Interpolation ☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_linear_regression/4_algo_proximal_lasso.html">
+     Sous-différentiel et le cas du Lasso ☕️☕️☕️
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../3_logistic_regression/0_propos_liminaire.html">
+   La
+   <em>
+    classification
+   </em>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../3_logistic_regression/1_logistic_regression.html">
+     La Régression Logistique ☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../3_logistic_regression/2_fonctions_proxy.html">
+     Les fonctions proxy ☕️☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../3_logistic_regression/3_bayes_classifier.html">
+     Le classifieur de Bayes ☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../3_logistic_regression/4_VC_theory.html">
+     La théorie de Vapnik et Chervonenkis ☕️☕️☕️☕️ (💆‍♂️)
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../4_max_margin/0_propos_liminaire.html">
+   Les modèles
+   <em>
+    max-margin
+   </em>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../4_max_margin/1_max_margin.html">
+     Les modèles max-margin ☕️☕️
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="0_propos_liminaire.html">
+   Les méthodes
+   <em>
+    ensemblistes
+   </em>
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Les méthodes ensemblistes ☕️☕️
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../6_autodiff/0_propos_liminaire.html">
+   La différentiation automatique
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../6_autodiff/1_autodiff.html">
+     La différentiation automatique et un début de
+     <em>
+      deep learning
+     </em>
+     ☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../6_autodiff/2_filters_representation.html">
+     Filtres et espace de représentation des réseaux de neurones ☕️☕️
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../7_regularization/0_propos_liminaire.html">
+   La régularisation
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../7_regularization/1_regularization_deep.html">
+     Régularisation en deep learning ☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../7_regularization/2_unsupervised_representation_learning.html">
+     Unsupervised representation learning ☕️☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../7_regularization/3_multitask.html">
+     L’apprentissage multi-tâches ☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../7_regularization/4_adversarial.html">
+     Les attaques adversaires ☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../7_regularization/5_ridge.html">
+     Une analyse de la régularisation Ridge ☕️☕️☕️
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../content.html">
+   Content in Jupyter Book
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <label for="toctree-checkbox-8">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../markdown.html">
+     Markdown Files
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../notebooks.html">
+     Content with notebooks
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/5_ensembles/1_ensembles.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/maximiliense/lmiprp"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/maximiliense/lmiprp/issues/new?title=Issue%20on%20page%20%2F5_ensembles/1_ensembles.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/maximiliense/lmiprp/master?urlpath=tree/5_ensembles/1_ensembles.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#introduction">
+   Introduction
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#i-l-approche-naive">
+   I. L’approche naïve
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#ii-bayesian-model-averaging-et-son-lien-avec-la-regularisation">
+   II. Bayesian Model Averaging (et son lien avec la régularisation)
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#la-regression-lineaire-bayesienne">
+     La régression linéaire Bayésienne
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#iii-boosting">
+   III. Boosting
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#iv-les-forets-aleatoires">
+   IV. Les forêts aléatoires
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="les-methodes-ensemblistes">
+<h1>Les méthodes ensemblistes ☕️☕️<a class="headerlink" href="#les-methodes-ensemblistes" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>Soit <span class="math notranslate nohighlight">\(\mathcal{X}\)</span> notre espace d’entrée et <span class="math notranslate nohighlight">\(\mathcal{Y}\)</span> notre espace de sortie. Soit <span class="math notranslate nohighlight">\(X, Y\)</span> deux variables aléatoires sur <span class="math notranslate nohighlight">\(\mathcal{X}\)</span> et <span class="math notranslate nohighlight">\(\mathcal{Y}\)</span> et soit <span class="math notranslate nohighlight">\(\mathbb{P}\)</span> leur mesure jointe. Notre objectif est de trouver une application <span class="math notranslate nohighlight">\(h:\mathcal{X}\mapsto\mathcal{Y}\)</span> minimise une certaine erreur qu’on notera <span class="math notranslate nohighlight">\(L\)</span>. N’ayant pas accès aux variables aléatoires <span class="math notranslate nohighlight">\(X\)</span> et <span class="math notranslate nohighlight">\(Y\)</span>, nous collectons un jeu de données <span class="math notranslate nohighlight">\(S_n=\{(X_i, Y_i)\}_{i\leq n}\sim\mathbb{P}^n\)</span> et nous construisons un risque empirique :</p>
+<div class="math notranslate nohighlight">
+\[L_n(h)=\frac{1}{n}\sum_{i}\ell(h(x_i), y_i),\]</div>
+<p>où <span class="math notranslate nohighlight">\(\ell\)</span> définit une erreur élémentaire (i.e. pour une unique prédiction). La fonction <span class="math notranslate nohighlight">\(h\)</span> est ainsi construite en utilisant le jeu de données <span class="math notranslate nohighlight">\(S_n\)</span>.</p>
+</div>
+<div class="section" id="i-l-approche-naive">
+<h2>I. L’approche naïve<a class="headerlink" href="#i-l-approche-naive" title="Permalink to this headline">¶</a></h2>
+<p>L’approche la plus simple lorsqu’on cherche à combiner plusieurs modèles consiste à moyenner leur prédiction. Dans le cas de la régression, la prédiction est la moyenne traditionnelle. Dans le cas de la classification, on utilisera un vote à la majorité simple.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_digits</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">load_digits</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">_</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">images</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">target</span><span class="p">):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">gray_r</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Training: </span><span class="si">%i</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">label</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/1_ensembles_4_0.png" src="../_images/1_ensembles_4_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">data</span> <span class="o">/</span> <span class="n">data</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">target</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.75</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">KNeighborsClassifier</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MajorityVoting</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">models</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">models</span> <span class="o">=</span> <span class="n">models</span>
+    
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">:</span>
+            <span class="n">m</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">:</span>
+            <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">))</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">stats</span><span class="o">.</span><span class="n">mode</span><span class="p">(</span><span class="n">results</span><span class="p">)</span><span class="o">.</span><span class="n">mode</span>
+    <span class="k">def</span> <span class="nf">score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="n">scores</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;model&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;vote&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">}</span>
+        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">:</span>
+            <span class="n">scores</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+        <span class="n">scores</span><span class="p">[</span><span class="s1">&#39;vote&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">==</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">scores</span>
+            
+<span class="n">model</span> <span class="o">=</span> <span class="n">MajorityVoting</span><span class="p">(</span>
+    <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">5000</span><span class="p">),</span> 
+    <span class="n">DecisionTreeClassifier</span><span class="p">(),</span>
+    <span class="n">KNeighborsClassifier</span><span class="p">()</span>
+<span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;model&#39;: [0.9391691394658753, 0.7603857566765578, 0.9584569732937686],
+ &#39;vote&#39;: 0.9451038575667656}
+</pre></div>
+</div>
+</div>
+</div>
+<p>On peut imaginer que les modèles se trompent sur les mêmes images et non de manière aléatoire. C’est par exemple le cas si les modèles se trompent lorsqu’un chiffre est mal dessiné et ressemble à un autre chiffre : tous les modèles vont faire la même erreur. Ainsi, le meilleur modèle est le meilleur modèle et non le vote.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_boston</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">load_boston</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">data</span><span class="o">/</span><span class="n">data</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">target</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.75</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">KNeighborsRegressor</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">AverageVoting</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">models</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">models</span> <span class="o">=</span> <span class="n">models</span>
+    
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">:</span>
+            <span class="n">m</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">:</span>
+            <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">))</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">results</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="n">scores</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;model&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;vote&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">}</span>
+        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">:</span>
+            <span class="n">scores</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)))</span>
+        <span class="n">scores</span><span class="p">[</span><span class="s1">&#39;vote&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">scores</span>
+            
+<span class="n">model</span> <span class="o">=</span> <span class="n">AverageVoting</span><span class="p">(</span>
+    <span class="n">LinearRegression</span><span class="p">(),</span> 
+    <span class="n">DecisionTreeRegressor</span><span class="p">(),</span>
+    <span class="n">KNeighborsRegressor</span><span class="p">()</span>
+<span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;model&#39;: [26.477467262772567, 28.380394736842103, 46.27930421052632],
+ &#39;vote&#39;: 25.226370600637846}
+</pre></div>
+</div>
+</div>
+</div>
+<p>On observe cette fois-ci un gain clair des performances. Les différents modèles doivent se tromper de manière aléatoire répartie autour de la moyenne. L’agrégation rend ce résultat plus stable.</p>
+</div>
+<div class="section" id="ii-bayesian-model-averaging-et-son-lien-avec-la-regularisation">
+<h2>II. Bayesian Model Averaging (et son lien avec la régularisation)<a class="headerlink" href="#ii-bayesian-model-averaging-et-son-lien-avec-la-regularisation" title="Permalink to this headline">¶</a></h2>
+<p>Notons <span class="math notranslate nohighlight">\(z_i=(x_i, y_i)\)</span> et une famille de <span class="math notranslate nohighlight">\(M\)</span> modèles probabilistes (e.g. régression logistique) où chaque modèle est noté <span class="math notranslate nohighlight">\(\mathcal{M}_j\)</span>. Notons :</p>
+<div class="math notranslate nohighlight">
+\[p(y_i|x_i, \mathcal{M}_j),\]</div>
+<p>la densité d’un point de <span class="math notranslate nohighlight">\(\mathcal{Y}\)</span> relativement au modèle <span class="math notranslate nohighlight">\(\mathcal{M}_j\)</span> et à une observation <span class="math notranslate nohighlight">\(x_i\in\mathcal{X}\)</span>. Notre objectif est de déterminer dans un premier temps la “qualité” d’un modèle en tenant compte de notre point de vu <em>a priori</em> ainsi que des données que nous avons pu observer <span class="math notranslate nohighlight">\(S_n\)</span>. Notons ainsi <span class="math notranslate nohighlight">\(p(\mathcal{M}_j)\)</span> notre probabilité <em>a priori</em> sur le modèle <span class="math notranslate nohighlight">\(\mathcal{M}_j\)</span>. Celle-ci peut favoriser certaines solutions parcimonieuses ou bien être uniforme et ne favoriser aucun modèle. En appliquant la règle de Bayes, nous obtenons :</p>
+<div class="math notranslate nohighlight">
+\[p(\mathcal{M}_j|S_n)=\frac{p(S_n|\mathcal{M}_j)p(\mathcal{M}_j)}{p(S_n)},\]</div>
+<p>où nous avons :</p>
+<div class="math notranslate nohighlight">
+\[p(S_n|\mathcal{M}_j)=\prod_i p(y_i|x_i, \mathcal{M}_j),\]</div>
+<p>ainsi que :</p>
+<div class="math notranslate nohighlight">
+\[p(S_n)=\sum_j p(S_n| \mathcal{M}_j)p(\mathcal{M}_j).\]</div>
+<p>Nous avons bien ici toutes les informations nous permettant d’évaluer de manière Bayésienne la qualité de nos différents modèles. Cependant, en pratique, les variations pourraient très bien dépendre d’un tirage particulier de nos données. L’idée derrière le <em>Bayesian Model Averaging</em> consiste à considérer TOUS les modèles mais à les pondérer par leur qualité. Cela ne se fait pas au doigt mouillé, mais en utilisant encore une fois le <em>framework</em> probabiliste :</p>
+<div class="math notranslate nohighlight">
+\[p(y|x_\text{new}, S_n)=\sum_j p(y|x_\text{new}, \mathcal{M}_j, S_n)p(\mathcal{M}_j|S_n)\]</div>
+<p>Dans le cas de la régression logistique, nous avons la vraisemblance suivante :</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{L}(\theta_j)=\prod_i p(y_i|x_i,\theta_j)\]</div>
+<p>où</p>
+<div class="math notranslate nohighlight">
+\[p(y_i|x_i, \theta_j)=\sigma_j(x_i)^y_i(1-\sigma_j(x_i))^{1-y_i}\]</div>
+<p>et</p>
+<div class="math notranslate nohighlight">
+\[\sigma_j(x)=(1+e^{-\langle\theta_j,x\rangle})^{-1}.\]</div>
+<p>Ainsi, la <em>posterior</em> de notre modèle <span class="math notranslate nohighlight">\(\theta_j\)</span> après avoir observé notre jeu de données est donnée par :</p>
+<div class="math notranslate nohighlight">
+\[p(\theta_j|S_n)\propto \prod_i p(y_i|x_i,\theta_j)p(\theta_j).\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># TODO exercice où des modèles logistiques prennent en compte que des paramètres choisis aléatoirement</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_digits</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">load_digits</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>On affiche les pixels que verront par exemple un modèle.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">_</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">images</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">target</span><span class="p">):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">gray_r</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Training: </span><span class="si">%i</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">label</span><span class="p">)</span>
+
+<span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">images</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span>
+
+<span class="n">_</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">images</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">target</span><span class="p">):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_array</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">),</span> 
+        <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">gray_r</span><span class="p">,</span> 
+        <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span>
+    <span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Training: </span><span class="si">%i</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">label</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/1_ensembles_21_0.png" src="../_images/1_ensembles_21_0.png" />
+<img alt="../_images/1_ensembles_21_1.png" src="../_images/1_ensembles_21_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">data</span> <span class="o">/</span> <span class="n">data</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">target</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.75</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">logsumexp</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">BayesianLogisticAveraging</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">nb_models</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">5000</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">p</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">nb_models</span><span class="p">,</span> <span class="n">dim</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nb_models</span> <span class="o">=</span> <span class="n">nb_models</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">models</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">posterior</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">prior</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">/</span><span class="n">nb_models</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_iter</span> <span class="o">=</span> <span class="n">max_iter</span>
+        
+    <span class="k">def</span> <span class="nf">posterior_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">)),</span> <span class="n">y</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">prior</span><span class="p">)</span>
+        
+        
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nb_models</span><span class="p">):</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_iter</span><span class="p">)</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mask</span><span class="p">[</span><span class="n">_</span><span class="p">]]</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">posterior</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">posterior_</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+            <span class="p">)</span>
+    <span class="k">def</span> <span class="nf">individual_scores</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="n">scores</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">)):</span>
+            <span class="n">scores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">[</span><span class="n">_</span><span class="p">]</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mask</span><span class="p">[</span><span class="n">_</span><span class="p">]],</span> <span class="n">y</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">scores</span><span class="p">))</span>
+            
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="n">predictions</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">model</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">):</span>
+            <span class="n">predictions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mask</span><span class="p">[</span><span class="n">i</span><span class="p">]]))</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">posterior</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="p">)</span>
+        <span class="n">predictions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">logsumexp</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="n">pred</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="n">acc</span> <span class="o">=</span> <span class="p">(</span><span class="n">pred</span><span class="o">==</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">acc</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">BayesianLogisticAveraging</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">individual_scores</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="c1"># print(np.argsort(model.posterior))</span>
+<span class="c1">#print(model.posterior)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9272997032640949
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9235905044510386
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">LogisticMaxPooling</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">nb_models</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">5000</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">p</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">nb_models</span><span class="p">,</span> <span class="n">dim</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nb_models</span> <span class="o">=</span> <span class="n">nb_models</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">models</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_iter</span> <span class="o">=</span> <span class="n">max_iter</span>
+        
+        
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nb_models</span><span class="p">):</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_iter</span><span class="p">)</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mask</span><span class="p">[</span><span class="n">_</span><span class="p">]]</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+            
+    <span class="k">def</span> <span class="nf">individual_scores</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="n">scores</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">)):</span>
+            <span class="n">scores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">[</span><span class="n">_</span><span class="p">]</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mask</span><span class="p">[</span><span class="n">_</span><span class="p">]],</span> <span class="n">y</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Best model:&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">scores</span><span class="p">),</span> <span class="s1">&#39;:: Worst model:&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">scores</span><span class="p">))</span>
+            
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="n">predictions</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">model</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">):</span>
+            <span class="n">predictions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mask</span><span class="p">[</span><span class="n">i</span><span class="p">]])</span>
+            <span class="p">)</span>
+        <span class="n">predictions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">predictions</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="n">pred</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="n">acc</span> <span class="o">=</span> <span class="p">(</span><span class="n">pred</span><span class="o">==</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">acc</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">LogisticMaxPooling</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">individual_scores</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="c1"># print(np.argsort(model.posterior))</span>
+<span class="c1">#print(model.posterior)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Best model: 0.9191394658753709 :: Worst model: 0.8130563798219584
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9176557863501483
+</pre></div>
+</div>
+</div>
+</div>
+<p>Le principe du <em>Bayesian Model Averaging</em> se généralise bien sûr lorsqu’on a une quantité infinie de modèles où la <em>posterior</em> prédictive s’écrit :</p>
+<div class="math notranslate nohighlight">
+\[p(y|x_\text{new}, S_n)=\int p(y|x_\text{new}, \mathcal{M}, S_n)p(\mathcal{M}|S_n)dM.\]</div>
+<hr class="docutils" />
+<div class="section" id="la-regression-lineaire-bayesienne">
+<h3>La régression linéaire Bayésienne<a class="headerlink" href="#la-regression-lineaire-bayesienne" title="Permalink to this headline">¶</a></h3>
+<p><strong>Le modèle</strong></p>
+<p>Considérons le modèle linéaire suivant. Soit <span class="math notranslate nohighlight">\(X\in\mathbb{R}^d\)</span>, <span class="math notranslate nohighlight">\(\omega\in\mathbb{R}^d\)</span>, <span class="math notranslate nohighlight">\(\epsilon\sim\mathcal{N}(0, \sigma^2)\)</span> et considérons la dépendence suivante :</p>
+<div class="math notranslate nohighlight">
+\[Y=\langle \omega, X\rangle + \epsilon.\]</div>
+<p>On supposera dans cet exercice que les matrices qu’on inverse sont inversibles.</p>
+<p>Nous avons donc <span class="math notranslate nohighlight">\(Y\sim\mathcal{N}(\langle\omega, X\rangle, \sigma^2)\)</span>. Ici, chaque paramétrisation (chaque choix de <span class="math notranslate nohighlight">\(\omega\)</span>) peut être vu comme un modèle. Comme pour le cas précédent, nous devons donner une mesure <em>a priori</em> pour chacun de nos modèles. Nous choissons ici le <em>prior</em> suivant :</p>
+<div class="math notranslate nohighlight">
+\[p(\omega)=\mathcal{N}(0, \sigma^2\Lambda^{-1}),\]</div>
+<p>où <span class="math notranslate nohighlight">\(\Lambda\)</span> est la matrice de précision. Par facilité, considérons <span class="math notranslate nohighlight">\(\Lambda=\lambda I\)</span> et notons <span class="math notranslate nohighlight">\(\Sigma=\sigma^2\Lambda^{-1}\)</span>.</p>
+<p><strong>Détail des calculs pour la régression linéaire Bayésienne (ou Bayesian Model Averaging with Linear Regression</strong></p>
+<p>(Si vous n’êtes intéressés que par la solution, vous pouvez sauter directement les calculs)</p>
+<p><em><strong>Étape 1 : Calcul de la posterior sur <span class="math notranslate nohighlight">\(\omega\)</span></strong></em></p>
+<p>Nous cherchons dans un premier temps à calculer :</p>
+<div class="math notranslate nohighlight">
+\[p(y|\tilde{X}, \omega)\propto\text{exp}\Big(-\frac{1}{2\sigma^2}(y-\tilde{X}\omega )^T(y-\tilde{X}\omega)\Big)\]</div>
+<p>où</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\tilde{X}=\begin{pmatrix}x_1^T\\\vdots\\x_n^T\end{pmatrix}\text{ et }y=\begin{pmatrix}y_1\\\vdots\\y_n\end{pmatrix}.\end{split}\]</div>
+<p>C’est notre likelihood. Si en maximisant cette quantité qu’on obtient (lorsque <span class="math notranslate nohighlight">\(\tilde{X}^T\tilde{X}\)</span> est inversible) :</p>
+<div class="math notranslate nohighlight">
+\[\hat{\omega}=(\tilde{X}^T\tilde{X})^{-1}\tilde{X}^ty\]</div>
+<p>On rappelle notre prior sur <span class="math notranslate nohighlight">\(\omega\)</span> :</p>
+<div class="math notranslate nohighlight">
+\[p(\omega)\propto\text{exp}\Big(-\frac{1}{2}\omega^T\Sigma^{-1}\omega\Big)=\text{exp}\Big(-\frac{\lambda}{2\sigma^2}\omega^T\omega\Big).\]</div>
+<p>Nous avons donc tous les éléments nous permettant de calculer notre <em>posterior</em> :</p>
+<div class="math notranslate nohighlight">
+\[p(\omega|\tilde{X}, y)\propto p(y|\tilde{X},\omega)p(\omega).\]</div>
+<p>En remplaçant les quantités ci-dessus, nous obtenons donc :</p>
+<div class="math notranslate nohighlight">
+\[p(\omega|\tilde{X}, y)\propto \text{exp}\Big(-\frac{1}{2\sigma^2}(y-\tilde{X}\omega )^T(y-\tilde{X}\omega)-\frac{\lambda}{2\sigma^2}\omega^T\omega\Big).\]</div>
+<p>Notre prior sur <span class="math notranslate nohighlight">\(\omega\)</span> est conjugué avec notre vraisemblance. Cela veut dire que la <em>posterior</em> est donc nécessairement une loi normale également. Ainsi, on sait qu’elle sera proportionnelle à l’exponentielle de :</p>
+<div class="math notranslate nohighlight">
+\[(\omega-\mu)^T{\Sigma^\prime}^{-1}(\omega-\mu)=\omega^T{\Sigma^\prime}^{-1}\omega-2\omega^T{\Sigma^\prime}^{-1}\mu+\text{constante}.\]</div>
+<p>où <span class="math notranslate nohighlight">\(\mu\)</span> sera le paramètre de moyenne et <span class="math notranslate nohighlight">\(\Sigma^\prime\)</span> notre nouvelle matrice de covariance. Considérons donc la quantité <span class="math notranslate nohighlight">\(\frac{1}{\sigma^2}(y-\tilde{X}\omega )^T(y-\tilde{X}\omega)+\frac{\lambda}{\sigma^2}\omega^T\omega\)</span> (nous avons factorisé par <span class="math notranslate nohighlight">\(-1/2\)</span> les éléments de l’exponentiel) et cherchons à obtenir la forme classique attendue d’une loi normale :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\frac{1}{\sigma^2}(y-\tilde{X}\omega )^T(y-\tilde{X}\omega)+\frac{\lambda}{\sigma^2}\omega^T\omega&amp;=\sigma^{-2}(y^Ty-2\omega^T\tilde{X}^T y+\omega^T\tilde{X}^T\tilde{X}\omega)+\lambda\sigma^{-2}\omega^T\omega\\
+&amp;=\sigma^{-2}y^Ty-2\sigma^{-2}\omega^T\tilde{X}^Ty+\sigma^{-2}\omega^T(\tilde{X}^T\tilde{X}+\lambda I)\omega
+\end{aligned}\end{split}\]</div>
+<p>On remarque ainsi directement que :</p>
+<div class="math notranslate nohighlight">
+\[\begin{aligned}
+{\Sigma^\prime}^{-1}&amp;=\frac{\tilde{X}^T\tilde{X}+\lambda I}{\sigma^2}
+\end{aligned}\]</div>
+<p>Et on en déduit que :</p>
+<div class="math notranslate nohighlight">
+\[\mu=(\tilde{X}^T\tilde{X}+\lambda I)^{-1}\tilde{X}^T y.\]</div>
+<p>On remarque que l’espérance de notre posterior est exactement l’estimateur de Ridge. Dans notre cas de figure, la posterior est une loi normale et est ainsi symétrique : son maximum est atteint par son espérance. On parle souvent de MAP, ou Maximum A Posteriori.</p>
+<p><em><strong>Étape 2 : Calcul de la posterior prédictive sur <span class="math notranslate nohighlight">\(y_\text{new}\)</span></strong></em></p>
+<p>Maintenant que nous avons la posterior pour nos modèles, nous pouvons calculer la <em>posterior</em> prédictive. Celle-ci s’exprime de la manière suivante :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+p(y_{\text{new}}| x_{\text{new}}, \tilde{X}, y)&amp;=\int_\omega p(y_{\text{new}}|x_{\text{new}}, \omega)p(\omega|\tilde{X}, y)d\omega\text{ (la dépendance en $X$ disparait)}\\
+&amp;\propto\int_\omega\text{exp}\Big(-\frac{1}{2\sigma^2}(y_{\text{new}}-\langle \omega, x_{\text{new}}\rangle)^2\Big)\text{exp}\Big(-\frac{1}{2}(\omega-\mu)^T{\Sigma^\prime}^{-1}(\omega-\mu)\Big)d\omega\\
+&amp;=\int_\omega\text{exp}\Big(-\frac{1}{2}\big(\sigma^{-2}(y_{\text{new}}^2-2y_{\text{new}}\langle \omega, x_{\text{new}}\rangle+(\langle \omega, x_{\text{new}}\rangle)^2+\omega^T{\Sigma^\prime}^{-1}\omega-2\omega^T{\Sigma^\prime}^{-1}\mu+\\&amp;\mu^T{\Sigma^\prime}^{-1}\mu\big)\Big)d\omega
+\end{aligned}\end{split}\]</div>
+<p>où <span class="math notranslate nohighlight">\(\mu^T{\Sigma^\prime}^{-1}\mu\)</span> n’agit que comme un facteur de proportionnalité et peut donc être “éliminé”.</p>
+<p><em><strong>Étape 2.1 : Intégration de la variable <span class="math notranslate nohighlight">\(\omega\)</span></strong></em></p>
+<p>Nous allons dans un premier temps regrouper tous les éléments faisant intervenir <span class="math notranslate nohighlight">\(\omega\)</span>, notre variable d’intégration.</p>
+<div class="math notranslate nohighlight">
+\[\begin{aligned}
+p(y_{\text{new}}| x_{\text{new}}, \tilde{X}, y)&amp;\propto\int_\omega\text{exp}\Big(-\frac{1}{2}\big(\sigma^{-2}(y_{\text{new}}^2-2y_{\text{new}}\langle \omega, x_{\text{new}}\rangle+(\langle \omega, x_{\text{new}}\rangle)^2+\omega^T{\Sigma^\prime}^{-1}\omega-2\omega^T{\Sigma^\prime}^{-1}\mu\big)\Big)d\omega
+\end{aligned}\]</div>
+<p>Considérons à nouveau la partie entre parenthèses :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\sigma^{-2}(y_{\text{new}}^2-2y_{\text{new}}&amp;\langle \omega, x_{\text{new}}\rangle+(\langle \omega, x_{\text{new}}\rangle)^2+\omega^T{\Sigma^\prime}^{-1}\omega-2\omega^T{\Sigma^\prime}^{-1}\mu\\
+&amp;=y_\text{new}^2\sigma^{-2}-2\omega^T({\Sigma^\prime}^{-1}\mu+x_\text{new}y_\text{new}\sigma^{-2})+\omega^T(x_\text{new}x_\text{new}^T\sigma^{-2}+{\Sigma^\prime}^{-1})\omega\\
+&amp;=(\omega-\mu^\prime){\Sigma^{\prime\prime}}^{-1}(\omega-\mu^\prime)-{\mu^\prime}^T{\Sigma^{\prime\prime}}^{-1}\mu^\prime+y_{\text{new}}^2\sigma^{-2}
+\end{aligned}\end{split}\]</div>
+<p>où :</p>
+<div class="math notranslate nohighlight">
+\[{\Sigma^{\prime\prime}}^{-1}=x_\text{new}x_\text{new}^T\sigma^{-2}+{\Sigma^\prime}^{-1},\]</div>
+<p>et :</p>
+<div class="math notranslate nohighlight">
+\[\mu^\prime={\Sigma^{\prime\prime}}({\Sigma^\prime}^{-1}\mu+x_{\text{new}}y_\text{new}\sigma^{-2}).\]</div>
+<p>On en déduit ainsi :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+p(y_{\text{new}}| x_{\text{new}}, \tilde{X}, y)&amp;\propto\text{exp}\Big(\frac{1}{2}{\mu^\prime}^T{\Sigma^{\prime\prime}}^{-1}\mu^\prime-\frac{1}{2}y_{\text{new}}^2\sigma^{-2}\Big)\int_\omega \text{exp}\Big(-\frac{1}{2}(\omega-\mu^\prime){\Sigma^{\prime\prime}}^{-1}(\omega-\mu^\prime)\Big)d\omega\\
+&amp;\propto\text{exp}\Big(\frac{1}{2}{\mu^\prime}^T{\Sigma^{\prime\prime}}^{-1}\mu^\prime-\frac{1}{2}y_{\text{new}}^2\sigma^{-2}\Big),
+\end{aligned}\end{split}\]</div>
+<p>où nous avons pu sortir les éléments constants relativement à <span class="math notranslate nohighlight">\(\omega\)</span> de l’intégral. N’y trouvant plus qu’une loi normale dont la probabilité vaut <span class="math notranslate nohighlight">\(1\)</span> sur son domaine, nous avons pu éliminer l’intégrale (toujours à un facteur proportionnel près).</p>
+<p><em><strong>Étape 2.2 : Calcul de la loi de <span class="math notranslate nohighlight">\(y_\text{new}\)</span></strong></em></p>
+<p>On sent que la loi de <span class="math notranslate nohighlight">\(y_\text{new}\)</span> sera aussi une loi normale, et on va essayer de retrouver quelque chose qui ressemble à :
+On sait qu’on aura quelque chose de la forme :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+p(y_\text{new}|x_\text{new}, \tilde{X}, y)&amp;\propto\text{exp}\Big(-\frac{1}{2{\sigma^\prime}^2}(y_\text{new}-\mu^{\prime\prime)^2}\Big)\\
+&amp;=\text{exp}\Big(-\frac{1}{2}({\sigma^\prime}^{-2}y_\text{new}^2-2{\sigma^\prime}^{-2}y_\text{new}\mu^{\prime\prime}+{\sigma^\prime}^{-2}{\mu^{\prime\prime}}^2)\Big),
+\end{aligned}
+\end{split}\]</div>
+<p>où <span class="math notranslate nohighlight">\(\mu^{\prime\prime}\)</span> sera l’espérance de notre prédiction et <span class="math notranslate nohighlight">\(\sigma^\prime\)</span> son écart-type. Rappelons que notre point de départ ici est :</p>
+<div class="math notranslate nohighlight">
+\[\text{exp}\Big(\frac{1}{2}{\mu^\prime}^T{\Sigma^{\prime\prime}}^{-1}\mu^\prime-\frac{1}{2}y_{\text{new}}^2\sigma^{-2}\Big).\]</div>
+<p>En constatant que <span class="math notranslate nohighlight">\(\Sigma, \Sigma^\prime\)</span> ou encore <span class="math notranslate nohighlight">\(\Sigma^{\prime\prime}\)</span> sont toutes symétriques, nous avons :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+{\mu^\prime}^T{\Sigma^{\prime\prime}}^{-1}\mu^\prime&amp;=({\Sigma^\prime}^{-1}\mu+x_{\text{new}}y_\text{new}\sigma^{-2})^T{\Sigma^{\prime\prime}}{\Sigma^{\prime\prime}}^{-1}{\Sigma^{\prime\prime}}({\Sigma^\prime}^{-1}\mu+x_{\text{new}}y_\text{new}\sigma^{-2})\\
+&amp;=\sigma^{-2}y_\text{new}x_\text{new}^T\Sigma^{\prime\prime}\sigma^{-2}y_\text{new}x_\text{new}+2y_\text{new}\sigma^{-2}x_\text{new}^T\Sigma^{\prime\prime}{\Sigma^\prime}^{-1}\mu+\text{constante}\\
+&amp;=(\sigma^{-4}x_\text{new}^T\Sigma^{\prime\prime}x_\text{new})y_\text{new}^2+2(\sigma^{-2}x_\text{new}^T\Sigma^{\prime\prime}{\Sigma^\prime}^{-1}\mu) y_\text{new}+\text{constante}.
+\end{aligned}\end{split}\]</div>
+<p>En combinant <span class="math notranslate nohighlight">\({\mu^\prime}^T{\Sigma^{\prime\prime}}^{-1}\mu^\prime\)</span> avec <span class="math notranslate nohighlight">\(-y_{\text{new}}^2\sigma^{-2}\)</span>, nous obtenons :</p>
+<div class="math notranslate nohighlight">
+\[\begin{aligned}
+{\mu^\prime}^T{\Sigma^{\prime\prime}}^{-1}\mu^\prime-y_{\text{new}}^2\sigma^{-2}&amp;=(\sigma^{-4}x_\text{new}^T\Sigma^{\prime\prime}x_\text{new}-\sigma^{-2})y_\text{new}^2+2(\sigma^{-2}x_\text{new}^T\Sigma^{\prime\prime}{\Sigma^\prime}^{-1}\mu) y_\text{new}+\text{c}
+\end{aligned}\]</div>
+<p>Remarquons que dans l’exponentielle nous n’avons pas indiqué le signe “-” classique de la loi normale. Nous obtenons ainsi :</p>
+<div class="math notranslate nohighlight">
+\[\begin{aligned}
+y_{\text{new}}^2\sigma^{-2}-{\mu^\prime}^T{\Sigma^{\prime\prime}}^{-1}\mu^\prime&amp;=(\sigma^{-2}-\sigma^{-4}x_\text{new}\Sigma^{\prime\prime}x_\text{new})y_\text{new}^2-2(\sigma^{-2}x_\text{new}\Sigma^{\prime\prime}{\Sigma^\prime}^{-1}\mu)y_\text{new}+c
+\end{aligned}\]</div>
+<p>On retrouve donc :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+{\sigma^\prime}^{-2}=\sigma^{-2}(1-\sigma^{-2}x_\text{new}^T\Sigma^{\prime\prime}x_\text{new})\\
+\mu^{\prime\prime}={\sigma^\prime}^2\sigma^{-2}x_\text{new}^T\Sigma^{\prime\prime}{\Sigma^\prime}^{-1}\mu.
+\end{aligned}\end{split}\]</div>
+<p>Nous avons :</p>
+<div class="math notranslate nohighlight">
+\[\begin{aligned}
+p(y_\text{new}|x_\text{new}, \tilde{X}, y)&amp;\propto\text{exp}\Big(-\frac{{\sigma^\prime}^{-2}}{2}(y_\text{new}-\mu^{\prime\prime)^2}\Big)
+\end{aligned}\]</div>
+<p><em><strong>Étape 2.3 : Un peu de nettoyage</strong></em></p>
+<p>Nous avons grâce à la formule de <a class="reference external" href="https://en.wikipedia.org/wiki/Sherman%E2%80%93Morrison_formula">Sherman–Morrison</a> :</p>
+<div class="math notranslate nohighlight">
+\[\Sigma^{\prime\prime}=(x_\text{new}x_\text{new}^T\sigma^{-2}+{\Sigma^\prime}^{-1})^{-1}={\Sigma^\prime}-\frac{{\Sigma^\prime}\sigma^{-2}x_\text{new}x_\text{new}^T{\Sigma^\prime}}{1+\sigma^{-2}x_\text{new}^T{\Sigma^\prime}x_\text{new}}\]</div>
+<p>Nous avons donc :</p>
+<div class="math notranslate nohighlight">
+\[x_\text{new}^T\Sigma^{\prime\prime}x_{\text{new}}=x_\text{new}^T\Sigma^\prime x_\text{new}-\frac{\sigma^{-2}(x_\text{new}^T\Sigma^\prime x_\text{new})^2}{1+\sigma^{-2}x_\text{new}^T{\Sigma^\prime}x_\text{new}}=\frac{x_\text{new}^T\Sigma^\prime x_\text{new}}{1+\sigma^{-2}x_\text{new}^T\Sigma^\prime x_\text{new}}.\]</div>
+<p>Reprenons <span class="math notranslate nohighlight">\(\sigma^\prime\)</span>. Nous avons enfin :</p>
+<div class="math notranslate nohighlight">
+\[{\sigma^\prime}^{-2}=\sigma^{-2}(1-\sigma^{-2}\frac{x_\text{new}^T\Sigma^\prime x_\text{new}}{1+\sigma^{-2}x_\text{new}^T\Sigma^\prime x_\text{new}})=\frac{\sigma^{-2}}{1+\sigma^{-2}x_\text{new}^T\Sigma^\prime x_\text{new}}\]</div>
+<p>Considérons maintenant <span class="math notranslate nohighlight">\(\mu^{\prime\prime}\)</span> :</p>
+<div class="math notranslate nohighlight">
+\[\mu^{\prime\prime}={\sigma^\prime}^2\sigma^{-2}x_\text{new}^T\Sigma^{\prime\prime}{\Sigma^\prime}^{-1}\mu=\mu^T{\sigma^\prime}^2\sigma^{-2}\Sigma^{\prime\prime}{\Sigma^\prime}^{-1}x_\text{new}.\]</div>
+<p>Traitons la partie à droite et montrons :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+{\sigma^\prime}^2\sigma^{-2}\Sigma^{\prime\prime}{\Sigma^\prime}^{-1}x_\text{new}&amp;=x_\text{new}\\
+\Leftrightarrow {\sigma^\prime}^2\sigma^{-2} x_\text{new}&amp;={\Sigma^{\prime\prime}}^{-1}\Sigma^\prime x_\text{new}\\&amp;
+=(x_\text{new}x_\text{new}^T\sigma^{-2}+{\Sigma^\prime}^{-1})\Sigma^\prime x_\text{new}\\
+&amp;=\sigma^{-2}x_\text{new}x_\text{new}^T\Sigma^\prime x_\text{new}+x_\text{new}\\
+&amp;= (\sigma^{-2}x_\text{new}^T\Sigma^\prime x_\text{new} + 1)x_\text{new}\\
+\Leftrightarrow {\sigma^\prime}^2x_\text{new}&amp;=\frac{\sigma^{-2}x_\text{new}^T\Sigma^\prime x_\text{new} + 1}{\sigma^{-2}}x_\text{new}\\
+\Leftrightarrow x_\text{new}&amp;=x_\text{new}.
+\end{aligned}\end{split}\]</div>
+<p>Et nous obtenons ce que nous voulions montrer. Cela nous indique que nous avons :</p>
+<div class="math notranslate nohighlight">
+\[\mu^{\prime\prime}=\mu^T x_\text{new},\]</div>
+<p>où</p>
+<div class="math notranslate nohighlight">
+\[\mu=(\tilde{X}^T\tilde{X}+\lambda I)^{-1}\tilde{X}^T y.\]</div>
+<p><strong>Conclusion</strong></p>
+<p>Nous obtenons donc, étant donné une observation <span class="math notranslate nohighlight">\(x_\text{new}\)</span> que son label <span class="math notranslate nohighlight">\(y_\text{new}\)</span> est distribué selon une loi normale dont la moyenne est :</p>
+<div class="math notranslate nohighlight">
+\[\mu^T x_\text{new}\]</div>
+<p>avec :</p>
+<div class="math notranslate nohighlight">
+\[\mu=(\tilde{X}^T\tilde{X}+\lambda I)^{-1}\tilde{X}^T y,\]</div>
+<p>et dont la variance est donnée par :</p>
+<div class="math notranslate nohighlight">
+\[{\sigma^\prime}^{-2}=\frac{\sigma^{-2}}{1+\sigma^{-2}x_\text{new}^T\Sigma^\prime x_\text{new}}\]</div>
+<p>où</p>
+<div class="math notranslate nohighlight">
+\[{\Sigma^\prime}^{-1}=\frac{\tilde{X}^T\tilde{X}+\lambda I}{\sigma^2}.\]</div>
+<p>Cela nous dit finalement qu’une prédiction d’un modèlre Ridge revient à prendre l’espérance d’un Bayesian Model Averaging où nos modèles sont les modèles linéaires auquel on ajoute comme <em>prior</em> une loi normale dont la variance est contrôlée par le paramètre <span class="math notranslate nohighlight">\(1/\lambda\)</span>.</p>
+<p>On retrouve ce modèle dans <span class="math notranslate nohighlight">\(\texttt{sklearn}\)</span> avec <span class="math notranslate nohighlight">\(\texttt{BayesianRidge}\)</span>.</p>
+<hr class="docutils" />
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">BayesianRidge</span>
+
+
+<span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">x</span><span class="p">):</span> <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">x</span><span class="p">)</span>
+
+
+<span class="c1"># #############################################################################</span>
+<span class="c1"># Generate sinusoidal data with noise</span>
+<span class="n">size</span> <span class="o">=</span> <span class="mi">25</span>
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="mi">1234</span><span class="p">)</span>
+<span class="n">x_train</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
+<span class="n">y_train</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">x_train</span><span class="p">)</span> <span class="o">+</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">)</span>
+<span class="n">x_test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+
+<span class="c1"># #############################################################################</span>
+<span class="c1"># Fit by cubic polynomial</span>
+<span class="n">n_order</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">X_train</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vander</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">n_order</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">increasing</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">X_test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vander</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">n_order</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">increasing</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># #############################################################################</span>
+<span class="c1"># Plot the true and predicted curves with log marginal likelihood (L)</span>
+<span class="n">reg</span> <span class="o">=</span> <span class="n">BayesianRidge</span><span class="p">(</span><span class="n">tol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">fit_intercept</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">compute_score</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">axes</span><span class="p">):</span>
+    <span class="c1"># Bayesian ridge regression with different initial value pairs</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">init</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">y_train</span><span class="p">),</span> <span class="mf">1.</span><span class="p">]</span>  <span class="c1"># Default values</span>
+    <span class="k">elif</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">init</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">1e-3</span><span class="p">]</span>
+        <span class="n">reg</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="n">alpha_init</span><span class="o">=</span><span class="n">init</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lambda_init</span><span class="o">=</span><span class="n">init</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">reg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+    <span class="n">ymean</span><span class="p">,</span> <span class="n">ystd</span> <span class="o">=</span> <span class="n">reg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">return_std</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">func</span><span class="p">(</span><span class="n">x_test</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;sin($2</span><span class="se">\\</span><span class="s2">pi x$)&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;observation&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">ymean</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;predict mean&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">ymean</span><span class="o">-</span><span class="n">ystd</span><span class="p">,</span> <span class="n">ymean</span><span class="o">+</span><span class="n">ystd</span><span class="p">,</span>
+                    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;pink&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;predict std&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">1.3</span><span class="p">,</span> <span class="mf">1.3</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;$</span><span class="se">\\</span><span class="s2">alpha$_init$=</span><span class="si">{:.2f}</span><span class="s2">,</span><span class="se">\\</span><span class="s2"> </span><span class="se">\\</span><span class="s2">lambda$_init$=</span><span class="si">{}</span><span class="s2">$&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">init</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">init</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">title</span> <span class="o">+=</span> <span class="s2">&quot; (Default)&quot;</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;$</span><span class="se">\\</span><span class="s2">alpha=</span><span class="si">{:.1f}</span><span class="s2">$</span><span class="se">\n</span><span class="s2">$</span><span class="se">\\</span><span class="s2">lambda=</span><span class="si">{:.3f}</span><span class="s2">$</span><span class="se">\n</span><span class="s2">$L=</span><span class="si">{:.1f}</span><span class="s2">$&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+           <span class="n">reg</span><span class="o">.</span><span class="n">alpha_</span><span class="p">,</span> <span class="n">reg</span><span class="o">.</span><span class="n">lambda_</span><span class="p">,</span> <span class="n">reg</span><span class="o">.</span><span class="n">scores_</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/1_ensembles_33_0.png" src="../_images/1_ensembles_33_0.png" />
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="iii-boosting">
+<h2>III. Boosting<a class="headerlink" href="#iii-boosting" title="Permalink to this headline">¶</a></h2>
+<p>L’idée primaire derrière la méthode de <em>boosting</em> est de construire des modèles “faibles” (potentiellement à peine meilleurs que le hasard) mais complémentaires entre eux possédant ainsi de bonnes performances en tant que groupe. Nous étudierons ici la méthode <em>AdaBoost</em> (i.e. Adaptive Boosting). Soit <span class="math notranslate nohighlight">\(\mathcal{X}\subseteq\mathbb{R}^d\)</span> et <span class="math notranslate nohighlight">\(\mathcal{Y}=\{-1, 1\}\)</span>. On ne considèrera que le cas de la classification binaire bien que le propos se généralise à d’autres tâches de <em>machine learning</em>. Notre objectif est de construire un modèle final <span class="math notranslate nohighlight">\(h\)</span> de <span class="math notranslate nohighlight">\(\mathcal{X}\)</span> vers <span class="math notranslate nohighlight">\(\mathcal{Y}\)</span> en s’appuyant sur un jeu de données <span class="math notranslate nohighlight">\(S_n\)</span>. Notons <span class="math notranslate nohighlight">\(w_i^j\)</span> le poids associé à la donnée <span class="math notranslate nohighlight">\((x_i, y_i)\)</span> pour le modèle faible <span class="math notranslate nohighlight">\(j\)</span>. Initialisons les poids à <span class="math notranslate nohighlight">\(w_i^j=1/n\)</span>. Notre modèle consistera en <span class="math notranslate nohighlight">\(m\)</span> classifieurs faibles.</p>
+<p><em>AdaBoost</em> fonctionne de la manière suivante :</p>
+<ol class="simple">
+<li><p>On initialise notre compteur <span class="math notranslate nohighlight">\(j=1\)</span></p></li>
+<li><p>On optimise notre modèle sur le jeu de données :</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[\sum_i w_i^j\textbf{1}\{h_j(x_i)\neq y_i\}\]</div>
+<ol class="simple">
+<li><p>On calcule l’erreur normalisée :</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[\epsilon_j=\frac{\sum_i w_i^j\textbf{1}\{h_j(x_i)\neq y_i\}}{\sum_i w_i^j}.\]</div>
+<p>et on évalue l’importance du modèle courant pour les futurs modèles :</p>
+<div class="math notranslate nohighlight">
+\[\alpha_j=\text{ln}\Big(\frac{1-\epsilon_j}{\epsilon_j}\Big)\]</div>
+<ol class="simple">
+<li><p>On met à jour la pondération des données pour le modèle suivant :</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[w_i^{j+1}=w_i^j\text{exp}\big(\alpha_j \textbf{1}\{h_j(x_i)\neq y_i\}\big)\]</div>
+<ol class="simple">
+<li><p>Si <span class="math notranslate nohighlight">\(j&lt;m\)</span>, on reprend à l’étape <span class="math notranslate nohighlight">\(2\)</span> pour optimiser le modèle suivant.</p></li>
+</ol>
+<p>Une fois les modèles optimisés, notre <em>meta-classifieur</em> permet de faire des prédictions de la manière suivante :</p>
+<div class="math notranslate nohighlight">
+\[H(x)=\text{sign}\Big(\sum_j\alpha_j h_j(x)\Big)\]</div>
+<p>Intuitivement, on cherche à favoriser les modèles qui “fonctionnent bien” et à donner de l’importance aux exemples d’apprentissage mal classés pour que les futurs classifieurs faibles se concentrent dessus.</p>
+<hr class="docutils" />
+<p><strong>Pourquoi ces coefficients ?</strong></p>
+<p>Considérons tout d’abord la <em>loss</em> exponentielle :</p>
+<div class="math notranslate nohighlight">
+\[\ell(z)=\text{exp}\big(-z\big),\]</div>
+<p>où <span class="math notranslate nohighlight">\(z=yh(x)\)</span>, <span class="math notranslate nohighlight">\((x, y)\in S_n\)</span>. La <em>loss</em> est affichée juste après.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Exponential loss&#39;</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="o">&lt;=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">x</span><span class="p">[</span><span class="mi">51</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;0/1 loss&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/1_ensembles_36_0.png" src="../_images/1_ensembles_36_0.png" />
+</div>
+</div>
+<p>On cherche à construire un classifieur <span class="math notranslate nohighlight">\(H\)</span> minimisant la <em>loss</em> exponentielle suivante :</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{L}(H)=\sum_{i=1}^n\ell(y_iH(x_i)),\]</div>
+<p>où</p>
+<div class="math notranslate nohighlight">
+\[H(x)=\frac{1}{2}\sum_j\alpha_j h_j(x),\]</div>
+<p>tels que <span class="math notranslate nohighlight">\(h_j\)</span> sont nos classifieurs faibles et <span class="math notranslate nohighlight">\(\alpha_j\)</span> les poids qui leur sont associés. Cependant, imaginons qu’au lieu de tout minimiser d’une seule fois, nous procédions itérativement, classifieur par classifieur. Ainsi, lorsqu’on optimise le classifieur <span class="math notranslate nohighlight">\(j\)</span>, tous les classifieurs <span class="math notranslate nohighlight">\(h_{1}, \ldots, h_{j-1}\)</span> et leur poid <span class="math notranslate nohighlight">\(\alpha_1, \ldots, \alpha_{j-1}\)</span> restent fixés. Notons <span class="math notranslate nohighlight">\(H_m(x)\)</span> le classifieur total jusqu’au classifieur faible <span class="math notranslate nohighlight">\(h_m\)</span>. Notre <em>loss</em> se reformule ainsi :</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{L}_j(H)=\sum_{i=1}^n\text{exp}\Big(-y_iH_{j-1}(x_i)-\frac{1}{2}y_i\alpha_jh_j(x_i)\Big)=\sum_{i=1}^nw_i^j\text{exp}\Big(-\frac{1}{2}y_i\alpha_jh_j(x_i)\Big),\]</div>
+<p>où <span class="math notranslate nohighlight">\(w_i^j = \text{exp}(-y_iH_{j-1}(x_i))\)</span>. Notons que si nous sommes bien entrain d’optimiser notre loss du point de vue de <span class="math notranslate nohighlight">\(h_j\)</span> et <span class="math notranslate nohighlight">\(\alpha_j\)</span>, alors <span class="math notranslate nohighlight">\(w_i^j, \forall i\)</span> sont des constantes. Notons <span class="math notranslate nohighlight">\(S_c^{m}\)</span> l’ensemble des points correctement classés par <span class="math notranslate nohighlight">\(H_m\)</span> et <span class="math notranslate nohighlight">\(S_i^m\)</span> ceux qui à l’inverse ne le sont pas. Nous pouvons reformuler l’erreur précédente de la manière suivante :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\mathcal{L}_j(H)&amp;=e^{-\alpha_j/2}\sum_{i\in S_\mathcal{c}^j}w_i^m+e^{\alpha_j/2}\sum_{i\in S_\mathcal{i}^j}w_i^m\\
+&amp;=(e^{\alpha_j/2}-e^{-\alpha_j/2})\sum_{i=1}^nw_i^m\textbf{1}\{h_j(x_i)\neq y_i\}+e^{-\alpha_j/2}\sum_{i=1}^nw_i^m\\
+&amp;\propto (e^{\alpha_j/2}-e^{-\alpha_j/2})\sum_{i=1}^nw_i^m\textbf{1}\{h_j(x_i)\neq y_i\}
+\end{aligned}\end{split}\]</div>
+<p>Du point de vu de l’optimisation de <span class="math notranslate nohighlight">\(h_j\)</span>, on remarque que cela revient à optimiser :</p>
+<div class="math notranslate nohighlight">
+\[(e^{\alpha_j/2}-e^{-\alpha_j/2})\sum_{i=1}^nw_i^m\textbf{1}\{h_j(x_i)\neq y_i\},\]</div>
+<p>où le choix de <span class="math notranslate nohighlight">\(\alpha_j\)</span> n’a pas d’effet. Cela revient à réaliser l’étape <span class="math notranslate nohighlight">\(2\)</span> de notre algorithme. Considérons maintenant l’optimisation de <span class="math notranslate nohighlight">\(\alpha_j\)</span>. En annulant la derivée en fonction de <span class="math notranslate nohighlight">\(\alpha_j\)</span> on se rend compte que cela revient à le calculer comme indiqué à l’étape 3 (<span class="math notranslate nohighlight">\(\epsilon_j\)</span> et <span class="math notranslate nohighlight">\(\alpha_j\)</span>).</p>
+<hr class="docutils" />
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># exercice avec des stumps...</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
+<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">zero_one_loss</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">AdaBoostClassifier</span>
+
+
+<span class="n">n_estimators</span> <span class="o">=</span> <span class="mi">400</span>
+<span class="c1"># A learning rate of 1. may not be optimal for both SAMME and SAMME.R</span>
+<span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">1.</span>
+
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">make_hastie_10_2</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">12000</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="mi">2000</span><span class="p">:],</span> <span class="n">y</span><span class="p">[</span><span class="mi">2000</span><span class="p">:]</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:</span><span class="mi">2000</span><span class="p">],</span> <span class="n">y</span><span class="p">[:</span><span class="mi">2000</span><span class="p">]</span>
+
+<span class="n">dt_stump</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">min_samples_leaf</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">dt_stump</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">dt_stump_err</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">dt_stump</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+
+<span class="n">dt</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">min_samples_leaf</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">dt</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">dt_err</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">dt</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+
+<span class="n">ada_discrete</span> <span class="o">=</span> <span class="n">AdaBoostClassifier</span><span class="p">(</span>
+    <span class="n">base_estimator</span><span class="o">=</span><span class="n">dt_stump</span><span class="p">,</span>
+    <span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">,</span>
+    <span class="n">n_estimators</span><span class="o">=</span><span class="n">n_estimators</span><span class="p">,</span>
+    <span class="n">algorithm</span><span class="o">=</span><span class="s2">&quot;SAMME&quot;</span><span class="p">)</span>
+<span class="n">ada_discrete</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="n">ada_real</span> <span class="o">=</span> <span class="n">AdaBoostClassifier</span><span class="p">(</span>
+    <span class="n">base_estimator</span><span class="o">=</span><span class="n">dt_stump</span><span class="p">,</span>
+    <span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">,</span>
+    <span class="n">n_estimators</span><span class="o">=</span><span class="n">n_estimators</span><span class="p">,</span>
+    <span class="n">algorithm</span><span class="o">=</span><span class="s2">&quot;SAMME.R&quot;</span><span class="p">)</span>
+<span class="n">ada_real</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_estimators</span><span class="p">],</span> <span class="p">[</span><span class="n">dt_stump_err</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;k-&#39;</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Decision Stump Error&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_estimators</span><span class="p">],</span> <span class="p">[</span><span class="n">dt_err</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;k--&#39;</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Decision Tree Error&#39;</span><span class="p">)</span>
+
+<span class="n">ada_discrete_err</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_estimators</span><span class="p">,))</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">y_pred</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ada_discrete</span><span class="o">.</span><span class="n">staged_predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)):</span>
+    <span class="n">ada_discrete_err</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">zero_one_loss</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+
+<span class="n">ada_discrete_err_train</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_estimators</span><span class="p">,))</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">y_pred</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ada_discrete</span><span class="o">.</span><span class="n">staged_predict</span><span class="p">(</span><span class="n">X_train</span><span class="p">)):</span>
+    <span class="n">ada_discrete_err_train</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">zero_one_loss</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="n">ada_real_err</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_estimators</span><span class="p">,))</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">y_pred</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ada_real</span><span class="o">.</span><span class="n">staged_predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)):</span>
+    <span class="n">ada_real_err</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">zero_one_loss</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+
+<span class="n">ada_real_err_train</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_estimators</span><span class="p">,))</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">y_pred</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ada_real</span><span class="o">.</span><span class="n">staged_predict</span><span class="p">(</span><span class="n">X_train</span><span class="p">)):</span>
+    <span class="n">ada_real_err_train</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">zero_one_loss</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_estimators</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ada_discrete_err</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Discrete AdaBoost Test Error&#39;</span><span class="p">,</span>
+        <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_estimators</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ada_discrete_err_train</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Discrete AdaBoost Train Error&#39;</span><span class="p">,</span>
+        <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_estimators</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ada_real_err</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Real AdaBoost Test Error&#39;</span><span class="p">,</span>
+        <span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_estimators</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ada_real_err_train</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Real AdaBoost Train Error&#39;</span><span class="p">,</span>
+        <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">((</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;n_estimators&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;error rate&#39;</span><span class="p">)</span>
+
+<span class="n">leg</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper right&#39;</span><span class="p">,</span> <span class="n">fancybox</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">leg</span><span class="o">.</span><span class="n">get_frame</span><span class="p">()</span><span class="o">.</span><span class="n">set_alpha</span><span class="p">(</span><span class="mf">0.7</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/1_ensembles_39_0.png" src="../_images/1_ensembles_39_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="iv-les-forets-aleatoires">
+<h2>IV. Les forêts aléatoires<a class="headerlink" href="#iv-les-forets-aleatoires" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_test</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(10000, 10)
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./5_ensembles"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="0_propos_liminaire.html" title="previous page">Les méthodes <em>ensemblistes</em></a>
+    <a class='right-next' id="next-link" href="../6_autodiff/0_propos_liminaire.html" title="next page">La différentiation automatique</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By The LMIPR team<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>
