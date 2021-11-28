@@ -1,0 +1,1530 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>La régression logistique ☕️ &#8212; Machine Learning</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet">
+  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Les fonctions de perte (loss function) ☕️☕️☕️" href="2_fonctions_proxy.html" />
+    <link rel="prev" title="La classification" href="0_propos_liminaire.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-72WWYCKNK6"></script>
+<script>
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){ dataLayer.push(arguments); }
+                    gtag('js', new Date());
+                    gtag('config', 'G-72WWYCKNK6');
+                </script>
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/logo.jpg" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Machine Learning</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   Introduction
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../0_requisite/rappels_python.html">
+   Rappels de Python et Numpy
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../1_what_is_ml/0_propos_liminaire.html">
+   <em>
+    Machine Learning
+   </em>
+   , initiation
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../1_what_is_ml/1_introduction_ml.html">
+     <em>
+      Machine learning
+     </em>
+     et malédiction de la dimension
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../1_what_is_ml/2_regression_and_classification_trees.html">
+     Les arbres de régression et de classification
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../2_regression/0_propos_liminaire.html">
+   La
+   <em>
+    régression
+   </em>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_regression/1_linear_regression.html">
+     La régression linéaire ☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_regression/2_optimization.html">
+     L’optimisation ☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_regression/3_interpolation.html">
+     Interpolation ☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_regression/4_algo_proximal_lasso.html">
+     Sous-différentiel et le cas du Lasso ☕️☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_regression/5_least_square_qr.html">
+     Les moindres carrés via une décomposition QR (et plus)☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_regression/6_ridge.html">
+     Une analyse de la régularisation Ridge ☕️☕️☕️
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="0_propos_liminaire.html">
+   La
+   <em>
+    classification
+   </em>
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     La régression logistique ☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2_fonctions_proxy.html">
+     Les fonctions de perte (loss function) ☕️☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="3_bayes_classifier.html">
+     Le classifieur de Bayes ☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="4_VC_theory.html">
+     Un modèle formel de l’apprentissage ☕️☕️☕️☕️ (💆‍♂️)
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../4_kernel_methods/0_propos_liminaire.html">
+   Les méthodes à noyaux
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../4_kernel_methods/1_svm.html">
+     Le SVM ou l’hypothèse max-margin ☕️☕️
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../5_ensembles/0_propos_liminaire.html">
+   Les méthodes
+   <em>
+    ensemblistes
+   </em>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../5_ensembles/1_ensembles.html">
+     Méthodes ensemblistes ☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../5_ensembles/2_bayesian_linear_regression.html">
+     Bayesian linear regression ☕️☕️☕️☕️
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../6_deeplearning/0_propos_liminaire.html">
+   <em>
+    deep learning
+   </em>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../6_deeplearning/1_autodiff.html">
+     La différentiation automatique et un début de
+     <em>
+      deep learning
+     </em>
+     ☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../6_deeplearning/2_filters_representation.html">
+     Filtres et espace de représentation des réseaux de neurones ☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../6_deeplearning/3_probabilities_calibration.html">
+     Calibration des probabilités et quelques notions ☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../6_deeplearning/4_regularization_deep.html">
+     Régularisation en
+     <em>
+      deep learning
+     </em>
+     ☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../6_deeplearning/5_transfer_multitask.html">
+     <em>
+      Transfer learning
+     </em>
+     et apprentissage multi-tâches ☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../6_deeplearning/6_adversarial.html">
+     Les attaques adversaires ☕️
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../7_unsupervised/0_propos_liminaire.html">
+   L’apprentissage non-supervisé
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../7_unsupervised/1_principal_component_analysis.html">
+     L’Analyse en Composantes Principales ☕️☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../7_unsupervised/2_em_gaussin_mixture_model.html">
+     Modèle de Mélange Gaussien et algorithme
+     <em>
+      Expectation-Maximization
+     </em>
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../8_set_prediction/0_propos_liminaire.html">
+   Prédiction d’ensembles
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <label for="toctree-checkbox-8">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../8_set_prediction/1_well_defined.html">
+     Jeu d’apprentissage
+     <em>
+      set-valued
+     </em>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../8_set_prediction/2_ill_defined.html">
+     Jeu d’apprentissage uniquement multi-classes ☕️
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../biblio.html">
+   Bibliographie
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/3_classification/1_logistic_regression.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/maximiliense/lmiprp"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/maximiliense/lmiprp/issues/new?title=Issue%20on%20page%20%2F3_classification/1_logistic_regression.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/maximiliense/lmiprp/blob/master/Travaux Pratiques/Machine Learning/Book/3_classification/1_logistic_regression.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="../_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#i-introduction">
+   I. Introduction
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#ii-construction-d-un-jeu-de-donnees">
+   II. Construction d’un jeu de données
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#iii-fonction-objectif-et-gradient">
+   III. Fonction objectif et gradient
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#iv-optimisation-et-dynamique-de-la-descente-de-gradient-dans-le-cas-separable">
+   IV. Optimisation et dynamique de la descente de gradient dans le cas séparable
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#v-optimisation-et-dynamique-de-la-descente-de-gradient-dans-le-cas-non-separable">
+   V. Optimisation et dynamique de la descente de gradient dans le cas non-séparable
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#construction-d-un-jeu-de-donnees-non-separable">
+     Construction d’un jeu de données non-séparable
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#vi-transformation-des-variables-explicatives">
+   VI. Transformation des variables explicatives
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#vii-classificateur-de-chiffres-manuscrits-le-dataset-mnist">
+   VII. Classificateur de chiffres manuscrits : Le dataset MNIST
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#a-chargement-du-dataset">
+     A. Chargement du dataset
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#b-visualisation-d-un-exemple-representatif-du-jeu-de-donnees">
+     B. Visualisation d’un exemple representatif du jeu de données
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#c-construction-d-un-ensemble-de-test">
+     C. Construction d’un ensemble de test
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#d-model-fit">
+     D. Model fit
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#e-model-test">
+     E. model test
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#viii-iterative-re-weighted-least-square-irwls">
+   VIII. Iterative Re-Weighted Least Square (IRWLS)
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#a-methode-de-type-newton">
+     A. Méthode de type Newton
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#b-application-au-cas-de-la-regression-logistique">
+     B. Application au cas de la regression logistique
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#ix-lien-entre-regression-et-classification">
+   IX. Lien entre régression et classification
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="la-regression-logistique">
+<h1>La régression logistique ☕️<a class="headerlink" href="#la-regression-logistique" title="Permalink to this headline">¶</a></h1>
+<div class="admonition-objectifs-de-la-sequence admonition">
+<p class="admonition-title">Objectifs de la séquence</p>
+<ul class="simple">
+<li><p>Concevoir :</p>
+<ul>
+<li><p>la régression logistique d’un point de vue prédictif,</p></li>
+<li><p>la régression logistique au travers d’un problème d’optimisation.</p></li>
+</ul>
+</li>
+<li><p>Être capable :</p>
+<ul>
+<li><p>d’implémenter un algorithme de descente de gradient,</p></li>
+<li><p>de transformer les variables d’entrée pour rendre le modèle non linéaire,</p></li>
+<li><p>d’utiliser la librairie <span class="math notranslate nohighlight">\(\texttt{sklearn}\)</span>.</p></li>
+</ul>
+</li>
+<li><p>De s’initier à la notion de régularisation et de sélection de variables.</p></li>
+</ul>
+</div>
+<div class="section" id="i-introduction">
+<h2>I. Introduction<a class="headerlink" href="#i-introduction" title="Permalink to this headline">¶</a></h2>
+<p>Dans cette partie, nous allons implémenter un algorithme de classification supervisée. Contrairement à la régression linéaire qui consiste à prédire une valeur scalaire, la régression logistique a pour but d’estimer la probabilité d’une variable catégorielle. Une variable catégorielle correspond à un nombre entier compris entre <span class="math notranslate nohighlight">\(1\)</span> et <span class="math notranslate nohighlight">\(K\)</span> pour un problème à <span class="math notranslate nohighlight">\(K\)</span> classes où la notion de proximité (1 est plus proche de 2 que de 3) est oubliée. Nous considererons dans un premier temps un cas simple à deux classes. Puis nous mettrons en place un classificateur de chiffre manuscrit compris entre 0 et 9.</p>
+<p><strong>La régression logistique</strong> cherche à estimer la probabilité <span class="math notranslate nohighlight">\(\mathbb{P}(Y=1|X=\boldsymbol{x})\)</span> où <span class="math notranslate nohighlight">\(y\in\{0,1\}\)</span>. On obtient la probabilité inverse de la manière suivante : <span class="math notranslate nohighlight">\(\mathbb{P}(Y=0|X=\boldsymbol{x})\)</span>=1-<span class="math notranslate nohighlight">\(\mathbb{P}(Y=1|X=\boldsymbol{x})\)</span>. De la même manière que pour la séquence traitant de la régression linéaire et par un abus de langage fort, nous utiliserons de manière interchangeable la notation <span class="math notranslate nohighlight">\(\boldsymbol{x}, y\)</span> pour faire référence aux variables aléatoires et à leur réalisation. Dans le cas de la régression logistique, on suppose que le paramètre naturel <span class="math notranslate nohighlight">\(\eta\)</span> de notre loi est estimable à partir d’une combinaison linéaire des variables explicatives :</p>
+<div class="math notranslate nohighlight">
+\[\exists\boldsymbol{\beta}\in\mathbb{R}^d,\ \eta(\boldsymbol{x}) = \langle\boldsymbol{\beta}, \boldsymbol{x}\rangle\]</div>
+<p>Attention, la notation <span class="math notranslate nohighlight">\(\eta\)</span> est aussi utilisée en machine learning afin de faire directement référence à :</p>
+<div class="math notranslate nohighlight">
+\[\eta(x)=\mathbb{P}(Y=1|X=\boldsymbol{x}).\]</div>
+<p>La fonction de lien <span class="math notranslate nohighlight">\(\sigma\)</span> est la fonction qui permet du passer du paramètre naturel à notre probabilité. Dans le cas d’une loi de Bernoulli (loi d’une variable binaire), la fonction de lien est la sigmoid :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\sigma:\mathbb{R}&amp;\rightarrow \big[0, 1\big]\\
+z&amp;\mapsto (1+\text{exp}(-z))^{-1}
+\end{aligned}\end{split}\]</div>
+<p>La fonction sigmoid est illustrée par la figure suivante.</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">expit</span> <span class="k">as</span> <span class="n">sigmoid</span>
+
+<span class="c1"># configuration generale de matplotlib</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">12.0</span><span class="p">,</span> <span class="mf">8.0</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;ggplot&#39;</span><span class="p">)</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># (1+np.exp(-x))**(-1) + numerical stability.. Question ?</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;fonction sigmoid&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/1_logistic_regression_4_0.png" src="../_images/1_logistic_regression_4_0.png" />
+</div>
+</div>
+<p>Si le paramètre naturel <span class="math notranslate nohighlight">\(\eta\)</span> est négatif, la probabilité estimée sera inférieure à <span class="math notranslate nohighlight">\(0.5\)</span> et notre échantillon appartiendra plus probablement à la classse <span class="math notranslate nohighlight">\(0\)</span> (<span class="math notranslate nohighlight">\(y=0\)</span>). À l’inverse, si <span class="math notranslate nohighlight">\(\eta\)</span> est positif, on dira que notre échantillon appartient à la classe positive.</p>
+<p>il est ainsi possible d’obtenir notre probabilité de la manière suivante :</p>
+<div class="math notranslate nohighlight">
+\[\mathbb{P}(y_{\text{new}}=1|\boldsymbol{x_{\text{new}}}, \boldsymbol{\beta})=\sigma(\boldsymbol{\beta}^T\boldsymbol{x_{\text{new}}} ).\]</div>
+<p>De la même manière que pour la régression linéaire, on supposera que le vecteur <span class="math notranslate nohighlight">\(\boldsymbol{x}\)</span> possède une dimension <span class="math notranslate nohighlight">\(0\)</span> avec la valeur <span class="math notranslate nohighlight">\(1\)</span> faisant office de biais.</p>
+<hr class="docutils" />
+<p><strong>Un problème de classification avec une séparation par hyperplan.</strong></p>
+<p>On dit que deux vecteurs <span class="math notranslate nohighlight">\(u\)</span> et <span class="math notranslate nohighlight">\(v\)</span> sont orthogonaux si leur produit scalaire est nul :</p>
+<div class="math notranslate nohighlight">
+\[\langle u, v \rangle = 0\]</div>
+<p>La frontière de décision est l’ensemble de tous les points qu’il n’est pas possible de classer <span class="math notranslate nohighlight">\(1\)</span> ou <span class="math notranslate nohighlight">\(0\)</span>. C’est l’ensemble des points tels que <span class="math notranslate nohighlight">\(\mathbb{P}(y=1|\boldsymbol{x}, \boldsymbol{\beta})=0.5\)</span>. Dit encore autrement, et en nous référant à la figure ci-dessus, il s’agit de l’ensemble des points tels que le paramètre naturel estimé <span class="math notranslate nohighlight">\(\eta(\boldsymbol{x})=\boldsymbol{\beta}^T\boldsymbol{x}=0\)</span>. Dit encore autrement, il s’agit de l’ensemble des points orthogonaux au vecteur de paramètres <span class="math notranslate nohighlight">\(\boldsymbol{\beta}\)</span>. Le vecteur <span class="math notranslate nohighlight">\(\boldsymbol{\beta}\)</span> est appelé vecteur normal à l’hyperplan séparateur.</p>
+<hr class="docutils" />
+<p>La régression logistique nous donne la probabilité <span class="math notranslate nohighlight">\(\mathbb{P}(y_{\text{new}}=1|\boldsymbol{x_{\text{new}}}, \boldsymbol{\beta})\)</span>. Il est trivial d’obtenir la classe à partir de ce score. On dira que l’échantillon appartient à la classe <span class="math notranslate nohighlight">\(1\)</span> si la probabilité est supérieure à <span class="math notranslate nohighlight">\(0.5\)</span> et à la classe <span class="math notranslate nohighlight">\(0\)</span> dans le cas contraire.</p>
+<p>On peut parfois vouloir bouger ce seuil. Ainsi, si on prédit qu’un patient a <span class="math notranslate nohighlight">\(45\%\)</span> de chance d’avoir un cancer, on voudra refaire des tests plutôt que lui dire que tout est bon.</p>
+</div>
+<div class="section" id="ii-construction-d-un-jeu-de-donnees">
+<h2>II. Construction d’un jeu de données<a class="headerlink" href="#ii-construction-d-un-jeu-de-donnees" title="Permalink to this headline">¶</a></h2>
+<p>Considérons le modèle génératif suivant :</p>
+<div class="math notranslate nohighlight">
+\[\boldsymbol{\beta} \sim \mathcal{N}(0, 1)^3 \in \mathbb{R}^3\]</div>
+<p>Nos échantillons sont simulés via une loi normale de moyenne centrée sur la frontière de décision. Notons <span class="math notranslate nohighlight">\(\boldsymbol{\beta^\prime}=\begin{bmatrix}\beta_1\\ \beta_2\end{bmatrix}\)</span>. On fixera cette moyenne de la manière suivante :</p>
+<div class="math notranslate nohighlight">
+\[\boldsymbol{\mu}=\boldsymbol{\beta^\prime}\Bigg(-\frac{\beta_0}{\lVert \boldsymbol{\beta^\prime}\rVert^2}
+\Bigg).\]</div>
+<div class="admonition-exercice admonition">
+<p class="admonition-title">Exercice</p>
+<p><strong>Vérifier qu’on obtient bien :</strong></p>
+<div class="math notranslate nohighlight">
+\[\langle \boldsymbol{\beta^\prime}, \boldsymbol{\mu}\rangle + \beta_0=0\]</div>
+<p><strong>Dit autrement, il s’agit de vérifier que <span class="math notranslate nohighlight">\(\boldsymbol{\mu}\)</span> est bien sur la frontière.</strong></p>
+</div>
+<p>La moyenne de notre loi normale étant maintenant fixée, nous pouvons simuler nos données :</p>
+<div class="math notranslate nohighlight">
+\[\boldsymbol{x}\sim\mathcal{N}(\boldsymbol{\mu}, \boldsymbol{1})\in\mathbb{R}^2\]</div>
+<p>La classe d’un échantillon est donnée par :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+y_i=\begin{cases}
+1\text{ si }\langle\boldsymbol{\beta^\prime},\boldsymbol{x_i}\rangle +\beta_0&gt;0\\
+0\text{ sinon.}
+\end{cases}\end{aligned}\end{split}\]</div>
+<p>Notre problème est donc par construction totalement linéairement séparable dans le sens où la frontière de décision définie par le vecteur normal <span class="math notranslate nohighlight">\(\boldsymbol{\beta^\prime}\)</span> et par le biais <span class="math notranslate nohighlight">\(\beta_0\)</span> sépare totalement et sans erreur notre jeu de données.</p>
+<p>Le code ci dessous affiche le jeux de données ainsi que la représentation graphique de la frontière de decision <span class="math notranslate nohighlight">\(f(x)=-\frac{\beta_1}{\beta_2}x_1-\frac{\beta_0}{\beta_2}\)</span>. On vérifie facilement que le vecteur construit tel que <span class="math notranslate nohighlight">\(\beta_2=f(x)\)</span> pour <span class="math notranslate nohighlight">\(\beta_1\)</span> et <span class="math notranslate nohighlight">\(\beta_0\)</span> quelconques (à part les cas particuliers) sont bien sur la frontière.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">real_beta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">sample_data</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">beta</span><span class="p">):</span>
+    <span class="c1"># constructing mean </span>
+    <span class="n">mu</span> <span class="o">=</span> <span class="n">beta</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="o">-</span><span class="n">beta</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">beta</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+    <span class="c1"># covariance is the same for each class</span>
+    <span class="n">cov</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+    
+    <span class="c1"># sampling x and adding the bias</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span> <span class="n">cov</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    
+    <span class="c1"># the label is deterministic</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">beta</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span><span class="o">*</span><span class="mi">1</span>
+    
+    <span class="k">return</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span>
+    
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">sample_data</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">real_beta</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="o">%</span><span class="k">matplotlib</span> inline
+
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">12.0</span><span class="p">,</span> <span class="mf">8.0</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;ggplot&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">predictor</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">ymin_</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:,</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+    <span class="n">ymax_</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:,</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+    <span class="n">min_</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+    <span class="n">max_</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+    
+    <span class="k">if</span> <span class="n">predictor</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">h</span> <span class="o">=</span> <span class="mf">0.02</span>
+        <span class="n">xx</span><span class="p">,</span> <span class="n">yy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">min_</span><span class="p">,</span> <span class="n">max_</span><span class="p">,</span> <span class="n">h</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">ymin_</span><span class="p">,</span> <span class="n">ymax_</span><span class="p">,</span> <span class="n">h</span><span class="p">))</span>
+        <span class="n">Z</span> <span class="o">=</span> <span class="n">predictor</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">xx</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">yy</span><span class="o">.</span><span class="n">ravel</span><span class="p">()],</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+        <span class="n">Z</span> <span class="o">=</span> <span class="n">Z</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">xx</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span><span class="n">shading</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span><span class="mi">2</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">beta</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">x_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">min_</span><span class="p">,</span> <span class="n">max_</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+        <span class="n">y_</span>  <span class="o">=</span> <span class="o">-</span><span class="n">beta</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="n">beta</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">x_</span> <span class="o">*</span> <span class="n">beta</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">beta</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_</span><span class="p">,</span> <span class="n">y_</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">title</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="n">min_</span><span class="p">,</span> <span class="n">max_</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="n">ymin_</span><span class="p">,</span> <span class="n">ymax_</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">real_beta</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/1_logistic_regression_9_0.png" src="../_images/1_logistic_regression_9_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="iii-fonction-objectif-et-gradient">
+<h2>III. Fonction objectif et gradient<a class="headerlink" href="#iii-fonction-objectif-et-gradient" title="Permalink to this headline">¶</a></h2>
+<p>De la même manière que pour la régression linéaire, nous pouvons obtenir notre fonction objectif à partir de la formulation de la vraisemblance de notre problème :</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{L}_{\boldsymbol{\beta}}(\mathcal{S})=\prod_{(\boldsymbol{x}, y)\in\mathcal{S}}\mathbb{P}(y=1|\boldsymbol{x},\boldsymbol{\beta})^y\mathbb{P}(y=0|\boldsymbol{x},\boldsymbol{\beta})^{1-y}\]</div>
+<p>Le paramètre maximisant la vraisemblance est aussi celui minimisant la log vraisemblance négative :</p>
+<div class="math notranslate nohighlight">
+\[J(\beta)=-\text{log}\big(\mathcal{L}_{\boldsymbol{\beta}}(\mathcal{S})\big)=-\sum_{(\boldsymbol{x}, y)\in\mathcal{S}}y\text{log}(p)+(1-y)\text{log}(1-p)\]</div>
+<p>où <span class="math notranslate nohighlight">\(p=\mathbb{P}(y=1|\boldsymbol{x},\boldsymbol{\beta})=\sigma(\boldsymbol{\beta}^T\boldsymbol{x})\)</span>. Cette fonction objectif, ou <em>loss</em> s’appelle la <em>cross entropy</em> ou entropie croisée. On obtient donc :</p>
+<div class="math notranslate nohighlight">
+\[\hat{\boldsymbol{\beta}}=\text{argmin}_{\boldsymbol{\beta}}\Big[-\sum_{(\boldsymbol{x}, y)\in\mathcal{S}}y\text{log}(\sigma(\boldsymbol{\beta}^T\boldsymbol{x}))+(1-y)\text{log}(1-\sigma(\boldsymbol{\beta}^T\boldsymbol{x}))\Big]\]</div>
+<p>La fonction <span class="math notranslate nohighlight">\(J\)</span> est ainsi ce qu’on souhaite minimiser.</p>
+<div class="admonition-question-1 admonition">
+<p class="admonition-title">Question 1</p>
+<p><strong>Compléter la méthode <span class="math notranslate nohighlight">\(\texttt{val}\)</span> de l’objet <span class="math notranslate nohighlight">\(\texttt{CrossEntropy}\)</span> ci-dessous.</strong></p>
+</div>
+<div class="admonition-question-2 admonition">
+<p class="admonition-title">Question 2</p>
+<p><strong>Calculez les dérivées partielles <span class="math notranslate nohighlight">\(\partial J(\beta)/\partial \beta_0\)</span>, <span class="math notranslate nohighlight">\(\partial J(\beta)/\partial \beta_1\)</span> et  <span class="math notranslate nohighlight">\(\partial J(\beta)/\partial \beta_2\)</span> de la fonction de coût de notre modèle de régréssion logistique. Complétez la méthode <span class="math notranslate nohighlight">\(\texttt{grad}\)</span> de l’objet <span class="math notranslate nohighlight">\(\texttt{CrossEntropy}\)</span> ci dessous.</strong></p>
+</div>
+<div class="tip dropdown admonition">
+<p class="admonition-title">Indice</p>
+<p>Rappellez-vous que la dérivée d’une composition de fonction s’écrit <span class="math notranslate nohighlight">\((g \circ f)^\prime (x) = f^\prime(x) g^\prime(f(x))\)</span> et que la fonction de coût de notre modèle s’écrit:</p>
+<div class="math notranslate nohighlight">
+\[J(\boldsymbol{\beta}) = \frac{1}{n}\sum_j^n g_1(f_{\boldsymbol{\beta}}(x_j)) + g_2(f_{\boldsymbol{\beta}}(x_j))\]</div>
+<p>avec <span class="math notranslate nohighlight">\(g\)</span>, <span class="math notranslate nohighlight">\(f\)</span>, etc. choisis intelligemment.</p>
+</div>
+<div class="admonition-question-2-star admonition">
+<p class="admonition-title">Question 2<span class="math notranslate nohighlight">\({}^\star\)</span></p>
+<p><strong>Calculez le gradient de la fonction <span class="math notranslate nohighlight">\(J(\boldsymbol{\beta})\)</span> en utilisant les dérivées matricielles et modifiez la méthode <span class="math notranslate nohighlight">\(\texttt{grad}\)</span> ci-dessous en conséquence.</strong></p>
+</div>
+<div class="admonition-question-3 admonition">
+<p class="admonition-title">Question 3</p>
+<p><strong>Complétez la méthode <span class="math notranslate nohighlight">\(\texttt{predict}\)</span> de l’objet ci-dessous</strong></p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">CrossEntropy</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">X</span> <span class="o">=</span> <span class="n">X</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pos</span> <span class="o">=</span> <span class="mi">0</span>
+        
+    <span class="k">def</span> <span class="nf">_format_ndarray</span><span class="p">(</span><span class="n">arr</span><span class="p">):</span>
+        <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span> <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="k">else</span> <span class="n">arr</span>
+        <span class="k">return</span> <span class="n">arr</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">arr</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">))</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">arr</span>
+    
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+    
+        <span class="c1">####### Complete this part ######## or die ####################</span>
+        <span class="o">...</span>
+        <span class="c1">###############################################################</span>
+
+        <span class="k">return</span> <span class="n">y_pred</span>
+    
+    <span class="k">def</span> <span class="nf">_sigmoid</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">beta</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">beta</span><span class="p">)))</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">val</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">beta</span><span class="p">):</span>
+        <span class="n">beta</span> <span class="o">=</span> <span class="n">CrossEntropy</span><span class="o">.</span><span class="n">_format_ndarray</span><span class="p">(</span><span class="n">beta</span><span class="p">)</span>
+
+        <span class="c1">####### Complete this part ######## or die ####################</span>
+        <span class="o">...</span>
+        <span class="o">...</span>
+        <span class="k">return</span> <span class="o">...</span>
+        <span class="c1">###############################################################</span>
+    
+    <span class="k">def</span> <span class="nf">_shuffle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">idx</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">grad</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">batch_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">batch_size</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="k">else</span> <span class="n">batch_size</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">idx</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_pos</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">_pos</span><span class="o">+</span><span class="n">batch_size</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pos</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pos</span><span class="o">+</span><span class="n">batch_size</span><span class="p">)</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pos</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_shuffle</span><span class="p">()</span>
+            
+        <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">CrossEntropy</span><span class="o">.</span><span class="n">_format_ndarray</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+        
+        <span class="n">beta</span> <span class="o">=</span> <span class="n">CrossEntropy</span><span class="o">.</span><span class="n">_format_ndarray</span><span class="p">(</span><span class="n">beta</span><span class="p">)</span>
+        
+        <span class="c1">####### Complete this part ######## or die ####################</span>
+        <span class="o">...</span>
+        <span class="k">return</span> <span class="o">...</span>
+        <span class="c1">###############################################################</span>
+    
+
+<span class="n">l</span> <span class="o">=</span> <span class="n">CrossEntropy</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;La valeur de la loss pour beta est&#39;</span><span class="p">,</span> <span class="n">l</span><span class="o">.</span><span class="n">val</span><span class="p">(</span><span class="n">real_beta</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Le gradient pour beta est</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">l</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="n">real_beta</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="iv-optimisation-et-dynamique-de-la-descente-de-gradient-dans-le-cas-separable">
+<h2>IV. Optimisation et dynamique de la descente de gradient dans le cas séparable<a class="headerlink" href="#iv-optimisation-et-dynamique-de-la-descente-de-gradient-dans-le-cas-separable" title="Permalink to this headline">¶</a></h2>
+<p>Récupérons l’algorithme de descente de gradient développé lors du TP sur la régression linéaire. Il s’agit exactement du même code à la différence près qu’on optimise la fonction <span class="math notranslate nohighlight">\(\texttt{CrossEntropy}\)</span> et non <span class="math notranslate nohighlight">\(\texttt{LeastSquare}\)</span>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">GradientDescent</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">init</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="n">CrossEntropy</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loss</span> <span class="o">=</span> <span class="n">loss</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">optimize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">nb_iterations</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="n">init</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">param_trace</span> <span class="o">=</span> <span class="p">[</span><span class="n">beta</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+        <span class="n">loss_trace</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">loss</span><span class="o">.</span><span class="n">val</span><span class="p">(</span><span class="n">beta</span><span class="p">)]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nb_iterations</span><span class="p">):</span>
+            <span class="n">beta</span> <span class="o">=</span> <span class="n">beta</span> <span class="o">-</span> <span class="n">learning_rate</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="n">beta</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">)</span>
+            <span class="n">param_trace</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">beta</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">loss_trace</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loss</span><span class="o">.</span><span class="n">val</span><span class="p">(</span><span class="n">beta</span><span class="p">))</span>
+            
+        <span class="k">return</span> <span class="n">param_trace</span><span class="p">,</span> <span class="n">loss_trace</span>
+
+
+<span class="n">gd</span> <span class="o">=</span> <span class="n">GradientDescent</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>La dimension de l’espace des paramètres est <span class="math notranslate nohighlight">\(3\)</span> et il n’est plus possible de visualiser ce dernier pour voir si notre algorithme d’optimisation fonctionne.</p>
+<div class="admonition-exercice admonition">
+<p class="admonition-title">Exercice</p>
+<p><strong>Proposez une stratégie permettant d’évaluer la convergence de notre algorithme. Jouez sur le <em>learning rate</em> et sur le nombre d’itérations afin d’améliorer la qualité de notre estimateur.</strong></p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">####### Complete this part ######## or die ####################</span>
+<span class="o">...</span>
+<span class="o">...</span>
+<span class="c1">###############################################################</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>Analysons maintenant l’évolution de notre paramètres en terme de distance par rapport au “vrai” paramètre ainsi que l’évolution de la <em>loss</em> pour plusieurs configurations d’apprentissage.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">distance</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">loss_evolution</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">it</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
+    <span class="n">params</span><span class="p">,</span> <span class="n">loss_trace</span> <span class="o">=</span> <span class="n">gd</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">nb_iterations</span><span class="o">=</span><span class="n">it</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">1.</span><span class="p">)</span>
+    <span class="n">distance</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">real_beta</span><span class="p">))</span>
+    <span class="n">loss_evolution</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss_trace</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">10</span><span class="p">)),</span><span class="n">distance</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Distance Euclidienne entre les parametres estimes et la vraie solution en fonction du&quot;</span><span class="o">+</span>
+          <span class="s2">&quot; nombre d&#39;itérations&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Évolution de la loss en fonction du nombre d&#39;itérations&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">10</span><span class="p">)),</span> <span class="n">loss_evolution</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>On remarque que notre vecteur de paramètres se rapproche dans un premier temps de la vraie solution (voire même pas) puis s’en écarte inéxorablement. Il est légitime de se poser la question du bug dans l’algorithme. Cependant, l’affichage de la <em>loss</em> nous montre que plus on s’écarte du vrai paramètre, plus notre modèle <em>fit</em> correctement les données dans le sens où il minimise bien la fonction objectif. De plus un affichage de la frontière de décision ainsi calculée montre que notre frontière de décision semble visuellement assez proche de la vraie solution.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">params</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Solution estimee&#39;</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">real_beta</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Vraie solution&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Il se produit donc un phénomène qu’il convient de comprendre. Ce phénomène est en réalité le pendant du régime interpolatoire (i.e. 0 erreur) de la régression linéaire pour la régression logistique.</p>
+<p>Étudions cela plus en détails.</p>
+<div class="admonition-exercice-1 admonition">
+<p class="admonition-title">Exercice 1</p>
+<p><strong>Montrer que si <span class="math notranslate nohighlight">\(\beta\)</span> est le vecteur normal d’un hyperplan qui sépare correctement (i.e. aucune erreur) les deux classes de notre jeu de données, alors <span class="math notranslate nohighlight">\(k\beta,\ k\in\mathbb{R}^{\star+}\)</span> est aussi un vecteur normal séparateur pour notre jeu de données.</strong></p>
+</div>
+<div class="admonition-exercice-2 admonition">
+<p class="admonition-title">Exercice 2</p>
+<p><strong>Montrer que si <span class="math notranslate nohighlight">\(\beta\)</span> est le vecteur normal d’un hyperplan qui sépare correctement (i.e. aucune erreur) les deux classes de notre jeu de données, alors <span class="math notranslate nohighlight">\(J(\beta)&gt;J(k\beta)\)</span> si <span class="math notranslate nohighlight">\(k&gt;1\)</span>.</strong></p>
+</div>
+<p>Autrement dit, s’il existe un vecteur <span class="math notranslate nohighlight">\(\beta\)</span> qui définit une bonne frontière de décision avec aucune erreur, alors tout vecteur <span class="math notranslate nohighlight">\(\gamma=k\beta,\ k&gt;0\)</span> définira le même hyperplan. De plus, plus <span class="math notranslate nohighlight">\(k\)</span> sera grand, plus notre loss sera petite. Cela nous indique qu’en réalité, la fonction <span class="math notranslate nohighlight">\(J(\beta)\)</span> n’admet <strong>aucun</strong> minimum ou, d’un point de vue statistique, que le maximum de vraisemblance n’existe pas. On se rapproche du minimum de la fonction <span class="math notranslate nohighlight">\(J\)</span> lorsque <span class="math notranslate nohighlight">\(\beta\)</span> diverge vers l’infini.</p>
+<p>D’un point de vue purement prédictif/classification, cela n’est pas gênant car toutes ces solutions définissent le même hyperplan qui n’est décrit que par la direction du vecteur <span class="math notranslate nohighlight">\(\beta\)</span>. D’un point de vue statistique, cela est plus gênant car les “probabilités” retournées par notre modèle convergent toutes soit vers <span class="math notranslate nohighlight">\(1\)</span> soit vers <span class="math notranslate nohighlight">\(0\)</span> et ne sont plus interprétables.</p>
+<p>La figure suivante montre que bien que notre vecteur de paramètres diverge, son cosinus avec le vrai vecteur de paramètres tend vers <span class="math notranslate nohighlight">\(1\)</span> : ils sont donc bien colinéaires.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cos</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">it</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
+    <span class="n">params</span><span class="p">,</span> <span class="n">loss_trace</span> <span class="o">=</span> <span class="n">gd</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">nb_iterations</span><span class="o">=</span><span class="n">it</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">1.</span><span class="p">)</span>
+    <span class="n">cos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">real_beta</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">real_beta</span><span class="p">)))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Cosinus entre les parametres estimes et la vraie solution&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">10</span><span class="p">)),</span> <span class="n">cos</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Ce n’est bien sûr pas exactement <span class="math notranslate nohighlight">\(1\)</span> puisque notre vecteur est estimé sur un jeu de données empirique de taille finie.</p>
+</div>
+<div class="section" id="v-optimisation-et-dynamique-de-la-descente-de-gradient-dans-le-cas-non-separable">
+<h2>V. Optimisation et dynamique de la descente de gradient dans le cas non-séparable<a class="headerlink" href="#v-optimisation-et-dynamique-de-la-descente-de-gradient-dans-le-cas-non-separable" title="Permalink to this headline">¶</a></h2>
+<p>À l’inverse, si le problème n’était pas séparable, une solution optimale existerait et notre algorithme s’en serait approché. Cette solution serait notre maximum de vraisemblance statistique.</p>
+<div class="admonition-exercice admonition">
+<p class="admonition-title">Exercice</p>
+<p><strong>Soit <span class="math notranslate nohighlight">\(\beta^\star\)</span> le minimum de notre fonction <span class="math notranslate nohighlight">\(J\)</span> tel qu’il existe un unique échantillon <span class="math notranslate nohighlight">\((\boldsymbol{x}, y)\)</span> mal classé. Montrer que <span class="math notranslate nohighlight">\(J(k\beta^\star)\)</span> diverge lorsque <span class="math notranslate nohighlight">\(k\)</span> tend vers l’infini.</strong></p>
+</div>
+<div class="section" id="construction-d-un-jeu-de-donnees-non-separable">
+<h3>Construction d’un jeu de données non-séparable<a class="headerlink" href="#construction-d-un-jeu-de-donnees-non-separable" title="Permalink to this headline">¶</a></h3>
+<p>Considérons tout d’abord le modèle génératif suivant:</p>
+<div class="math notranslate nohighlight">
+\[\boldsymbol{x^+} \sim \mathcal{N}(\mu^+, 1)^2 \in \mathbb{R}^2, \boldsymbol{x^-} \sim \mathcal{N}(\mu^-, 1)^2 \in \mathbb{R}^2\]</div>
+<p>Les échantillons <span class="math notranslate nohighlight">\(\boldsymbol{x^+}\)</span> sont associés à <span class="math notranslate nohighlight">\(y=1\)</span> et <span class="math notranslate nohighlight">\(\boldsymbol{x^-}\)</span> à <span class="math notranslate nohighlight">\(y=0\)</span>. La variable <span class="math notranslate nohighlight">\(y\)</span> est notre variable binaire à expliquer. Le centre de chaque <em>cluster</em> est défini de la manière suivante :</p>
+<div class="math notranslate nohighlight">
+\[\boldsymbol{\mu^{+/-}}=\boldsymbol{\beta^\prime}\Bigg(-\frac{\beta_0}{\lVert \boldsymbol{\beta^\prime}\rVert^2}\pm\rho
+\Bigg),\]</div>
+<p>où <span class="math notranslate nohighlight">\(\rho\)</span> nous permet de contrôler l’écart du centre de chaque cluster avec la frontière de décision. De la même manière que précédemment, nous choissons une règle arbitraire pour générer aléatoirement les paramètres du “vrai” modèle en incluant un biais:</p>
+<div class="math notranslate nohighlight">
+\[\boldsymbol{\beta} \sim \mathcal{N}(0, 1)^3 \in \mathbb{R}^3\]</div>
+<p>Ainsi <span class="math notranslate nohighlight">\(\beta_1\)</span> et <span class="math notranslate nohighlight">\(\beta_2\)</span> correspondent aux paramètres associés à nos variables explicatives et <span class="math notranslate nohighlight">\(\beta_0\)</span> est le biais.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">real_beta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">sample_data</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">rho</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="c1"># constructing mean of each class</span>
+    <span class="n">mu_1</span> <span class="o">=</span> <span class="n">beta</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span><span class="o">*</span><span class="p">((</span><span class="o">-</span><span class="n">beta</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">beta</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span><span class="o">-</span><span class="n">rho</span><span class="p">)</span>
+    <span class="n">mu_0</span> <span class="o">=</span> <span class="n">beta</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span><span class="o">*</span><span class="p">((</span><span class="o">-</span><span class="n">beta</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">beta</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span><span class="o">+</span><span class="n">rho</span><span class="p">)</span>
+    <span class="c1"># covariance is the same for each class</span>
+    <span class="n">cov</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+    
+    <span class="c1"># the two classes have the same number of samples</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mu_1</span><span class="p">,</span> <span class="n">cov</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="o">/</span><span class="mi">2</span><span class="p">)),</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mu_0</span><span class="p">,</span> <span class="n">cov</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="o">/</span><span class="mi">2</span><span class="p">))</span>
+    <span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    
+    <span class="c1"># the label is deterministic</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span> <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="k">else</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="o">/</span><span class="mi">2</span><span class="p">))])</span>
+    
+    <span class="c1"># we shuffle the samples</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+    
+    <span class="c1"># we insert a bias</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">y</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+    
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">sample_data</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="n">real_beta</span><span class="p">,</span> <span class="n">rho</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">real_beta</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/1_logistic_regression_34_0.png" src="../_images/1_logistic_regression_34_0.png" />
+</div>
+</div>
+<p>on retrace les mêmes courbes que nous avions réalisées précédemment et on constate la différence.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">gd</span> <span class="o">=</span> <span class="n">GradientDescent</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="n">distance</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">loss_evolution</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">cos</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">it</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
+    <span class="n">params</span><span class="p">,</span> <span class="n">loss_trace</span> <span class="o">=</span> <span class="n">gd</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">nb_iterations</span><span class="o">=</span><span class="n">it</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">1.</span><span class="p">)</span>
+    <span class="n">distance</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">real_beta</span><span class="p">))</span>
+    <span class="n">loss_evolution</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss_trace</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">cos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">real_beta</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">real_beta</span><span class="p">)))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">10</span><span class="p">)),</span><span class="n">distance</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Distance Euclidienne entre les parametres estimes et la vraie solution en fonction du&quot;</span><span class="o">+</span>
+          <span class="s2">&quot; nombre d&#39;itérations&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Évolution de la loss en fonction du nombre d&#39;itérations&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">10</span><span class="p">)),</span> <span class="n">loss_evolution</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Cosinus entre les parametres estimes et la vraie solution&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">10</span><span class="p">)),</span> <span class="n">cos</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>On remarque qu’on ne converge pas vers le vecteur que nous avions utilisé lors de la construction du jeu de données. Cela est du au fait que nous ne nous sommes servi de ce vecteur que pour positionner l’hyperplan. Ainsi, nous avons utilisé sa direction et non sa norme. Rajoutons que maintenant le problème n’est plus séparable et notre vecteur estimé converge vers une valeur. On peut également confirmer que le problème n’est plus séparable car notre <em>loss</em> ne tend plus vers 0.</p>
+<div class="admonition-question admonition">
+<p class="admonition-title">Question</p>
+<p><strong>Quel processus génératif aurait pu être utilisé afin que le vecteur <span class="math notranslate nohighlight">\(\beta\)</span> réel soit bien celui vers lequel on retombe lorsqu’on optimise notre problème ?</strong></p>
+</div>
+<div class="admonition-exercice admonition">
+<p class="admonition-title">Exercice</p>
+<p><strong>Testez votre modèle génératif et comparez les résultats.</strong></p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">real_beta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">real_beta</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">*=</span> <span class="mi">10</span>
+
+<span class="k">def</span> <span class="nf">perfect_data_sampler</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">beta</span><span class="p">):</span>
+    <span class="c1">####### Complete this part ######## or die ####################</span>
+    <span class="o">...</span>
+    <span class="o">...</span>
+    <span class="o">...</span>
+    <span class="o">...</span>
+    <span class="o">...</span>
+    <span class="o">...</span>
+    <span class="o">...</span>
+    <span class="c1">###############################################################</span>
+    <span class="k">return</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span>
+    
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">perfect_data_sampler</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="n">real_beta</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">real_beta</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">gd</span> <span class="o">=</span> <span class="n">GradientDescent</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="n">distance</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">loss_evolution</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">cos</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">it</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
+    <span class="n">params</span><span class="p">,</span> <span class="n">loss_trace</span> <span class="o">=</span> <span class="n">gd</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">nb_iterations</span><span class="o">=</span><span class="n">it</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">1.</span><span class="p">)</span>
+    <span class="n">distance</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">real_beta</span><span class="p">))</span>
+    <span class="n">loss_evolution</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss_trace</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">cos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">real_beta</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">real_beta</span><span class="p">)))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">10</span><span class="p">)),</span><span class="n">distance</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Distance Euclidienne entre les parametres estimes et la vraie solution en fonction du&quot;</span><span class="o">+</span>
+          <span class="s2">&quot; nombre d&#39;itérations&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Évolution de la loss en fonction du nombre d&#39;itérations&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">10</span><span class="p">)),</span> <span class="n">loss_evolution</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Cosinus entre les parametres estimes et la vraie solution&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">10</span><span class="p">)),</span> <span class="n">cos</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Succès !</p>
+</div>
+</div>
+<div class="section" id="vi-transformation-des-variables-explicatives">
+<h2>VI. Transformation des variables explicatives<a class="headerlink" href="#vi-transformation-des-variables-explicatives" title="Permalink to this headline">¶</a></h2>
+<p>Considérons maintenant un jeu de données tel qu’il n’est pas possible de séparer nos deux classes linéairement.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="k">def</span> <span class="nf">sample_data</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">sigma1</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">sigma2</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+    <span class="n">class_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">class_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">r</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">class_1</span><span class="p">),</span> <span class="n">r</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">class_1</span><span class="p">)],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> 
+                                                                       <span class="n">sigma1</span><span class="p">,</span> 
+                                                                       <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="n">class_2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">sigma2</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">class_1</span><span class="p">,</span> <span class="n">class_2</span><span class="p">]),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span> <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="k">else</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="o">/</span><span class="mi">2</span><span class="p">))])</span>
+    
+    <span class="k">return</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span>
+    
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">sample_data</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/1_logistic_regression_45_0.png" src="../_images/1_logistic_regression_45_0.png" />
+</div>
+</div>
+<p>On remarque assez naïvement et rapidement qu’une simple régression logistique n’est plus une solution acceptable.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">fit_intercept</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">coef_</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/1_logistic_regression_47_0.png" src="../_images/1_logistic_regression_47_0.png" />
+</div>
+</div>
+<div class="admonition-exercice admonition">
+<p class="admonition-title">Exercice</p>
+<p><strong>Proposez une transformation polynomiale de vos variables explicatives permettant de résoudre correctement ce problème.</strong></p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">PolynomialFeatures</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
+
+<span class="c1">####### Complete this part ######## or die ####################</span>
+<span class="n">deg</span> <span class="o">=</span> <span class="o">...</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="o">...</span>
+<span class="o">...</span>
+<span class="c1">###############################################################</span>
+
+<span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">predictor</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="vii-classificateur-de-chiffres-manuscrits-le-dataset-mnist">
+<h2>VII. Classificateur de chiffres manuscrits : Le dataset MNIST<a class="headerlink" href="#vii-classificateur-de-chiffres-manuscrits-le-dataset-mnist" title="Permalink to this headline">¶</a></h2>
+<p>Le jeu de données MNIST n’est plus un problème de classification binaire mais multi-classes (i.e. 10). Le passage de la régression logistique à une tâche multi-classes n’est pas directe. Il y a deux stratégies :</p>
+<ol class="simple">
+<li><p>Remplacer notre vecteur de paramètre par une matrice dont la sortie est un vecteur dont la dimension est le nombre de classes et remplacer la sigmoïd par la fonction softmax,</p></li>
+<li><p>Entraîner autant de modèles qu’il n’y a de classes via une stratégie “one versus rest” (OVR).</p></li>
+</ol>
+<p>La librairie <span class="math notranslate nohighlight">\(\texttt{scikit-learn}\)</span> s’en charge bien sûr pour vous.</p>
+<div class="section" id="a-chargement-du-dataset">
+<h3>A. Chargement du dataset<a class="headerlink" href="#a-chargement-du-dataset" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_openml</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">fetch_openml</span><span class="p">(</span><span class="s1">&#39;mnist_784&#39;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">return_X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="b-visualisation-d-un-exemple-representatif-du-jeu-de-donnees">
+<h3>B. Visualisation d’un exemple representatif du jeu de données<a class="headerlink" href="#b-visualisation-d-un-exemple-representatif-du-jeu-de-donnees" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_img</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">X</span><span class="p">,(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="mi">28</span><span class="o">*</span><span class="mi">28</span><span class="p">))</span>
+
+<span class="c1">#Recuperation du nombre d&#39;exemples d&#39;apprentissage ainsi que la dimension des vecteurs</span>
+<span class="n">n_samples</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Nombre d&#39;exemples d&#39;apprentissage n_samples = </span><span class="si">%d</span><span class="s2"> &quot;</span> <span class="o">%</span> <span class="n">n_samples</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">plotImg</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">7.195</span><span class="p">,</span> <span class="mf">3.841</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">200</span><span class="p">):</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">,:]</span><span class="o">.</span><span class="n">reshape</span><span class="p">([</span><span class="mi">28</span><span class="p">,</span><span class="mi">28</span><span class="p">]),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    
+<span class="n">plotImg</span><span class="p">(</span><span class="n">X_img</span><span class="p">)</span>
+    
+<span class="n">n_classes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Nombre de classes d&#39;objets n_classes = </span><span class="si">%d</span><span class="s2"> &quot;</span> <span class="o">%</span> <span class="n">n_classes</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Nombre d&#39;exemples d&#39;apprentissage n_samples = 70000 
+</pre></div>
+</div>
+<img alt="../_images/1_logistic_regression_54_1.png" src="../_images/1_logistic_regression_54_1.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Nombre de classes d&#39;objets n_classes = 10 
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="c-construction-d-un-ensemble-de-test">
+<h3>C. Construction d’un ensemble de test<a class="headerlink" href="#c-construction-d-un-ensemble-de-test" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="d-model-fit">
+<h3>D. Model fit<a class="headerlink" href="#d-model-fit" title="Permalink to this headline">¶</a></h3>
+<div class="admonition-exercice admonition">
+<p class="admonition-title">Exercice</p>
+<p><strong>Proposez un modèle de classification permettant de classer correctement nos chiffres. N’hésitez pas à jouer avec de notions non abordées dans ce TP (e.g. régularisation). Testez votre modèle !</strong></p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">####### Complete this part ######## or die ####################</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="o">...</span>
+
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="o">...</span>
+<span class="c1">###############################################################</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="e-model-test">
+<h3>E. model test<a class="headerlink" href="#e-model-test" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">####### Complete this part ######## or die ####################</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;L&#39;accuracy de notre modele est&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="o">...</span>
+<span class="c1">###############################################################</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">n_test_visu</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;On teste le modele sur&quot;</span><span class="p">,</span> <span class="n">n_test_visu</span><span class="p">,</span> <span class="s2">&quot;images de test selectionnees aleatoirement&quot;</span><span class="p">)</span>
+
+<span class="n">idx</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+
+<span class="n">predicted</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">[</span><span class="n">idx</span><span class="p">][:</span><span class="n">n_test_visu</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mf">17.14</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_test_visu</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">n_test_visu</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Predicted:&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">predicted</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">X_test</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="n">i</span><span class="p">,:]</span><span class="o">.</span><span class="n">reshape</span><span class="p">([</span><span class="mi">28</span><span class="p">,</span><span class="mi">28</span><span class="p">]),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">hspace</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="viii-iterative-re-weighted-least-square-irwls">
+<h2>VIII. Iterative Re-Weighted Least Square (IRWLS)<a class="headerlink" href="#viii-iterative-re-weighted-least-square-irwls" title="Permalink to this headline">¶</a></h2>
+<p>Contrairement au cas de la regression linéaire, il n’est ici plus possible de résoudre le problème analytiquement, comme nous l’avons vu (i.e. en annulant le gradient). Nous allons cependant voir une autre approche itérative d’optimisation comme alternative à la descente de gradient qui va nous permettre de faire des ponts avec la solution analytique de la regression linéaire. Il s’agit ici d’utiliser une méthode d’optimisation de type Newton que vous avez peut-être vue dans les exercices d’approfondissement.</p>
+<div class="section" id="a-methode-de-type-newton">
+<h3>A. Méthode de type Newton<a class="headerlink" href="#a-methode-de-type-newton" title="Permalink to this headline">¶</a></h3>
+<p>La méthode de Newton consiste à considerer une fonction (qu’on suppose <span class="math notranslate nohighlight">\(C^{n}\)</span>) par son approximation au voisinage de <span class="math notranslate nohighlight">\(\beta_0\)</span> (notre point d’initialisation) par une expansion de Taylor:</p>
+<div class="math notranslate nohighlight">
+\[
+  f(\beta) = f(\beta_0)
+  + \frac{f'(\beta_0)}{1!}(\beta - \beta_0)
+  + \frac{f^{(2)}(\beta_0)}{2!}(\beta - \beta_0)^2
+  + \cdots
+  + \frac{f^{(n)}(a)}{n!}(\beta - \beta_0)^n
+  + R_n(\beta)
+\]</div>
+<p>C’est à dire, de manière générale:</p>
+<div class="math notranslate nohighlight">
+\[f(\beta) = \sum_{k=0}^n \frac{f^{(k)}(\beta_0)}{k!}(\beta-\beta_0)^k + R_n(\beta)\]</div>
+<p>où <span class="math notranslate nohighlight">\(R_n(\beta)\)</span> est le résidu qui est négligeable par rapport à <span class="math notranslate nohighlight">\((\beta-\beta_0)^{n}\)</span>. C’est à dire <span class="math notranslate nohighlight">\(R_n(\beta)=o((\beta-\beta_0)^n) \Leftrightarrow \lim_{\beta\to \beta_0\atop \beta\ne \beta_0}\frac{R_n(\beta)}{(\beta-\beta_0)^n}=0\)</span>.</p>
+<p>On a donc:</p>
+<div class="math notranslate nohighlight">
+\[f(\beta) \approx \sum_{k=0}^n \frac{f^{(k)}(\beta_0)}{k!}(\beta-\beta_0)^k \]</div>
+<p>qu’on définira comme l’approximation de Taylor à l’ordre <span class="math notranslate nohighlight">\(n\)</span>. La méthode de Newton consiste à approximer la fonction qu’on veut minimiser par son expression à l’ordre 2:</p>
+<div class="math notranslate nohighlight">
+\[  f(\beta) \approx f(\beta_0)
+  + f'(\beta_0)(\beta - \beta_0)
+  + \frac{f^{(2)}(\beta_0)}{2!}(\beta - \beta_0)^2\]</div>
+<p>Puis de résoudre l’annulation du gradient de cette approximation locale. On trouve donc une valeur qui annule le gradient qu’on nomme <span class="math notranslate nohighlight">\(\beta_1\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[  f'(\beta) = f'(\beta_0) + f^{(2)}(\beta_0)(\beta_1 - \beta_0) = 0 \Leftrightarrow \beta_1 = \beta_0 -\frac{f'(\beta_0)}{f^{(2)}(\beta_0)}\]</div>
+<p>on exprime ensuite à nouveau l’approximation à l’ordre 2 au voisinage de <span class="math notranslate nohighlight">\(\beta_1\)</span> et on recommence. On construit ainsi un algorithme itératif pour produire une séquences de solutions convergeants vers celle qui minimise localement la fonction de coût (i.e. la fonction objectif).</p>
+<p>Cette procédure se généralise très bien pour des fonctions à plusieurs variables ou l’approximation de Taylor à l’odre 2 est donnée par :</p>
+<div class="math notranslate nohighlight">
+\[ f(\boldsymbol{\beta}) \approx f(\boldsymbol{\beta_0})
+  + (\boldsymbol{\beta} - \boldsymbol{\beta_0})^T\nabla_{\boldsymbol{\beta_0}}f
+  + \frac{1}{2}(\boldsymbol{\beta} - \boldsymbol{\beta_0})^T\big[H_{\boldsymbol{\beta_0}}\big](\boldsymbol{\beta} - \boldsymbol{\beta_0})\]</div>
+<p>où <span class="math notranslate nohighlight">\(\nabla_{\boldsymbol{\beta_0}}f\)</span> et <span class="math notranslate nohighlight">\(H_{\boldsymbol{\beta_0}}\)</span> sont respeictvement le gradient et la matrice Hessienne de f calculées en <span class="math notranslate nohighlight">\(\boldsymbol{\beta_0}\)</span>. Et on obtient une itération de la forme:</p>
+<div class="math notranslate nohighlight">
+\[  \boldsymbol{\beta_{t+1}} = \boldsymbol{\beta_t} -\big[H_{\boldsymbol{\beta_0}}\big]^{-1}\nabla_{\boldsymbol{\beta_0}}f\]</div>
+<div class="admonition-remarque admonition">
+<p class="admonition-title">Remarque</p>
+<p>Cela ressemble aux itération de l’algorithme de descente de gradient ou l’inverse de la matrice hessienne jouerait le rôle du learning rate (si on remplace <span class="math notranslate nohighlight">\(\big[H_{\boldsymbol{\beta_0}}\big]^{-1}\)</span> par <span class="math notranslate nohighlight">\(\rho \big[\boldsymbol{I}\big]\)</span> on retrouve bien la même chose). Intuitivement, les méthode du second ordre sont en quelque sorte adaptative en fonction de la courbure local de la fonction de cout. Plus la fonction est courbé localement, plus le pas de gradient sera petit, et vice versa. Ce genre d’approche permettant d’adapter le learning rate en fonction de la courbure a pour avantage de converger plus rapidement mais au prix couteux d’une inversion de la matrice Hessienne qui peut être lourd mais aussi instable numériquement. De nombreuses méthodes on été développées pour approximer cette matrice hessienne par une matrice plus creuses et dont l’inversion est plus stable (méthode de type approximation quasi-diagonale).</p>
+</div>
+</div>
+<div class="section" id="b-application-au-cas-de-la-regression-logistique">
+<h3>B. Application au cas de la regression logistique<a class="headerlink" href="#b-application-au-cas-de-la-regression-logistique" title="Permalink to this headline">¶</a></h3>
+<p>On a déjà vu au dessus l’expression du gradient de la fonction de cout associé à la regression logistique :</p>
+<div class="math notranslate nohighlight">
+\[\nabla f(\boldsymbol{\beta})=\frac{1}{n}X^T(\sigma(X\boldsymbol{\beta})-\boldsymbol{y})= \frac{1}{n}X^T(\hat{\boldsymbol{y}}-\boldsymbol{y})\]</div>
+<p>On peut montrer que la hessienne peut s’exprimer comme :</p>
+<div class="math notranslate nohighlight">
+\[\boldsymbol{H} = \frac{1}{n}\sum_{i=0}^n \boldsymbol{x_i}\big(\sigma(\boldsymbol{x_i}^T\boldsymbol{\beta})(1-\sigma(\boldsymbol{x_i}^T\boldsymbol{\beta}))\big)\boldsymbol{x_i}^T = \frac{1}{n} X^TWX\]</div>
+<p>Où l’on note <span class="math notranslate nohighlight">\(W_t\)</span> la matrice diagonale dont le <span class="math notranslate nohighlight">\(i\)</span>-eme terme sur la diagonale vaut <span class="math notranslate nohighlight">\(\sigma(\boldsymbol{x_i}^T\boldsymbol{\beta})(1-\sigma(\boldsymbol{x_i}^T\boldsymbol{\beta}) = \hat{y_i}(1-\hat{y_i})\)</span>. On a donc une expression pour l’itération:</p>
+<div class="math notranslate nohighlight">
+\[  \boldsymbol{\beta_{t+1}} = \boldsymbol{\beta_t} - [X^TW_tX]^{-1}X^T(\hat{\boldsymbol{y}}-\boldsymbol{y})\]</div>
+<div class="admonition-remarque admonition">
+<p class="admonition-title">Remarque</p>
+<p>On trouve une expression très analogue à celle des équations normales de la regression linéaire si ce n’est qu’on doit appliquer cette opération de manière itérative (en pratique peut d’itérations suffisent comme c’est une méthode d’ordre 2). C’est d’ailleurs pour cette raison que l’on utilise l’expression Iterative Reweighted Least Square pour cette méthode d’optimisation dans le cadre de la regression logistique, car cela revient quasiment à la même chose en remplaçant la cible y par l’erreur de prediction et en ajoutant une matrice de poids W. Cette matrice va clairement jouer sur la singularité/le conditionnement de la matrice à inverser. Le problème qu’on avait précédemment pour la regression linéaire sur le conditionnement dépendait uniquement du fait que différents exemples pouvait être trop “corrélés”, ici la matrice W peut venir soit améliorer le conditionnement de <span class="math notranslate nohighlight">\(X^TX\)</span> ou bien l’empirer. D’un coté les le termes <span class="math notranslate nohighlight">\(\hat{y_i}(1 - y_i)\)</span> font converger, mais comme ils aparaissent aussi dans <span class="math notranslate nohighlight">\(W_t\)</span> qui est en inverse dans l’expression, si des points commencent à être bien prédit, ils peuvent provoquer l’explosion de certains coefficients de la solution du fait de la singularité de <span class="math notranslate nohighlight">\([X^TW_tX]\)</span>. Une technique de régularisation (à la ridge) peut donc vite être nécessaire.</p>
+</div>
+<div class="admonition-question admonition">
+<p class="admonition-title">Question</p>
+<p>Proposez une méthode <span class="math notranslate nohighlight">\(\texttt{hessian}\)</span> dans l’objet <span class="math notranslate nohighlight">\(\texttt{CrossEntropy}\)</span> permettant de calculer la hessienne et, à l’instar de l’objet <span class="math notranslate nohighlight">\(\texttt{GradientDescent}\)</span> qui vous est adressé en bas, construisez un objet <span class="math notranslate nohighlight">\(\texttt{Newton}\)</span> qui implémente la méthode IRWLS vu dans cette section. Testez votre code.</p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">expit</span> <span class="k">as</span> <span class="n">sigmoid</span>
+
+<span class="k">class</span> <span class="nc">CrossEntropyNewton</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">X</span> <span class="o">=</span> <span class="n">X</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pos</span> <span class="o">=</span> <span class="mi">0</span>
+        
+    <span class="k">def</span> <span class="nf">_format_ndarray</span><span class="p">(</span><span class="n">arr</span><span class="p">):</span>
+        <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span> <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="k">else</span> <span class="n">arr</span>
+        <span class="k">return</span> <span class="n">arr</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">arr</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">))</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">arr</span>
+    
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="n">y_pred</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">beta</span><span class="p">)))</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">y_pred</span>
+    
+    <span class="k">def</span> <span class="nf">val</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">beta</span><span class="p">):</span>
+        <span class="n">beta</span> <span class="o">=</span> <span class="n">CrossEntropy</span><span class="o">.</span><span class="n">_format_ndarray</span><span class="p">(</span><span class="n">beta</span><span class="p">)</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">beta</span><span class="p">))</span>
+        <span class="n">log_p</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">p</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">p</span><span class="p">)],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">)),</span> <span class="n">y</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">log_p</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">)</span>
+    
+    
+    <span class="k">def</span> <span class="nf">grad</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">beta</span><span class="p">):</span>
+        <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">CrossEntropy</span><span class="o">.</span><span class="n">_format_ndarray</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+        <span class="n">beta</span> <span class="o">=</span> <span class="n">CrossEntropy</span><span class="o">.</span><span class="n">_format_ndarray</span><span class="p">(</span><span class="n">beta</span><span class="p">)</span>
+
+        <span class="n">grad</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">beta</span><span class="p">))</span>   <span class="o">-</span> <span class="n">y</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">grad</span>
+    
+    <span class="k">def</span> <span class="nf">hessian</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">beta</span><span class="p">):</span>
+        <span class="c1">####### Complete this part ######## or die ####################</span>
+        <span class="o">...</span>
+        <span class="o">...</span>
+        <span class="o">...</span>
+        <span class="c1">###############################################################</span>
+        <span class="k">return</span> <span class="n">XWX</span>
+    
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">perfect_data_sampler</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="n">real_beta</span><span class="p">)</span>
+
+
+<span class="n">loss</span> <span class="o">=</span> <span class="n">CrossEntropyNewton</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">beta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Hessian:</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">loss</span><span class="o">.</span><span class="n">hessian</span><span class="p">(</span><span class="n">beta</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Newton</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">init</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="n">CrossEntropyNewton</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loss</span> <span class="o">=</span> <span class="n">loss</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">optimize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nb_iterations</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="n">init</span><span class="p">):</span>
+        <span class="n">param_trace</span> <span class="o">=</span> <span class="p">[</span><span class="n">beta</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+        <span class="n">loss_trace</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">loss</span><span class="o">.</span><span class="n">val</span><span class="p">(</span><span class="n">beta</span><span class="p">)]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nb_iterations</span><span class="p">):</span>
+            <span class="c1">####### Complete this part ######## or die ####################</span>
+            <span class="n">beta</span> <span class="o">=</span> <span class="o">...</span>
+            <span class="n">param_trace</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">beta</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">loss_trace</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loss</span><span class="o">.</span><span class="n">val</span><span class="p">(</span><span class="n">beta</span><span class="p">))</span>
+            <span class="c1">###############################################################</span>
+            
+        <span class="k">return</span> <span class="n">param_trace</span><span class="p">,</span> <span class="n">loss_trace</span>
+
+
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">perfect_data_sampler</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">real_beta</span><span class="p">)</span>
+<span class="n">init</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    
+<span class="n">gd</span> <span class="o">=</span> <span class="n">GradientDescent</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">newton</span> <span class="o">=</span> <span class="n">Newton</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">loss_gd</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">loss_newton</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">it</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">params</span><span class="p">,</span> <span class="n">loss_gd</span> <span class="o">=</span> <span class="n">gd</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">nb_iterations</span><span class="o">=</span><span class="n">it</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">2.</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="n">init</span><span class="p">)</span>
+<span class="n">params</span><span class="p">,</span> <span class="n">loss_newton</span> <span class="o">=</span> <span class="n">newton</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">nb_iterations</span><span class="o">=</span><span class="n">it</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="n">init</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Évolution de la loss en fonction du nombre d&#39;itérations&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">loss_gd</span><span class="p">))],</span> <span class="n">loss_gd</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;GD&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">loss_gd</span><span class="p">))],</span> <span class="n">loss_newton</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Newton&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>On peut jouer avec le learning rate pour se rendre compte de l’efficacité de la méthode “Newton”. Un learning rate trop fort pour la descente de gradient la rendra instable.</p>
+</div>
+</div>
+<div class="section" id="ix-lien-entre-regression-et-classification">
+<h2>IX. Lien entre régression et classification<a class="headerlink" href="#ix-lien-entre-regression-et-classification" title="Permalink to this headline">¶</a></h2>
+<p>Lorsque nous sommes face à un problème de classification, notre objectif est de trouver une application de <span class="math notranslate nohighlight">\(\mathcal{X}\subseteq\mathbb{R}^d\)</span> dans <span class="math notranslate nohighlight">\(\mathcal{Y}=\{1,\ldots, C\}\)</span>, notre ensemble de classes. Nous ne cherchons ce pendant pas directement cette fonction mais plutôt un estimateur <span class="math notranslate nohighlight">\(\eta_n\)</span> (l’indice <span class="math notranslate nohighlight">\(n\)</span> indique la dépendance dans la taille du jeu de données) de la probabilité conditionnelle <span class="math notranslate nohighlight">\(\eta_k(x)=\mathbb{P}(Y=k|X=x)\)</span>. Une fois cet estimateur obtenu, nous pouvons construire ce qu’on appelle la <em>plugin rule</em> :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}\hat{g}_n=\begin{cases}1\text{ si }\hat{\eta}_n(x)\geq 0.5\\0\text{ sinon.}\end{cases}\end{aligned}\end{split}\]</div>
+<p>Est-ce une bonne stratégie ? La réponse est oui et nous allons montrer un théorème allant dans ce sens. Considérons dans un premier temps la figure suivante.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/1_logistic_regression_74_0.png" src="../_images/1_logistic_regression_74_0.png" />
+</div>
+</div>
+<p>On observe que bien que notre estimateur de la probabilité conditionnelle <span class="math notranslate nohighlight">\(\hat{\eta}\)</span> soit imparfait partout, seule la région où il se situe du mauvais côté de <span class="math notranslate nohighlight">\(y=0.5\)</span> entraîne une erreur de classification vis-à-vis du classifieur de Bayes (i.e. la <em>plugin rule</em> associée à la vraie probabilité conditionnelle). On sent donc l’idée que notre erreur de classificaiton pourra se réduire même si nous avons du mal à bien estimer notre régression sur la probabilité conditionnelle. C’est ce que montre le théorème suivant.</p>
+<div class="admonition-theoreme-la-classification-est-plus-facile-que-la-regression admonition">
+<p class="admonition-title">Théorème (La classification est plus facile que la régression)</p>
+<p>Soit <span class="math notranslate nohighlight">\(\hat{\eta}_n\)</span> notre estimateur de la vraie probabilité conditionnelle <span class="math notranslate nohighlight">\(\eta\)</span> où l’indice <span class="math notranslate nohighlight">\(n\)</span> indique la dépendance à un jeu de données de taille <span class="math notranslate nohighlight">\(n\)</span>. Supposons <span class="math notranslate nohighlight">\(\hat{\eta}_n\)</span> construit de manière à ce que nous ayons une convergence faible au sens suivant :</p>
+<div class="math notranslate nohighlight">
+\[\lim_{n\rightarrow\infty}\big[(\hat{\eta}_n(X)-\eta(X))^2\big]=0.\]</div>
+<p>Construisons les <em>plugin rules</em> suivantes :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\hat{g}_n(x)=\begin{cases}1\text{ si }\hat{\eta}_n(x)\geq 0.5\\0\text{ sinon}\end{cases}\text{ et }g(x)=\begin{cases}1\text{ si }\eta(x)\geq 0.5\\0\text{ sinon.}\end{cases}
+\end{aligned}\end{split}\]</div>
+<p><span class="math notranslate nohighlight">\(\hat{g}_n\)</span> est la règle de classification que nous avons construite et <span class="math notranslate nohighlight">\(g\)</span> le classifieur de Bayes. Notons :</p>
+<div class="math notranslate nohighlight">
+\[L(g)=\mathbb{E}\big[\textbf{1}\{g(X)\neq Y\}\big].\]</div>
+<p>Nous avons alors :</p>
+<div class="math notranslate nohighlight">
+\[\lim_{n\rightarrow\infty}\frac{\mathbb{E}\big[L(\hat{g}_n)\big]-L(g)}{\sqrt{\mathbb{E}\big[(\hat{\eta}_n(X)-\eta(X))^2\big]}}=0,\]</div>
+<p>où l’espérance est prise sur le jeu de données.</p>
+</div>
+<div class="caution dropdown admonition">
+<p class="admonition-title">Preuve</p>
+<p>Supposons <span class="math notranslate nohighlight">\(\mathbb{E}\big[L(\hat{g}_n)\big]-L(g)=2\mathbb{E}\big[|\eta(X)-1/2|\mathbf{1}\{\hat{g}_n(X)\neq g(X)\}\}\big]\)</span>. Cette égalité est démontrée dans la séquence sur le <a class="reference internal" href="3_bayes_classifier.html"><span class="doc std std-doc">classifieur de Bayes</span></a>.</p>
+<p>Soit <span class="math notranslate nohighlight">\(\epsilon&gt;0\)</span>. Nous avons :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\mathbb{E}\big[&amp;|\eta(X)-1/2|\mathbf{1}\{\hat{g}_n(X)\neq g(X)\}\}\big]\leq \mathbb{E}\big[\mathbf{1}\{\eta(X)\neq 1/2\}|\eta(X)-\hat{\eta}_n(X)|\mathbf{1}\{\hat{g}_n(X)\neq g(X)\}\}\big]\\
+&amp;=\mathbb{E}\big[\mathbf{1}\{\eta(X)\neq 1/2\}\mathbf{1}\{|\eta(X)-1/2|\leq \epsilon\}|\eta(X)-\hat{\eta}_n(X)|\mathbf{1}\{\hat{g}_n(X)\neq g(X)\}\}\big]\\
+&amp;\ \ \ \ +\mathbb{E}\big[\mathbf{1}\{|\eta(X)-1/2|&gt; \epsilon\}\mathbf{1}\{\eta(X)\neq 1/2\}|\eta(X)-\hat{\eta}_n(X)|\mathbf{1}\{\hat{g}_n(X)\neq g(X)\}\}\big]=(\star)
+\end{aligned}\end{split}\]</div>
+<p>Appliquons l’inégalité de <a class="reference external" href="https://fr.wikipedia.org/wiki/In%C3%A9galit%C3%A9_de_Cauchy-Schwarz">Cauchy-Scharz</a> et majorons <span class="math notranslate nohighlight">\(\mathbf{1}\{\hat{g}_n(X)\neq g(X)\}\)</span> par <span class="math notranslate nohighlight">\(1\)</span> sur le premier terme :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+(\star)\leq &amp;\sqrt{\mathbb{E}\big[(\hat{\eta}_n(X)-\eta(X))^2\big]}\Bigg(\sqrt{\mathbb{P}\big(|\eta(X)-1/2|\leq \epsilon, \eta(X)\neq 1/2\big)}
+\\&amp;\ \ \ + \sqrt{\mathbb{P}\big(\hat{g}_n(X)\neq g(X), |\eta(X)-1/2|&gt;\epsilon\big)}\Bigg)
+\end{aligned}\end{split}\]</div>
+<p>Remarquons que si <span class="math notranslate nohighlight">\(\hat{g}_n(X)\neq g^\star(X)\)</span> et que <span class="math notranslate nohighlight">\(|\eta(X)-1/2|&gt;\epsilon\)</span>, alors <span class="math notranslate nohighlight">\(\hat{\eta}_n\)</span> est de “l’autre côté” de <span class="math notranslate nohighlight">\(1/2\)</span> et on a nécessairement <span class="math notranslate nohighlight">\(|\eta_n(X)-\eta(X)|&gt;\epsilon\)</span>. Cependant, <span class="math notranslate nohighlight">\(\hat{\eta}_n\)</span> est consistent. Cela implique que la probabilité de l’évènement <span class="math notranslate nohighlight">\(|\eta_n(X)-\eta(X)|&gt;\epsilon\)</span> tend vers <span class="math notranslate nohighlight">\(0\)</span> pour <span class="math notranslate nohighlight">\(\epsilon\)</span> fixé et :</p>
+<div class="math notranslate nohighlight">
+\[\lim_{n\rightarrow\infty}\mathbb{P}\big(\hat{g}_n(X)\neq g(X), |\eta(X)-1/2|&gt;\epsilon\big)=0\]</div>
+<p>D’un autre côté,</p>
+<div class="math notranslate nohighlight">
+\[\lim_{\epsilon\rightarrow 0}. \mathbb{P}\big(|\eta(X)-1/2|\leq \epsilon, \eta(X)\neq 1/2\big)=0\]</div>
+<p>Il suffit de reprendre le tout et diviser notre inégalité par <span class="math notranslate nohighlight">\(\sqrt{\mathbb{E}\big[(\hat{\eta}_n(X)-\eta(X))^2\big]}\)</span> pour constater qu’on majore notre fraction par un terme qui converge vers <span class="math notranslate nohighlight">\(0\)</span>.</p>
+</div>
+<p>Dit autrement, l’erreur de classification décroît plus vite que l’erreur <span class="math notranslate nohighlight">\(\ell_2\)</span> sur la régression. Il est beaucoup plus facile de construire un classifieur que d’avoir une “idée” précise de la probabilité conditionnelle.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./3_classification"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+            <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="0_propos_liminaire.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">La <em>classification</em></p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="2_fonctions_proxy.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Les fonctions de perte (loss function) ☕️☕️☕️</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+        
+        </div>
+    </div>
+    <footer class="footer">
+    <div class="container">
+      <p>
+        
+          By Servajean, Leveau & Chailan<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>

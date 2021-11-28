@@ -1,0 +1,743 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Le classifieur de Bayes ☕️ &#8212; Machine Learning</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet">
+  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Un modèle formel de l’apprentissage ☕️☕️☕️☕️ (💆‍♂️)" href="4_VC_theory.html" />
+    <link rel="prev" title="Les fonctions de perte (loss function) ☕️☕️☕️" href="2_fonctions_proxy.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-72WWYCKNK6"></script>
+<script>
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){ dataLayer.push(arguments); }
+                    gtag('js', new Date());
+                    gtag('config', 'G-72WWYCKNK6');
+                </script>
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/logo.jpg" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Machine Learning</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   Introduction
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../0_requisite/rappels_python.html">
+   Rappels de Python et Numpy
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../1_what_is_ml/0_propos_liminaire.html">
+   <em>
+    Machine Learning
+   </em>
+   , initiation
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../1_what_is_ml/1_introduction_ml.html">
+     <em>
+      Machine learning
+     </em>
+     et malédiction de la dimension
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../1_what_is_ml/2_regression_and_classification_trees.html">
+     Les arbres de régression et de classification
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../2_regression/0_propos_liminaire.html">
+   La
+   <em>
+    régression
+   </em>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_regression/1_linear_regression.html">
+     La régression linéaire ☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_regression/2_optimization.html">
+     L’optimisation ☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_regression/3_interpolation.html">
+     Interpolation ☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_regression/4_algo_proximal_lasso.html">
+     Sous-différentiel et le cas du Lasso ☕️☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_regression/5_least_square_qr.html">
+     Les moindres carrés via une décomposition QR (et plus)☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_regression/6_ridge.html">
+     Une analyse de la régularisation Ridge ☕️☕️☕️
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="0_propos_liminaire.html">
+   La
+   <em>
+    classification
+   </em>
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="1_logistic_regression.html">
+     La régression logistique ☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2_fonctions_proxy.html">
+     Les fonctions de perte (loss function) ☕️☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Le classifieur de Bayes ☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="4_VC_theory.html">
+     Un modèle formel de l’apprentissage ☕️☕️☕️☕️ (💆‍♂️)
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../4_kernel_methods/0_propos_liminaire.html">
+   Les méthodes à noyaux
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../4_kernel_methods/1_svm.html">
+     Le SVM ou l’hypothèse max-margin ☕️☕️
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../5_ensembles/0_propos_liminaire.html">
+   Les méthodes
+   <em>
+    ensemblistes
+   </em>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../5_ensembles/1_ensembles.html">
+     Méthodes ensemblistes ☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../5_ensembles/2_bayesian_linear_regression.html">
+     Bayesian linear regression ☕️☕️☕️☕️
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../6_deeplearning/0_propos_liminaire.html">
+   <em>
+    deep learning
+   </em>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../6_deeplearning/1_autodiff.html">
+     La différentiation automatique et un début de
+     <em>
+      deep learning
+     </em>
+     ☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../6_deeplearning/2_filters_representation.html">
+     Filtres et espace de représentation des réseaux de neurones ☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../6_deeplearning/3_probabilities_calibration.html">
+     Calibration des probabilités et quelques notions ☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../6_deeplearning/4_regularization_deep.html">
+     Régularisation en
+     <em>
+      deep learning
+     </em>
+     ☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../6_deeplearning/5_transfer_multitask.html">
+     <em>
+      Transfer learning
+     </em>
+     et apprentissage multi-tâches ☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../6_deeplearning/6_adversarial.html">
+     Les attaques adversaires ☕️
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../7_unsupervised/0_propos_liminaire.html">
+   L’apprentissage non-supervisé
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../7_unsupervised/1_principal_component_analysis.html">
+     L’Analyse en Composantes Principales ☕️☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../7_unsupervised/2_em_gaussin_mixture_model.html">
+     Modèle de Mélange Gaussien et algorithme
+     <em>
+      Expectation-Maximization
+     </em>
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../8_set_prediction/0_propos_liminaire.html">
+   Prédiction d’ensembles
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <label for="toctree-checkbox-8">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../8_set_prediction/1_well_defined.html">
+     Jeu d’apprentissage
+     <em>
+      set-valued
+     </em>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../8_set_prediction/2_ill_defined.html">
+     Jeu d’apprentissage uniquement multi-classes ☕️
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../biblio.html">
+   Bibliographie
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/3_classification/3_bayes_classifier.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/maximiliense/lmiprp"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/maximiliense/lmiprp/issues/new?title=Issue%20on%20page%20%2F3_classification/3_bayes_classifier.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/maximiliense/lmiprp/blob/master/Travaux Pratiques/Machine Learning/Book/3_classification/3_bayes_classifier.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="../_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#i-introduction">
+   I. Introduction
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#ii-le-classifieur-de-bayes">
+   II. Le classifieur de Bayes
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#iii-un-petit-exercice">
+   III. Un petit exercice
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#iv-quelques-exercices">
+   IV. Quelques exercices
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="le-classifieur-de-bayes">
+<h1>Le classifieur de Bayes ☕️<a class="headerlink" href="#le-classifieur-de-bayes" title="Permalink to this headline">¶</a></h1>
+<div class="admonition-objectifs-de-la-sequence admonition">
+<p class="admonition-title">Objectifs de la séquence</p>
+<ul class="simple">
+<li><p>Comprendre :</p>
+<ul>
+<li><p>le problème qu’on souhaite résoudre en <em>machine learning</em>,</p></li>
+</ul>
+</li>
+<li><p>Être sensibilisé aux notions de :</p>
+<ul>
+<li><p>erreur de Bayes</p></li>
+<li><p>classifieur de Bayes.</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="i-introduction">
+<h2>I. Introduction<a class="headerlink" href="#i-introduction" title="Permalink to this headline">¶</a></h2>
+<p>Reformalisons notre problème de classification. Soit <span class="math notranslate nohighlight">\(\mathcal{X}\)</span> l’espace des données d’entrée et <span class="math notranslate nohighlight">\(\mathcal{Y}\)</span> celui des données de sortie. On aurait par exemple <span class="math notranslate nohighlight">\(\mathcal{X}\)</span> l’ensemble de toutes les photos et <span class="math notranslate nohighlight">\(\mathcal{Y}\)</span> celui des labels “chien” et “chat”. <em>A priori</em>, dans le cadre d’une application de détection “chien/chat”, on ne s’attend pas à trouver n’importe quelle image (e.g. on ne s’attend pas à voir des photos de pizzas). L’idée est d’interpréter cela de manière probabiliste en considérons le couple de variables aléatoires suivant :</p>
+<div class="math notranslate nohighlight">
+\[X, Y\in\mathcal{X}\times\mathcal{Y}.\]</div>
+<p>On appellera <span class="math notranslate nohighlight">\(\mu\)</span> la mesure de <span class="math notranslate nohighlight">\(X\)</span> dans le sens où étant donné <span class="math notranslate nohighlight">\(A\subseteq\mathcal{X}\)</span>, on a <span class="math notranslate nohighlight">\(\mathbb{P}(X\in A)=\mu(A)\)</span> et <span class="math notranslate nohighlight">\(\eta(x)=\mathbb{P}(Y=1|X=x)\)</span> (dans le cas de la classification binaire) la “probabilité a posteriori”. La fonction <span class="math notranslate nohighlight">\(\eta\)</span> revête d’autres formes lorsqu’on travaille sur d’autres problèmes (e.g. classification, top-k). Il est important de constater que <span class="math notranslate nohighlight">\(\mu\)</span> et <span class="math notranslate nohighlight">\(\eta\)</span> décrivent totalement le couple <span class="math notranslate nohighlight">\(X, Y\)</span>. En effet, soit <span class="math notranslate nohighlight">\(A\subseteq \mathcal{X}\times \mathcal{Y}\)</span>, nous avons :</p>
+<div class="math notranslate nohighlight">
+\[\mathbb{P}(X, Y\in A)=\int_{A\cap \mathcal{X}\times \{1\}}\eta(x)d\mu+\int_{A\cap \mathcal{X}\times \{0\}}(1-\eta(x))d\mu.\]</div>
+<p>Notre objectif est de construire une application <span class="math notranslate nohighlight">\(h:\mathcal{X}\mapsto\mathcal{Y}\)</span> telle que les “prédictions” de <span class="math notranslate nohighlight">\(h\)</span> soient bonnes dans le sens du risque suivant :</p>
+<div class="math notranslate nohighlight">
+\[L(h)=\mathbb{P}(h(X)\neq Y)=\mathbb{E}\big[\textbf{1}\{h(X)\neq Y\}\big].\]</div>
+<p>On veut que la probabilité que <span class="math notranslate nohighlight">\(h\)</span> fasse des erreurs soit la plus faible possible.</p>
+<p>Ne connaissant ni <span class="math notranslate nohighlight">\(\mu\)</span> ni <span class="math notranslate nohighlight">\(\eta\)</span>, nous ne pouvons pas calculer <span class="math notranslate nohighlight">\(L\)</span> et donc trouver le meilleur <span class="math notranslate nohighlight">\(h\)</span>. Habituellement, en <em>machine learning</em>, nous collectons des données afin d’estimer <span class="math notranslate nohighlight">\(L\)</span> et construire le classifieur approprié. Cependant, dans ce <em>notebook</em>, nous supposerons que nous sommes un oracle et que nous connaissons le processus générateur.</p>
+</div>
+<div class="section" id="ii-le-classifieur-de-bayes">
+<h2>II. Le classifieur de Bayes<a class="headerlink" href="#ii-le-classifieur-de-bayes" title="Permalink to this headline">¶</a></h2>
+<p>Supposons que nous connaissions <span class="math notranslate nohighlight">\(\eta\)</span> (nous sommes un oracle). Quel est le meilleur classifieur que nous puissions construire ?</p>
+<p>Il s’agit du classifieur suivant :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}g^\star(x)=\begin{cases}1&amp;\text{ si }\eta(x)\geq 0.5\\ 0&amp;\text{ sinon.}\end{cases}\end{split}\]</div>
+<p>C’est ce qu’on appelle le classifieur de Bayes. C’est lui qui fait le moins d’erreurs (notons qu’il peut exister plusieurs classifieurs qui font aussi peu d’erreurs). On peut quantifier le risque atteint par ce classifieur :</p>
+<div class="math notranslate nohighlight">
+\[L^\star=\mathbb{E}\big[\text{min}(\eta(X), 1-\eta(X))\big].\]</div>
+<p>Si les labels sont déterministes (i.e. <span class="math notranslate nohighlight">\(\eta\in\{0, 1\}\)</span>), alors <span class="math notranslate nohighlight">\(L^\star=0\)</span>.</p>
+<div class="admonition-proposition admonition">
+<p class="admonition-title">Proposition</p>
+<p><span class="math notranslate nohighlight">\(\not\exists g:\mathcal{X}\mapsto\mathcal{Y}\)</span> tel que <span class="math notranslate nohighlight">\(L(g)&lt;L^\star\)</span>. Dit autrement, on ne peut pas faire mieux que le classifieur de Bayes.</p>
+</div>
+<div class="caution dropdown admonition">
+<p class="admonition-title">Preuve</p>
+<p>Soit <span class="math notranslate nohighlight">\(x\in\mathcal{X}\)</span> et <span class="math notranslate nohighlight">\(g:\mathcal{X}\mapsto\mathcal{Y}\)</span> un classifieur quelconque. On a :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\mathbb{P}(g(X)\neq Y|X=x)&amp;=1-\mathbb{P}(g(X)=Y|X=x)\\
+&amp;= 1-(\mathbb{P}(Y=1, g(X)=1|X=x)+\mathbb{P}(Y=0, g(X)=0|X=x))\\
+&amp;=1-(\textbf{1}\{g(x)=1\}\mathbb{P}(Y=1|X=x)+\textbf{1}\{g(x)=0\}\mathbb{P}(Y=0|X=x))\\
+&amp;=1-(\textbf{1}\{g(x)=1\}\eta(x)+\textbf{1}\{g(x)=0\}(1-\eta(x))).
+\end{aligned}\end{split}\]</div>
+<p>Ainsi, nous avons :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\mathbb{P}(g^\star(X)\neq Y|X=x)-\mathbb{P}(g(X)\neq Y|X=x)&amp;=\eta(x)(\textbf{1}\{g(x)=1\}-\textbf{1}\{g^\star(x)=1\})\\&amp;\ \ \ +(1-\eta(x))(\textbf{1}\{g^\star(x)=0\}-\textbf{1}\{g(x)=0\})\\
+&amp;=(2\eta(x)-1)(\textbf{1}\{g^\star(x)=1\}-\textbf{1}\{g(x)=1\})\\
+&amp;\geq 0
+\end{aligned}\end{split}\]</div>
+<p>Il suffit maintenant d’intégrer sur tous les “<span class="math notranslate nohighlight">\(x\)</span>” et le résultat est là.</p>
+</div>
+<p>Soit <span class="math notranslate nohighlight">\(h\)</span> une fonction de <span class="math notranslate nohighlight">\(\mathcal{X}\)</span> dans <span class="math notranslate nohighlight">\(\mathcal{Y}\)</span>. La question qu’on peut se poser est celle de l’excès de <span class="math notranslate nohighlight">\(h\)</span> par rapport à <span class="math notranslate nohighlight">\(g^\star\)</span>. Comme on l’a vu dans la preuve précédente, nous avons :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+\mathbb{P}(h(X)\neq Y)-L^\star&amp;=\mathbb{E}\big[|2\eta(X)-1|\textbf{1}\{g^\star(X)\neq h(X)\}\big]\\
+\end{aligned}\end{split}\]</div>
+</div>
+<div class="section" id="iii-un-petit-exercice">
+<h2>III. Un petit exercice<a class="headerlink" href="#iii-un-petit-exercice" title="Permalink to this headline">¶</a></h2>
+<p>Construisons un jeu de données de classification binaire.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">expit</span> <span class="k">as</span> <span class="n">sigmoid</span>
+
+<span class="n">beta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">class_probability</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">logit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">beta</span><span class="p">)</span>
+    <span class="n">proba</span> <span class="o">=</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">logit</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">proba</span>
+
+<span class="k">def</span> <span class="nf">dataset</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">class_probability</span><span class="p">(</span><span class="n">X</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span>
+
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/3_bayes_classifier_5_0.png" src="../_images/3_bayes_classifier_5_0.png" />
+</div>
+</div>
+<div class="admonition-exercice admonition">
+<p class="admonition-title">Exercice</p>
+<p><strong>En vous appuyant sur le code précédent (en réutilisant éventuellement du code fourni), implémentez le classifieur de Bayes.</strong></p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">bayes_classifier</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="c1">####### Complete this part ######## or die ####################</span>
+    <span class="o">...</span>
+    <span class="c1">###############################################################</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">XX</span><span class="p">,</span> <span class="n">YY</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mgrid</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span><span class="mi">500</span><span class="n">j</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span><span class="mi">500</span><span class="n">j</span><span class="p">]</span>
+<span class="n">predictions</span> <span class="o">=</span> <span class="n">bayes_classifier</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">XX</span><span class="p">,</span> <span class="n">YY</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">500</span><span class="o">*</span><span class="mi">500</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">XX</span><span class="p">,</span> <span class="n">YY</span><span class="p">,</span> <span class="n">predictions</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">500</span><span class="p">),</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">Paired</span><span class="p">,</span> <span class="n">shading</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Le classifieur de Bayes&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="iv-quelques-exercices">
+<h2>IV. Quelques exercices<a class="headerlink" href="#iv-quelques-exercices" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-exercice admonition">
+<p class="admonition-title">Exercice</p>
+<p><strong>Considérons cette fois-ci le problème de classification multi-classes. Ici, <span class="math notranslate nohighlight">\(\mathcal{Y}=\{1, \ldots, C\}\)</span>. Notons <span class="math notranslate nohighlight">\(\eta_k(x)=\mathbb{P}(Y=k|X=x)\)</span>.</strong></p>
+<ul class="simple">
+<li><p><strong>Trouvez le classifieur de Bayes.</strong></p></li>
+<li><p><strong>Trouvez l’expression de l’erreur de Bayes.</strong></p></li>
+</ul>
+</div>
+<div class="admonition-exercice admonition">
+<p class="admonition-title">Exercice</p>
+<p><strong>Considérons cette fois-ci le problème de classification multi-classes <em>Top-K</em>. À chaque prédiction exactement <span class="math notranslate nohighlight">\(K\)</span> classes sont retournées. Cette fois-ci, nos prédictions se font dans l’espace <span class="math notranslate nohighlight">\(\mathcal{P}(\mathcal{Y})\)</span> l’ensemble des parties de <span class="math notranslate nohighlight">\(\mathcal{Y}\)</span>. Notons <span class="math notranslate nohighlight">\(\eta_k(x)=\mathbb{P}(Y=k|X=x)\)</span>.</strong></p>
+<ul class="simple">
+<li><p><strong>Trouvez le classifieur de Bayes.</strong></p></li>
+<li><p><strong>Trouvez l’expression de l’erreur de Bayes.</strong></p></li>
+</ul>
+</div>
+<div class="admonition-exercice-partie-i admonition">
+<p class="admonition-title">Exercice (partie I)</p>
+<p><strong>Imaginons une situation où la variable aléatoire <span class="math notranslate nohighlight">\(X\)</span> représente le nombre d’heures passées à revoir le cours chez soi par semaine. Soit la loi conditionnelle suivante :</strong></p>
+<div class="math notranslate nohighlight">
+\[\eta(x)=\frac{x}{c+x},\ c&gt;0,\]</div>
+<p><strong>où <span class="math notranslate nohighlight">\(c\)</span> est une constante. Celle-ci indique la probabilité que l’étudiant réussisse son année. Dit autrement, plus un étudiant travaille chez lui, plus la probabilité qu’il réussisse est grande. Construisez le classifieur de Bayes et déduisez-en l’erreur de Bayes.</strong></p>
+</div>
+<div class="admonition-exercice-partie-ii admonition">
+<p class="admonition-title">Exercice (partie II)</p>
+<p><strong>En complétant l’exercice précédent, supposez les cas suivants et calculez une valeur de <span class="math notranslate nohighlight">\(L^\star\)</span> :</strong></p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mu(\{c\})=\mathbb{P}(X=c)=1\)</span>,</p></li>
+<li><p><span class="math notranslate nohighlight">\(X\)</span> suit une loi uniforme sur <span class="math notranslate nohighlight">\([0, 4c]\)</span> (i.e. <span class="math notranslate nohighlight">\(\mu([a;b])=\int_a^b\frac{1}{b-a}dx\)</span>).</p></li>
+</ul>
+</div>
+<p>En pratique, nous aurions collecté un jeu de données <span class="math notranslate nohighlight">\(S_n=\{(X_i,Y_i)\}_{i\leq n}\)</span> et nous aurions dû choisir notre classifieur à partir de ce dernier.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./3_classification"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+            <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="2_fonctions_proxy.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Les fonctions de perte (loss function) ☕️☕️☕️</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="4_VC_theory.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Un modèle formel de l’apprentissage ☕️☕️☕️☕️ (💆‍♂️)</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+        
+        </div>
+    </div>
+    <footer class="footer">
+    <div class="container">
+      <p>
+        
+          By Servajean, Leveau & Chailan<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>

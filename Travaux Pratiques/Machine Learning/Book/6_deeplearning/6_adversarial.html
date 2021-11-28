@@ -1,0 +1,1629 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Les attaques adversaires ☕️ &#8212; Machine Learning</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet">
+  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="L’apprentissage non-supervisé" href="../7_unsupervised/0_propos_liminaire.html" />
+    <link rel="prev" title="Transfer learning et apprentissage multi-tâches ☕️☕️" href="5_transfer_multitask.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-72WWYCKNK6"></script>
+<script>
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){ dataLayer.push(arguments); }
+                    gtag('js', new Date());
+                    gtag('config', 'G-72WWYCKNK6');
+                </script>
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/logo.jpg" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Machine Learning</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   Introduction
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../0_requisite/rappels_python.html">
+   Rappels de Python et Numpy
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../1_what_is_ml/0_propos_liminaire.html">
+   <em>
+    Machine Learning
+   </em>
+   , initiation
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../1_what_is_ml/1_introduction_ml.html">
+     <em>
+      Machine learning
+     </em>
+     et malédiction de la dimension
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../1_what_is_ml/2_regression_and_classification_trees.html">
+     Les arbres de régression et de classification
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../2_regression/0_propos_liminaire.html">
+   La
+   <em>
+    régression
+   </em>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_regression/1_linear_regression.html">
+     La régression linéaire ☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_regression/2_optimization.html">
+     L’optimisation ☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_regression/3_interpolation.html">
+     Interpolation ☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_regression/4_algo_proximal_lasso.html">
+     Sous-différentiel et le cas du Lasso ☕️☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_regression/5_least_square_qr.html">
+     Les moindres carrés via une décomposition QR (et plus)☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_regression/6_ridge.html">
+     Une analyse de la régularisation Ridge ☕️☕️☕️
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../3_classification/0_propos_liminaire.html">
+   La
+   <em>
+    classification
+   </em>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../3_classification/1_logistic_regression.html">
+     La régression logistique ☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../3_classification/2_fonctions_proxy.html">
+     Les fonctions de perte (loss function) ☕️☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../3_classification/3_bayes_classifier.html">
+     Le classifieur de Bayes ☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../3_classification/4_VC_theory.html">
+     Un modèle formel de l’apprentissage ☕️☕️☕️☕️ (💆‍♂️)
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../4_kernel_methods/0_propos_liminaire.html">
+   Les méthodes à noyaux
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../4_kernel_methods/1_svm.html">
+     Le SVM ou l’hypothèse max-margin ☕️☕️
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../5_ensembles/0_propos_liminaire.html">
+   Les méthodes
+   <em>
+    ensemblistes
+   </em>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../5_ensembles/1_ensembles.html">
+     Méthodes ensemblistes ☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../5_ensembles/2_bayesian_linear_regression.html">
+     Bayesian linear regression ☕️☕️☕️☕️
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="0_propos_liminaire.html">
+   <em>
+    deep learning
+   </em>
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="1_autodiff.html">
+     La différentiation automatique et un début de
+     <em>
+      deep learning
+     </em>
+     ☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2_filters_representation.html">
+     Filtres et espace de représentation des réseaux de neurones ☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="3_probabilities_calibration.html">
+     Calibration des probabilités et quelques notions ☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="4_regularization_deep.html">
+     Régularisation en
+     <em>
+      deep learning
+     </em>
+     ☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="5_transfer_multitask.html">
+     <em>
+      Transfer learning
+     </em>
+     et apprentissage multi-tâches ☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Les attaques adversaires ☕️
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../7_unsupervised/0_propos_liminaire.html">
+   L’apprentissage non-supervisé
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../7_unsupervised/1_principal_component_analysis.html">
+     L’Analyse en Composantes Principales ☕️☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../7_unsupervised/2_em_gaussin_mixture_model.html">
+     Modèle de Mélange Gaussien et algorithme
+     <em>
+      Expectation-Maximization
+     </em>
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../8_set_prediction/0_propos_liminaire.html">
+   Prédiction d’ensembles
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <label for="toctree-checkbox-8">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../8_set_prediction/1_well_defined.html">
+     Jeu d’apprentissage
+     <em>
+      set-valued
+     </em>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../8_set_prediction/2_ill_defined.html">
+     Jeu d’apprentissage uniquement multi-classes ☕️
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../biblio.html">
+   Bibliographie
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/6_deeplearning/6_adversarial.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/maximiliense/lmiprp"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/maximiliense/lmiprp/issues/new?title=Issue%20on%20page%20%2F6_deeplearning/6_adversarial.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/maximiliense/lmiprp/blob/master/Travaux Pratiques/Machine Learning/Book/6_deeplearning/6_adversarial.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="../_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#i-introduction-qu-est-ce-qu-une-attaque-adversaire">
+   I. Introduction, qu’est-ce qu’une attaque adversaire ?
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#ii-imports-et-construction-du-modele">
+   II. Imports et construction du modèle
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#iii-la-donnee-a-attaquer">
+   III. La donnée à attaquer
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#iv-une-premiere-attaque">
+   IV. Une première attaque
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#quelques-rappels-d-optimisation">
+     Quelques rappels d’optimisation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#construction-d-une-attaque-adversaire">
+     Construction d’une attaque adversaire
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#v-un-deuxieme-essai">
+   V. Un deuxième essai
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#vi-une-attaque-un-petit-peu-plus-ciblee">
+   VI. Une attaque un petit peu plus ciblée ?
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#vii-la-methode-fast-sign">
+   VII. La méthode “fast-sign”
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#viii-devenir-robuste-aux-attaques-adversaires">
+   VIII. Devenir robuste aux attaques adversaires
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#introduction">
+     Introduction
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#construction-du-jeu-de-donnees">
+     Construction du jeu de données
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#un-cas-simple-le-modele-lineaire-rappels">
+     Un cas simple : le modèle linéaire (Rappels)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#construction-du-modele">
+     Construction du modèle
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#construction-de-la-loss">
+     Construction de la loss
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#entrainement">
+     Entraînement
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#test-des-performances">
+     Test des performances
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#construction-d-une-attaque-adversaire-dans-le-cas-du-modele-lineaire">
+     Construction d’une attaque adversaire dans le cas du modèle linéaire
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#apprentissage-robuste-aux-attaques-adversaires">
+     Apprentissage robuste aux attaques adversaires
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#en-resume">
+   En résumé
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="les-attaques-adversaires">
+<h1>Les attaques adversaires ☕️<a class="headerlink" href="#les-attaques-adversaires" title="Permalink to this headline">¶</a></h1>
+<div class="admonition-objectifs-de-la-sequence admonition">
+<p class="admonition-title">Objectifs de la séquence</p>
+<ul class="simple">
+<li><p>Être sensibilisé :</p>
+<ul>
+<li><p>aux attaques adversaires,</p></li>
+<li><p>à leur lien au sur-apprentissage et à la régularisation.</p></li>
+</ul>
+</li>
+<li><p>Être capable :</p>
+<ul>
+<li><p>d’implémenter une attaque adversaire avec <span class="math notranslate nohighlight">\(\texttt{pytorch}\)</span>,</p></li>
+<li><p>de produire un apprentissage robuste aux attaques adversaires.</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="i-introduction-qu-est-ce-qu-une-attaque-adversaire">
+<h2>I. Introduction, qu’est-ce qu’une attaque adversaire ?<a class="headerlink" href="#i-introduction-qu-est-ce-qu-une-attaque-adversaire" title="Permalink to this headline">¶</a></h2>
+<p>Reprenons le problème introduit précédemment. Soit <span class="math notranslate nohighlight">\(\mathcal{X}\subseteq\mathbb{R}^d\)</span> notre espace d’entrée et <span class="math notranslate nohighlight">\(\mathcal{Y}=\{1, \ldots, C\}\)</span> notre espace de sortie où <span class="math notranslate nohighlight">\(C\in\mathbb{N}\)</span> est le nombre de classes de notre problème de classification. Considérons une famille paramétrique de fonctions :</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{H}=\{h_\theta:\ \theta\in\mathbb{R}^p\},\]</div>
+<p>où <span class="math notranslate nohighlight">\(p\in\mathbb{N}\)</span> est le nombre de paramètres. Notons <span class="math notranslate nohighlight">\(S_n\)</span> notre jeu de données d’apprentissage composé de <span class="math notranslate nohighlight">\(n\)</span> exemples, <span class="math notranslate nohighlight">\(T_m\)</span> notre jeu de test et <span class="math notranslate nohighlight">\(\ell\)</span> la <em>loss</em> pour une unique prédiction. Notons aussi <span class="math notranslate nohighlight">\(\text{Acc}(h_\theta, S)\)</span> le pourcentage de bonnes prédictions (i.e. <em>accuracy</em>) faites par <span class="math notranslate nohighlight">\(h_\theta\)</span> sur l’ensemble de données <span class="math notranslate nohighlight">\(S\)</span>. L’objectif classique en <em>machine learning</em> est de trouver la paramétrisation qui nous permet de minimiser notre <em>loss</em> sur le jeu de données d’apprentissage :</p>
+<div class="math notranslate nohighlight">
+\[\theta^\star=\text{argmin}_{\theta\in\mathbb{R}^p}\frac{1}{n}\sum_i \ell(h_\theta(x_i), y_i)=\text{argmin}_{\theta\in\mathbb{R}^p}\mathcal{L}(h_\theta, S_n).\]</div>
+<p>Cette minimisation n’est cependant pas un critère ultime et on souhaite que la fonction ainsi obtenue se comporte bien sur de nouvelles données jamais observées. Une manière d’estimer ces performances consiste à tester notre fonction sur un jeu de test :</p>
+<div class="math notranslate nohighlight">
+\[\text{Acc}(h_{\theta^\star}, T_m).\]</div>
+<p>Et malheureusement, la paramétrisation qui minimise notre <em>loss</em> n’est pas toujours performante sur de nouvelles données, comme nous avons pu le voir. Pour cela, diverses techniques allant de la réduction du nombre de paramètres aux techniques de régularitation <span class="math notranslate nohighlight">\(\ell_1\)</span> ou <span class="math notranslate nohighlight">\(\ell_2\)</span> en passant par le <em>dropout</em>, etc. sont possibles.</p>
+<p>Cependant, imaginons que notre jeu de test <span class="math notranslate nohighlight">\(T_m\)</span> au lieu d’être un tirage aléatoire représentatif de la distribution de nos données soit choisi par un adversaire dont l’objectif est de mettre en échec notre modèle d’une manière telle qu’un être humain n’y verrait aucune différence. Est-il possible de faire croire à un modèle que la photo d’un STOP est en réalité une limitation de vitesse à 130km/h sans qu’un être humain ne voit la différence. C’est là l’objectif des attaques adversaires.</p>
+<img SRC="https://raw.githubusercontent.com/maximiliense/lmiprp/main/Travaux%20Pratiques/Machine%20Learning/Introduction/data/Adversarial/lemons_result.jpeg" style='width:700px' align="center" >
+<p>Nous commencerons l’étude de ces questions en utilisant un modèle de l’état de l’art déjà pré-entraîné sur la base de données ImagetNet. L’objectif sera dans un premier temps de construire ces attaques adversaires puis, dans un second temps, de construire une procédure d’apprentissage robuste aux attaques adversaires.</p>
+</div>
+<div class="section" id="ii-imports-et-construction-du-modele">
+<h2>II. Imports et construction du modèle<a class="headerlink" href="#ii-imports-et-construction-du-modele" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torchvision</span> <span class="kn">import</span> <span class="n">models</span><span class="p">,</span> <span class="n">transforms</span><span class="p">,</span> <span class="n">datasets</span>
+<span class="kn">from</span> <span class="nn">torch.nn.functional</span> <span class="kn">import</span> <span class="n">softmax</span>
+<span class="kn">from</span> <span class="nn">torch.nn</span> <span class="kn">import</span> <span class="n">CrossEntropyLoss</span><span class="p">,</span> <span class="n">Linear</span><span class="p">,</span> <span class="n">BatchNorm1d</span><span class="p">,</span> <span class="n">ReLU</span><span class="p">,</span> <span class="n">Sequential</span><span class="p">,</span> <span class="n">Module</span>
+<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">Dataset</span> <span class="k">as</span> <span class="n">TorchDataset</span><span class="p">,</span> <span class="n">DataLoader</span>
+<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">optim</span><span class="p">,</span> <span class="n">zeros_like</span><span class="p">,</span> <span class="n">LongTensor</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;ggplot&#39;</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.patches</span> <span class="k">as</span> <span class="nn">patches</span>
+<span class="kn">import</span> <span class="nn">ast</span><span class="o">,</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Le modèle utilisé est <span class="math notranslate nohighlight">\(\texttt{resnet50}\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">resnet</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">resnet50</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">resnet</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+
+<span class="c1"># https://pytorch.org/vision/stable/models.html</span>
+
+<span class="n">normalize</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Normalize</span><span class="p">(</span>
+    <span class="n">mean</span><span class="o">=</span><span class="p">[</span><span class="mf">0.485</span><span class="p">,</span> <span class="mf">0.456</span><span class="p">,</span> <span class="mf">0.406</span><span class="p">],</span>
+    <span class="n">std</span><span class="o">=</span><span class="p">[</span><span class="mf">0.229</span><span class="p">,</span> <span class="mf">0.224</span><span class="p">,</span> <span class="mf">0.225</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">preprocessing_no_normalize</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">Resize</span><span class="p">(</span><span class="mi">256</span><span class="p">),</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">CenterCrop</span><span class="p">(</span><span class="mi">224</span><span class="p">),</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">()</span>
+<span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Notre réseau de neurones fait ses prédictions au travers d’un vecteur de dimension 1000 où chaque dimension est la probabilité (ou un score) associée à la classe de même indice. Afin de pouvoir associer un nom à chacune de ces classes, nous construisons le dictionnaire ci-dessous <span class="math notranslate nohighlight">\(\texttt{classes}\_\texttt{to}\_\texttt{labels}\)</span>.</p>
+<p>Le fichier est téléchargeable à l’adresse suivante :
+<a class="reference external" href="https://raw.githubusercontent.com/maximiliense/lmiprp/main/Travaux%20Pratiques/Machine%20Learning/Introduction/data/Adversarial/imagenet.json">imagenet.json</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># python 3</span>
+<span class="kn">import</span> <span class="nn">urllib.request</span>
+
+<span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlretrieve</span><span class="p">(</span>
+    <span class="s2">&quot;https://raw.githubusercontent.com/maximiliense/lmiprp/main/&quot;</span>\
+    <span class="s2">&quot;Travaux%20Pratiques/Machine</span><span class="si">%20Le</span><span class="s2">arning/Introduction/data/Adversarial/imagenet.json&quot;</span><span class="p">,</span> 
+    <span class="s2">&quot;imagenet.json&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&#39;imagenet.json&#39;, &lt;http.client.HTTPMessage at 0x105785070&gt;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;imagenet.json&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">classes_to_labels</span> <span class="o">=</span> <span class="p">{</span><span class="nb">int</span><span class="p">(</span><span class="n">k</span><span class="p">):</span><span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="iii-la-donnee-a-attaquer">
+<h2>III. La donnée à attaquer<a class="headerlink" href="#iii-la-donnee-a-attaquer" title="Permalink to this headline">¶</a></h2>
+<p>L’image est téléchargeable à l’adresse suivante :
+<a class="reference external" href="https://raw.githubusercontent.com/maximiliense/lmiprp/main/Travaux%20Pratiques/Machine%20Learning/Introduction/data/Adversarial/lemon.jpeg">lemon.jpeg</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># python 3</span>
+
+<span class="kn">import</span> <span class="nn">urllib.request</span>
+<span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlretrieve</span><span class="p">(</span>
+    <span class="s2">&quot;https://raw.githubusercontent.com/maximiliense/lmiprp/main/&quot;</span>\
+    <span class="s2">&quot;Travaux%20Pratiques/Machine</span><span class="si">%20Le</span><span class="s2">arning/Introduction/data/Adversarial/lemon.jpeg&quot;</span><span class="p">,</span> 
+    <span class="s2">&quot;lemon.jpeg&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&#39;lemon.jpeg&#39;, &lt;http.client.HTTPMessage at 0x10d11dc40&gt;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;lemon.jpeg&#39;</span><span class="p">)</span>
+<span class="n">tensor</span> <span class="o">=</span> <span class="n">preprocessing_no_normalize</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">tensor</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/6_adversarial_14_0.png" src="../_images/6_adversarial_14_0.png" />
+</div>
+</div>
+<p><span class="math notranslate nohighlight">\(\texttt{Pytorch}\)</span> prend en entrée des données dont la première dimension représente celle du batch. S’il n’y a qu’une donnée alors cette première dimension doit toujours exister et vaut <span class="math notranslate nohighlight">\(1\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">batch</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">tensor</span><span class="p">)[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="p">:]</span> <span class="c1"># we create a batch</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;[batch size, channels, width, height]:&#39;</span><span class="p">,</span> <span class="n">batch</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[batch size, channels, width, height]: torch.Size([1, 3, 224, 224])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prediction</span> <span class="o">=</span> <span class="n">resnet</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/maximilienservajean/.miniforge3/lib/python3.9/site-packages/torch/nn/functional.py:718: UserWarning: Named tensors and all their associated APIs are an experimental feature and subject to change. Please do not use them for anything important until they are released as stable. (Triggered internally at  /tmp/pip-req-build-gqmopi53/c10/core/TensorImpl.h:1156.)
+  return torch.max_pool2d(input, kernel_size, stride, padding, dilation, ceil_mode)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># dim=1 indique qu&#39;on prédit image par image </span>
+<span class="c1"># rappelez-vous que dim=0 correspond à la dimension du batch</span>
+<span class="n">true_index</span> <span class="o">=</span> <span class="n">prediction</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+<span class="n">probability</span> <span class="o">=</span> <span class="n">softmax</span><span class="p">(</span><span class="n">prediction</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+<span class="n">true_label</span> <span class="o">=</span> <span class="n">classes_to_labels</span><span class="p">[</span><span class="n">true_index</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">true_label</span><span class="p">,</span> <span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">probability</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>lemon : 0.9656189680099487
+</pre></div>
+</div>
+</div>
+</div>
+<p>On observe que notre modèle prédit le bon label avec une très bonne probabilité !</p>
+</div>
+<div class="section" id="iv-une-premiere-attaque">
+<h2>IV. Une première attaque<a class="headerlink" href="#iv-une-premiere-attaque" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="quelques-rappels-d-optimisation">
+<h3>Quelques rappels d’optimisation<a class="headerlink" href="#quelques-rappels-d-optimisation" title="Permalink to this headline">¶</a></h3>
+<p>Revenons à l’apprentissage de notre réseau de neurones. Notre objectif est de trouver une solution à la minimisation suivante :</p>
+<div class="math notranslate nohighlight">
+\[\theta^\star=\text{argmin}_{\theta\in\mathbb{R}^p}\frac{1}{n}\sum_i \ell(h_\theta(x_i), y_i)=\text{argmin}_{\theta\in\mathbb{R}^p}\mathcal{L}(h_\theta, S_n).\]</div>
+<p>Pour cela, nous exploitons le fait que <span class="math notranslate nohighlight">\(\mathcal{L}(h_\theta, S_n)\)</span> est différentiable presque partout en tant que fonction de <span class="math notranslate nohighlight">\(\theta\)</span> et cela afin d’utiliser l’algorithme de descente de gradient. Ce dernier réalise des pas successifs afin de se rapprocher toujours plus du minimum de notre fonction (ou du moins d’un minimum local). Chacun des pas se construit de la manière suivante :</p>
+<div class="math notranslate nohighlight">
+\[\theta^{(t+1)}=\theta^{(t)}-\eta \nabla_\theta\mathcal{L}(h_{\theta^{(t)}}, S_n)\]</div>
+<p>La valeur du gradient <span class="math notranslate nohighlight">\(\nabla_\theta\mathcal{L}(h_{\theta^{(t)}}, S_n)\)</span> est elle obtenue au travers de l’algorithme de <em>backpropagration</em>. Le paramètre <span class="math notranslate nohighlight">\(\eta&gt;0\)</span> est ce qu’on appelle le pas d’apprentissage ou <em>learning rate</em> et permet de controler la stabilité de l’optimisation mais a aussi un effet de régularisation.</p>
+</div>
+<div class="section" id="construction-d-une-attaque-adversaire">
+<h3>Construction d’une attaque adversaire<a class="headerlink" href="#construction-d-une-attaque-adversaire" title="Permalink to this headline">¶</a></h3>
+<p>L’idée d’une attaque adversaire est de s’appuyer sur le même raisonnement mais dans l’espace des données <span class="math notranslate nohighlight">\(\mathbb{R}^d\)</span>. Soit une donnée et son label <span class="math notranslate nohighlight">\((x, y)\)</span>. Notre objectif est ainsi de trouver une perturbation <span class="math notranslate nohighlight">\(\delta\in\mathbb{R}^d\)</span> telle que la nouvelle donnée <span class="math notranslate nohighlight">\(x+\delta\)</span> ne soit plus associée au label <span class="math notranslate nohighlight">\(y\)</span>. Rappelons que notre loss <span class="math notranslate nohighlight">\(\ell\)</span> est une mesure des performances de notre réseau de neurones pour la donnée <span class="math notranslate nohighlight">\((x, y)\)</span>. Ainsi, <span class="math notranslate nohighlight">\(\ell(h_\theta(x), y)\)</span> est d’autant plus faible que notre modèle est bon et d’autant plus forte que notre modèle est mauvais. Nous allons omettre l’indice <span class="math notranslate nohighlight">\(\theta\)</span> de notre modèle puisqu’on le considère maintenant comme une constante.</p>
+<p>L’objectif d’une attaque adversaire est donc de trouver un bruit <span class="math notranslate nohighlight">\(\delta\in\mathbb{R}^d\)</span> de telle manière à ce que <span class="math notranslate nohighlight">\(\ell(h_\theta(x+\delta), y)\)</span> ait la plus grande valeur possible. Ainsi, on peut reformuler l’attaque adversaire via le problème de minimisation suivant :</p>
+<div class="math notranslate nohighlight">
+\[\delta^\star=\text{argmin}_{\delta\in\mathbb{R}^d}-\ell(h_{\theta}(x+\delta), y).\]</div>
+<p>Observez qu’on minimise bien l’opposé de notre <em>loss</em> puisqu’on est en réalité intéressé par une maximisation.</p>
+<div class="admonition-exercice admonition">
+<p class="admonition-title">Exercice</p>
+<p>Complétez l’algorithme suivant permettant de construire notre attaque adversaire.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># we initialize delta with 0</span>
+<span class="n">delta</span> <span class="o">=</span> <span class="n">zeros_like</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+<span class="c1"># we construct our optimizer and loss</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">([</span><span class="n">delta</span><span class="p">],</span> <span class="n">lr</span><span class="o">=</span><span class="mf">2e-1</span><span class="p">)</span>
+<span class="n">criterion</span> <span class="o">=</span> <span class="n">CrossEntropyLoss</span><span class="p">()</span>
+
+<span class="c1"># we construct the target</span>
+<span class="n">target</span> <span class="o">=</span> <span class="n">LongTensor</span><span class="p">([</span><span class="n">true_index</span><span class="p">])</span>
+
+<span class="k">for</span> <span class="n">iteration</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">60</span><span class="p">):</span>
+    <span class="c1">############### COMPLETE HERE ###############</span>
+    <span class="o">...</span>
+    <span class="o">...</span>
+    <span class="o">...</span>
+
+    <span class="k">if</span> <span class="n">iteration</span> <span class="o">%</span> <span class="mi">5</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\r</span><span class="s1">[</span><span class="si">%d</span><span class="s1">] loss: </span><span class="si">%.3f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">iteration</span><span class="p">,</span> <span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()),</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    
+    <span class="o">...</span>
+    <span class="c1">#############################################</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">batch</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">tensor</span> <span class="o">+</span> <span class="n">delta</span><span class="p">)[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="p">:]</span>
+<span class="n">logit</span> <span class="o">=</span> <span class="n">resnet</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\r</span><span class="s1">True class probability:&#39;</span><span class="p">,</span> <span class="n">softmax</span><span class="p">(</span><span class="n">logit</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">,</span> <span class="n">true_index</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+
+<span class="n">new_index</span> <span class="o">=</span> <span class="n">logit</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+<span class="n">new_label</span> <span class="o">=</span> <span class="n">classes_to_labels</span><span class="p">[</span><span class="n">new_index</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;New class:&#39;</span><span class="p">,</span> <span class="n">new_label</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Excellent, nous avons réussi à transformer notre image <span class="math notranslate nohighlight">\(x\)</span> via un bruit <span class="math notranslate nohighlight">\(\delta\)</span> de manière à piéger notre modèle ! On observe de plus que la probabilité de la bonne classe est maintenant ridiculement faible et se retrouve très probablement parmi les classes les moins probables. Observons le résultat de notre attaque adversaire.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="mi">18</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">131</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Notre image transformée $x+\delta$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">((</span><span class="n">tensor</span> <span class="o">+</span> <span class="n">delta</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">132</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Le bruit $\delta$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">((</span><span class="n">delta</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">133</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Le bruit $\delta$ amplifié&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">((</span><span class="mi">50</span><span class="o">*</span><span class="n">delta</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Oups ! Notre image ne ressemble plus à rien. Le bruit ajouté est clairement visible. On pourrait même, si nous ne savions pas qu’il s’agit de citrons, douter et penser qu’il s’agit réellement d’oranges…</p>
+</div>
+</div>
+<div class="section" id="v-un-deuxieme-essai">
+<h2>V. Un deuxième essai<a class="headerlink" href="#v-un-deuxieme-essai" title="Permalink to this headline">¶</a></h2>
+<p>La stratégie va être de contraindre les déformations à rester à l’intérieur d’une boule dont nous pourrons contrôler le rayon et le fixer à de petites valeurs :</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{B}_\epsilon=\{x\in\mathbb{R}^d:\ \lVert x\rVert\leq \epsilon\}\]</div>
+<p>Considérons le cas simple de la norme <span class="math notranslate nohighlight">\(\ell_\infty\)</span> :</p>
+<div class="math notranslate nohighlight">
+\[\lVert x\rVert_\infty=\text{max}_i|x_i|.\]</div>
+<p>Contraindre un vecteur à rester au sein d’une boule de rayon <span class="math notranslate nohighlight">\(\epsilon\)</span> revient pour la norme <span class="math notranslate nohighlight">\(\ell_\infty\)</span> à tronquer chaque coordonnée de manière à ce que sa valeur absolue ne dépasse pas <span class="math notranslate nohighlight">\(\epsilon\)</span>.</p>
+<div class="admonition-exercice admonition">
+<p class="admonition-title">Exercice</p>
+<p>Complétez l’algorithme suivant permettant de construire notre attaque adversaire en contraignant le vecteur <span class="math notranslate nohighlight">\(\delta\)</span> à rester dans une boule de rayon <span class="math notranslate nohighlight">\(\epsilon\)</span>. Utilisez la méthode <span class="math notranslate nohighlight">\(\texttt{delta.data.clamp}\_\texttt{(min, max)}\)</span> qui permet de tronquer la valeur.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># we initialize delta with 0</span>
+<span class="n">delta</span> <span class="o">=</span> <span class="n">zeros_like</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">epsilon</span> <span class="o">=</span> <span class="mf">2.</span><span class="o">/</span><span class="mi">255</span>
+
+<span class="c1"># we construct our optimizer and loss</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">([</span><span class="n">delta</span><span class="p">],</span> <span class="n">lr</span><span class="o">=</span><span class="mf">2e-1</span><span class="p">)</span>
+<span class="n">criterion</span> <span class="o">=</span> <span class="n">CrossEntropyLoss</span><span class="p">()</span>
+
+<span class="c1"># we construct the target</span>
+<span class="n">target</span> <span class="o">=</span> <span class="n">LongTensor</span><span class="p">([</span><span class="n">true_index</span><span class="p">])</span>
+
+<span class="k">for</span> <span class="n">iteration</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">60</span><span class="p">):</span>
+    <span class="c1">############### COMPLETE HERE ###############</span>
+    <span class="c1"># we construct the batch</span>
+    <span class="o">...</span>
+    <span class="o">...</span>
+
+    <span class="k">if</span> <span class="n">iteration</span> <span class="o">%</span> <span class="mi">5</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\r</span><span class="s1">[</span><span class="si">%d</span><span class="s1">] loss: </span><span class="si">%.3f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">iteration</span><span class="p">,</span> <span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()),</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    
+    <span class="o">...</span>
+    <span class="o">...</span>
+    <span class="c1">#############################################</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">batch</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">tensor</span> <span class="o">+</span> <span class="n">delta</span><span class="p">)[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="p">:]</span>
+<span class="n">logit</span> <span class="o">=</span> <span class="n">resnet</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\r</span><span class="s1">True class probability:&#39;</span><span class="p">,</span> <span class="n">softmax</span><span class="p">(</span><span class="n">logit</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">,</span> <span class="n">true_index</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+
+<span class="n">new_index</span> <span class="o">=</span> <span class="n">logit</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+<span class="n">new_label</span> <span class="o">=</span> <span class="n">classes_to_labels</span><span class="p">[</span><span class="n">new_index</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;New class:&#39;</span><span class="p">,</span> <span class="n">new_label</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Affichons maintenant l’image ainsi obtenue et le bruit qui lui est associé :</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="mi">18</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">131</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Notre image transformée $x+\delta$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">((</span><span class="n">tensor</span> <span class="o">+</span> <span class="n">delta</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">132</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Le bruit $\delta$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">((</span><span class="n">delta</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">133</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Le bruit $\delta$ amplifié&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">((</span><span class="mi">50</span><span class="o">*</span><span class="n">delta</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>C’est beaucoup mieux ! Cependant, ce n’est pas en transformant des citrons en oranges que nous arriverons à prendre le contrôle de l’univers ! Ce que nous souhaiterions, c’est tromper le réseau de neurones avec une classe qui n’a RIEN À VOIR !!</p>
+<p>Avant d’aller plus loin, il convient de comprendre un peu mieux pourquoi le réseau de neurones a choisi la classe orange à la place de citron. En minimisant l’opposé de l’entropie croisée afin de trouver notre bruit <span class="math notranslate nohighlight">\(\delta\)</span> nous avons en réalité principalement réduit l’amplitude des logits (i.e. le vecteur de score associé à chaque classe) pour la classe citron… Celle-ci en perdant de l’importance a laissé la place à la deuxième classe la plus probable pour cette image : les oranges.</p>
+</div>
+<div class="section" id="vi-une-attaque-un-petit-peu-plus-ciblee">
+<h2>VI. Une attaque un petit peu plus ciblée ?<a class="headerlink" href="#vi-une-attaque-un-petit-peu-plus-ciblee" title="Permalink to this headline">¶</a></h2>
+<p>Ce que nous voulons ici, c’est minimiser l’importance d’une classe <span class="math notranslate nohighlight">\(A\)</span> tout en augmentant l’importance d’une classe <span class="math notranslate nohighlight">\(B\)</span>. Le problème qui nous intéresse est donc :</p>
+<div class="math notranslate nohighlight">
+\[\delta^\star=\text{argmin}_{\delta\in\mathcal{B}_\epsilon}-\ell(h_{\theta}(x+\delta), y)+\ell(h_{\theta}(x+\delta), y_{\text{target}}),\]</div>
+<p>où <span class="math notranslate nohighlight">\(y_{\text{target}}\)</span> est la classe que nous aimerions voir prédite. Choisissons maintenant la classe que nous visons :</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_index</span> <span class="o">=</span> <span class="mi">589</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Selected target:&#39;</span><span class="p">,</span> <span class="n">classes_to_labels</span><span class="p">[</span><span class="n">target_index</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Selected target: hand blower, blow dryer, blow drier, hair dryer, hair drier
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition-exercice admonition">
+<p class="admonition-title">Exercice</p>
+<p>Complétez l’algorithme suivant permettant de construire notre attaque adversaire en contraignant le vecteur <span class="math notranslate nohighlight">\(\delta\)</span> à rester dans une boule de rayon <span class="math notranslate nohighlight">\(\epsilon\)</span> et en ciblant une classe objectif.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># we initialize delta with 0</span>
+<span class="n">delta</span> <span class="o">=</span> <span class="n">zeros_like</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">epsilon</span> <span class="o">=</span> <span class="mf">2.</span><span class="o">/</span><span class="mi">255</span>
+
+<span class="c1"># we initialize delta with 0</span>
+<span class="n">delta</span> <span class="o">=</span> <span class="n">zeros_like</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># we construct our optimizer and loss</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">([</span><span class="n">delta</span><span class="p">],</span> <span class="n">lr</span><span class="o">=</span><span class="mf">5e-3</span><span class="p">)</span>
+<span class="n">criterion</span> <span class="o">=</span> <span class="n">CrossEntropyLoss</span><span class="p">()</span>
+
+<span class="c1"># we construct the targets</span>
+<span class="n">true_target</span> <span class="o">=</span> <span class="n">LongTensor</span><span class="p">([</span><span class="n">true_index</span><span class="p">])</span>
+<span class="n">target_target</span> <span class="o">=</span> <span class="n">LongTensor</span><span class="p">([</span><span class="n">target_index</span><span class="p">])</span>
+
+<span class="k">for</span> <span class="n">iteration</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+    <span class="c1">############### COMPLETE HERE ###############</span>
+    <span class="o">...</span>
+    <span class="o">...</span>
+    <span class="o">...</span>
+
+    <span class="k">if</span> <span class="n">iteration</span> <span class="o">%</span> <span class="mi">5</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\r</span><span class="s1">[</span><span class="si">%d</span><span class="s1">] loss: </span><span class="si">%.3f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">iteration</span><span class="p">,</span> <span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()),</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    
+    <span class="o">...</span>
+    <span class="o">...</span>
+    <span class="c1">#############################################</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">batch</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">tensor</span> <span class="o">+</span> <span class="n">delta</span><span class="p">)[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="p">:]</span>
+<span class="n">logit</span> <span class="o">=</span> <span class="n">resnet</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\r</span><span class="s1">True class probability:&#39;</span><span class="p">,</span> <span class="n">softmax</span><span class="p">(</span><span class="n">logit</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">,</span> <span class="n">true_index</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+
+<span class="n">new_index</span> <span class="o">=</span> <span class="n">logit</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+<span class="n">new_label</span> <span class="o">=</span> <span class="n">classes_to_labels</span><span class="p">[</span><span class="n">new_index</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;New class:&#39;</span><span class="p">,</span> <span class="n">new_label</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Victoire ! Observons maintenant l’image bruitée ainsi que le bruit associé.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="mi">18</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">131</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Notre image transformée $x+\delta$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">((</span><span class="n">tensor</span> <span class="o">+</span> <span class="n">delta</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">132</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Le bruit $\delta$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">((</span><span class="n">delta</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">133</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Le bruit $\delta$ amplifié&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">((</span><span class="mi">50</span><span class="o">*</span><span class="n">delta</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Nous avons ainsi réussi à choisir notre classe objectif et à perturber notre réseau de neurones avec un bruit invisible à l’oeil nu.</p>
+</div>
+<div class="section" id="vii-la-methode-fast-sign">
+<h2>VII. La méthode “fast-sign”<a class="headerlink" href="#vii-la-methode-fast-sign" title="Permalink to this headline">¶</a></h2>
+<p>Nous avons pu constater dans l’exemple précédent que la construction d’un exemple adversaire demandait de minimiser une fonction de coût (i.e. l’opposé de ce qu’on souhaiterait minimiser en temps normal). Cette minimisation prend un certain temps pour une unique image.</p>
+<p>Il existe une méthode alternative, moins performante en terme d’attaque mais plus efficace computationnellement. Il s’agit de la méthode “fast-sign”. Rappelons que l’objectif d’une attaque adversaire est de construire le bruit suivant :</p>
+<div class="math notranslate nohighlight">
+\[\delta^\star=\text{argmin}_{\delta\in\mathcal{B}_\epsilon}-\ell(h_{\theta}(x+\delta), y).\]</div>
+<p>L’intuition derrière la méthode “fast-sign” est de supposer que la direction du gradient au cours de la minimisation ne changera pas très significativement. Ainsi, au lieu de réaliser plusieurs petits pas successifs, nous pouvons réaliser un grand pas dans la direction du gradient au point de départ. Notons que nous souhaitons que notre vecteur de bruit reste dans une boule en norme infini <span class="math notranslate nohighlight">\(\ell_\infty\)</span>. Cela revient à dire que pour chaque coordonnée positive de notre gradient nous voulons que <span class="math notranslate nohighlight">\(\delta_j=-\epsilon\)</span> et pour chaque coordonnée négative, nous voulons <span class="math notranslate nohighlight">\(\delta_j=\epsilon\)</span> (nous voulons aller le plus loin possible). Notre bruit devient donc :</p>
+<div class="math notranslate nohighlight">
+\[\hat{\delta}=-\epsilon\cdot\text{sign}(\nabla_\delta\ell(h_{\theta}(x+\delta), y)).\]</div>
+<div class="admonition-exercice admonition">
+<p class="admonition-title">Exercice</p>
+<p>À vous d’implémenter la méthode <em>fast-sign</em> dans le cas d’une attaque non ciblée.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># we initialize delta with 0</span>
+<span class="n">delta</span> <span class="o">=</span> <span class="n">zeros_like</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">epsilon</span> <span class="o">=</span> <span class="mf">2.</span><span class="o">/</span><span class="mi">255</span>
+
+<span class="c1"># we construct our loss</span>
+<span class="n">criterion</span> <span class="o">=</span> <span class="n">CrossEntropyLoss</span><span class="p">()</span>
+
+<span class="c1"># we construct the target</span>
+<span class="n">target</span> <span class="o">=</span> <span class="n">LongTensor</span><span class="p">([</span><span class="n">true_index</span><span class="p">])</span>
+
+<span class="n">batch</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">tensor</span> <span class="o">+</span> <span class="n">delta</span><span class="p">)[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="p">:]</span>
+
+<span class="n">pred</span> <span class="o">=</span> <span class="n">resnet</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+
+<span class="c1">############### COMPLETE HERE ###############</span>
+<span class="n">loss</span> <span class="o">=</span> <span class="o">...</span>
+<span class="o">...</span>
+
+<span class="n">delta</span> <span class="o">=</span> <span class="o">...</span>
+<span class="c1">#############################################</span>
+
+<span class="n">batch</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">tensor</span> <span class="o">+</span> <span class="n">delta</span><span class="p">)[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="p">:]</span>
+<span class="n">pred</span> <span class="o">=</span> <span class="n">resnet</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\r</span><span class="s1">True class probability:&#39;</span><span class="p">,</span> <span class="n">softmax</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">,</span> <span class="n">true_index</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+
+<span class="n">new_index</span> <span class="o">=</span> <span class="n">pred</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+<span class="n">new_label</span> <span class="o">=</span> <span class="n">classes_to_labels</span><span class="p">[</span><span class="n">new_index</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;New class:&#39;</span><span class="p">,</span> <span class="n">new_label</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>La performance de l’attaque est grandement réduite, mais fonctionne ! Visualisons le résultat :</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="mi">18</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">131</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Notre image transformée $x+\delta$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">((</span><span class="n">tensor</span> <span class="o">+</span> <span class="n">delta</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">132</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Le bruit $\delta$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">((</span><span class="n">delta</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">133</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Le bruit $\delta$ amplifié&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">((</span><span class="mi">50</span><span class="o">*</span><span class="n">delta</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="admonition-exercice admonition">
+<p class="admonition-title">Exercice</p>
+<p>À vous d’implémenter la méthode <em>fast-sign</em> dans le cas d’une attaque ciblée.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># we initialize delta with 0</span>
+<span class="n">delta</span> <span class="o">=</span> <span class="n">zeros_like</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">epsilon</span> <span class="o">=</span> <span class="mf">50.</span><span class="o">/</span><span class="mi">255</span>
+
+<span class="n">target_index</span> <span class="o">=</span> <span class="mi">589</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Selected target:&#39;</span><span class="p">,</span> <span class="n">classes_to_labels</span><span class="p">[</span><span class="n">target_index</span><span class="p">])</span>
+
+<span class="c1"># we construct our loss</span>
+<span class="n">criterion</span> <span class="o">=</span> <span class="n">CrossEntropyLoss</span><span class="p">()</span>
+
+<span class="c1"># we construct the target</span>
+<span class="n">true_target</span> <span class="o">=</span> <span class="n">LongTensor</span><span class="p">([</span><span class="n">true_index</span><span class="p">])</span>
+<span class="n">target_target</span> <span class="o">=</span> <span class="n">LongTensor</span><span class="p">([</span><span class="n">target_index</span><span class="p">])</span>
+
+<span class="n">batch</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">tensor</span> <span class="o">+</span> <span class="n">delta</span><span class="p">)[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="p">:]</span>
+
+<span class="n">pred</span> <span class="o">=</span> <span class="n">resnet</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+
+<span class="c1">############### COMPLETE HERE ###############</span>
+<span class="o">...</span>
+<span class="o">...</span>
+<span class="o">...</span>
+<span class="c1">#############################################</span>
+
+
+
+<span class="n">batch</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">tensor</span> <span class="o">+</span> <span class="n">delta</span><span class="p">)[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="p">:]</span>
+<span class="n">pred</span> <span class="o">=</span> <span class="n">resnet</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\r</span><span class="s1">True class probability:&#39;</span><span class="p">,</span> <span class="n">softmax</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">,</span> <span class="n">true_index</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+
+<span class="n">new_index</span> <span class="o">=</span> <span class="n">pred</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+<span class="n">new_label</span> <span class="o">=</span> <span class="n">classes_to_labels</span><span class="p">[</span><span class="n">new_index</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;New class:&#39;</span><span class="p">,</span> <span class="n">new_label</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Il est probable que cette attaque ait échoué. En effet, nous avons déjà pu observer que dans le cas non ciblé, notre attaque avait eu beaucoup moins d’effet. L’effet sur les logits de la bonne classe est encore plus réduit lorsque l’attaque devient ciblée. Pour que l’attaque fonctionne, nous devons considérer un déplacement plus significatif qui risque d’être visible à l’écran…</p>
+<p>Testez plusieurs valeurs de <span class="math notranslate nohighlight">\(\epsilon\)</span> et observez le résultat à la fois en termes de prédiction que visuellement avec le code ci-dessous.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="mi">18</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">131</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Notre image transformée $x+\delta$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">((</span><span class="n">tensor</span> <span class="o">+</span> <span class="n">delta</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">132</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Le bruit $\delta$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">((</span><span class="n">delta</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">133</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Le bruit $\delta$ amplifié&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">((</span><span class="mi">50</span><span class="o">*</span><span class="n">delta</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="viii-devenir-robuste-aux-attaques-adversaires">
+<h2>VIII. Devenir robuste aux attaques adversaires<a class="headerlink" href="#viii-devenir-robuste-aux-attaques-adversaires" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="introduction">
+<h3>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h3>
+<p>Comme indiqué plus haut, l’objectif de notre apprentissage est de trouver la solution :</p>
+<div class="math notranslate nohighlight">
+\[\theta^\star=\text{argmin}_{\theta\in\mathbb{R}^p}\frac{1}{n}\sum_i \ell(h_\theta(x_i), y_i)=\text{argmin}_{\theta\in\mathbb{R}^p}\mathcal{L}(h_\theta, S_n).\]</div>
+<p>C’est la paramétrisation qui fait le moins d’erreur (au sens de la loss <span class="math notranslate nohighlight">\(\ell\)</span>) sur notre jeu de données d’apprentissage. Si le choix de notre classe de fonctions et de nos hyperparamètres est bon, alors cette même paramétrisation fonctionnera également sur des données que nous n’avons pas encore vu. Cependant, cette dernière peut être très sensible aux attaques adversaires comme nous avons pu le voir ci-dessus. Une solution consiste à ne pas minimiser notre loss sur le jeu d’apprentissage, mais notre loss dans le pire des cas :</p>
+<div class="math notranslate nohighlight">
+\[\theta^\star=\text{argmin}_{\theta\in\mathbb{R}^p}\frac{1}{n}\sum_i \text{max}_{\delta\in\mathcal{B}_\epsilon}\ell(h_\theta(x_i+\delta), y_i).\]</div>
+<p>Rappelons nous que l’algorithme de descente de gradient a besoin de ce dernier. Il nous faut donc calculer le gradient du maximum. Il se trouve que la solution est assez simple et revient à calculer le gradient au point <span class="math notranslate nohighlight">\(\delta^\star\)</span>, solution du maximum :</p>
+<div class="math notranslate nohighlight">
+\[\nabla_\theta \text{max}_{\delta\in\mathcal{B}_\epsilon}\ell(h_\theta(x_i+\delta), y_i)=\nabla_\theta \ell(h_\theta(x_i+\delta^\star), y_i).\]</div>
+</div>
+<div class="section" id="construction-du-jeu-de-donnees">
+<h3>Construction du jeu de données<a class="headerlink" href="#construction-du-jeu-de-donnees" title="Permalink to this headline">¶</a></h3>
+<p>Nous utiliserons ici le jeu de données MNIST restreint aux chiffres 0 et 1.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mnist_train</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">MNIST</span><span class="p">(</span><span class="s2">&quot;./data&quot;</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">())</span>
+<span class="n">mnist_test</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">MNIST</span><span class="p">(</span><span class="s2">&quot;./data&quot;</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_idx</span> <span class="o">=</span> <span class="n">mnist_train</span><span class="o">.</span><span class="n">targets</span> <span class="o">&lt;=</span> <span class="mi">1</span>
+<span class="n">mnist_train</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">mnist_train</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">train_idx</span><span class="p">]</span>
+<span class="n">mnist_train</span><span class="o">.</span><span class="n">targets</span> <span class="o">=</span> <span class="n">mnist_train</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="n">train_idx</span><span class="p">]</span>
+
+<span class="n">test_idx</span> <span class="o">=</span> <span class="n">mnist_test</span><span class="o">.</span><span class="n">targets</span> <span class="o">&lt;=</span> <span class="mi">1</span>
+<span class="n">mnist_test</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">mnist_test</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">test_idx</span><span class="p">]</span>
+<span class="n">mnist_test</span><span class="o">.</span><span class="n">targets</span> <span class="o">=</span> <span class="n">mnist_test</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="n">test_idx</span><span class="p">]</span>
+
+<span class="n">train_loader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">mnist_train</span><span class="p">,</span> <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">512</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">test_loader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">mnist_test</span><span class="p">,</span> <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">512</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Visualisons la tête de ces données.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">iterator</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">train_loader</span><span class="p">)</span>
+<span class="n">images</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">iterator</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">12</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">16</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">labels</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">()))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">images</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">detach</span><span class="p">())</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/6_adversarial_70_0.png" src="../_images/6_adversarial_70_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="un-cas-simple-le-modele-lineaire-rappels">
+<h3>Un cas simple : le modèle linéaire (Rappels)<a class="headerlink" href="#un-cas-simple-le-modele-lineaire-rappels" title="Permalink to this headline">¶</a></h3>
+<p>La méthode “fast-sign” permet d’obtenir efficacement un adversaire mais le résultat n’est qu’approximatif. Le cas du modèle linéaire est intéressant car il est possible de trouver analytiquement les solutions de la maximisation (l’adversaire). Comme nous l’avons vu, un modèle linéaire cherche à séparer les classes par un ou plusieurs (multi-classes) hyperplans. Supposons que nous soyons dans <span class="math notranslate nohighlight">\(\mathbb{R}^d\)</span>, un hyper-plan est décrit par un vecteur <span class="math notranslate nohighlight">\(\omega\in\mathbb{R}^d\)</span> et un scalaire <span class="math notranslate nohighlight">\(b\in\mathbb{R}\)</span>. Le vecteur <span class="math notranslate nohighlight">\(\omega\)</span> donne l’orientation de l’hyperplan et <span class="math notranslate nohighlight">\(b\)</span> sa “distance” à “l’origine”. Ainsi, un hyperplan est représenté par l’ensemble des points suivants :</p>
+<div class="math notranslate nohighlight">
+\[\{x\in\mathbb{R}^d:\ \langle \omega, x\rangle+b=0\}.\]</div>
+<p>Au-delà des points de l’hyperplan, la quantité <span class="math notranslate nohighlight">\(\langle \omega, x,\rangle+b\)</span> est positive si on est d’un côté de l’hyperplan et négative de l’autre. Considérons le cas binaire et notons nos classes <span class="math notranslate nohighlight">\(\mathcal{Y}=\{-1,+1\}\)</span>. On souhaiterait que le côté négatif de l’hyperplan soit associé aux données dont le label est -1 et de la même manière que le côté positif soit associé aux données dont le label est +1.</p>
+<p>Soit la fonction <span class="math notranslate nohighlight">\(\text{sign}(z)\)</span> qui retourne <span class="math notranslate nohighlight">\(+1\)</span> si <span class="math notranslate nohighlight">\(z&gt;0\)</span> et <span class="math notranslate nohighlight">\(-1\)</span> si <span class="math notranslate nohighlight">\(z\leq 0\)</span>. Le classifieur associé à notre hyperplan se construit donc de la manière suivante :</p>
+<div class="math notranslate nohighlight">
+\[h_\theta(x)=\text{sign}(\langle \omega, x\rangle + b),\ \theta=\{\omega\in\mathbb{R}^d,b\in\mathbb{R}\}.\]</div>
+<p>Par simplicité de notation nous ommettrons à partir de maintenant le biais <span class="math notranslate nohighlight">\(b\)</span>. Notons <span class="math notranslate nohighlight">\(g(x)=\langle \omega, x\rangle\)</span>. Il s’agit d’une fonction qui donne le score de classification. On remarque que la fonction <span class="math notranslate nohighlight">\(g\)</span> prédit le bon label si <span class="math notranslate nohighlight">\(g(x)\)</span> a le même signe que <span class="math notranslate nohighlight">\(y\)</span>. Dit autrement, nos prédictions sont correctes si <span class="math notranslate nohighlight">\(g(x)y&gt;0\)</span>.</p>
+<p>Intuitivement, nous aimerions minimiser la loss 0/1 :</p>
+<div class="math notranslate nohighlight">
+\[\ell_{0/1}(z)=1\{z\leq 0\}.\]</div>
+<p>Cette loss retourne <span class="math notranslate nohighlight">\(1\)</span> si <span class="math notranslate nohighlight">\(z\)</span> est négatif et <span class="math notranslate nohighlight">\(0\)</span> sinon. Appliqué à notre modèle, cela donnée <span class="math notranslate nohighlight">\(\ell(g(x)y)\)</span> qui vaut <span class="math notranslate nohighlight">\(1\)</span> si <span class="math notranslate nohighlight">\(g(x)\)</span> n’a pas le même signe que <span class="math notranslate nohighlight">\(y\)</span>. C’est exactement ce qu’on veut. Cependant, cette loss n’est pas différentiable en <span class="math notranslate nohighlight">\(0\)</span> et son gradient vaut <span class="math notranslate nohighlight">\(0\)</span> partout ailleurs. Cela nous complique la tâche lorsqu’on cherche à optimiser notre modèle. Utilisons donc une loss possédant de meilleures propriétés mathématiques ainsi que certaines garanties pour la classification. Il s’agit de la fonction de perte logistique :</p>
+<div class="math notranslate nohighlight">
+\[\ell(z)=\text{log}(1+e^{-z}).\]</div>
+<p>On remarque que si <span class="math notranslate nohighlight">\(z\)</span> est très grand (<span class="math notranslate nohighlight">\(g\)</span> et <span class="math notranslate nohighlight">\(y\)</span> sont de même signe et le score prédit est grand) alors la fonction est très proche de <span class="math notranslate nohighlight">\(0\)</span>. Si <span class="math notranslate nohighlight">\(z\)</span> est très petit (<span class="math notranslate nohighlight">\(g\)</span> et <span class="math notranslate nohighlight">\(y\)</span> sont de signe différent et le score prédit est grand) alors la fonction diverge vers <span class="math notranslate nohighlight">\(+\infty\)</span>. Il s’agit en réalité exactement de l’entropie croisée composée avec la sigmoid que nous avons déjà vu !</p>
+<p>Finalement, le problème à résoudre dans le cadre d’un classifieur linéaire est le suivant :</p>
+<div class="math notranslate nohighlight">
+\[\theta^\star=\text{argmin}_{\theta=\omega\in\mathbb{R}^d}\frac{1}{n}\sum_i \ell(y\langle \omega, x\rangle).\]</div>
+</div>
+<div class="section" id="construction-du-modele">
+<h3>Construction du modèle<a class="headerlink" href="#construction-du-modele" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">LinearClassifier</span><span class="p">(</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dim_input</span><span class="o">=</span><span class="mi">784</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">LinearClassifier</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">weights</span> <span class="o">=</span> <span class="n">Linear</span><span class="p">(</span><span class="n">dim_input</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dim_input</span> <span class="o">=</span> <span class="n">dim_input</span>
+        
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="c1"># we flatten the image into a vector</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">()[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">dim_input</span><span class="p">)</span>
+        <span class="c1"># we apply our linear model</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="construction-de-la-loss">
+<h3>Construction de la loss<a class="headerlink" href="#construction-de-la-loss" title="Permalink to this headline">¶</a></h3>
+<p>La logistic loss n’est rien d’autre que la sigmoid composée avec l’entropie croisée.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">LogisticLoss</span><span class="p">(</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">LogisticLoss</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y_hat</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="c1"># we flatten the image into a vector</span>
+        <span class="n">y_hat</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">y_hat</span><span class="p">)</span>
+        <span class="n">batch_size</span> <span class="o">=</span> <span class="n">y_hat</span><span class="o">.</span><span class="n">size</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">y</span><span class="o">-</span><span class="mi">1</span>  <span class="c1"># on met les labels entre -1 (anciennement 0) et 1</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="n">y</span><span class="o">*</span><span class="n">y_hat</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">z</span><span class="p">)))</span> <span class="o">/</span> <span class="n">batch_size</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="entrainement">
+<h3>Entraînement<a class="headerlink" href="#entrainement" title="Permalink to this headline">¶</a></h3>
+<p>Notez qu’il s’agit encore et toujours ici de l’entraînement classique où nous ne tenons pas compte des attaques adversaires.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># TODO Décommenter les prints de loss, etc.</span>
+<span class="k">def</span> <span class="nf">train_and_plot</span><span class="p">(</span><span class="n">lr</span><span class="o">=</span><span class="mf">0.005</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">criterion</span><span class="o">=</span><span class="n">LogisticLoss</span><span class="p">()):</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">LinearClassifier</span><span class="p">()</span>
+    <span class="c1"># model.cuda()</span>
+    
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span> <span class="n">momentum</span><span class="o">=</span><span class="mf">0.</span><span class="p">)</span>
+    
+    <span class="n">loss_history</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">running_loss</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">epochs</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">train_loader</span><span class="p">):</span>
+            <span class="n">inputs</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">data</span>
+            <span class="c1"># labels = labels.cuda()</span>
+            <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+            <span class="n">outputs</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+            
+            <span class="n">loss</span> <span class="o">=</span> <span class="n">criterion</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+            <span class="n">running_loss</span> <span class="o">+=</span> <span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">idx</span> <span class="o">%</span> <span class="n">logs</span> <span class="o">==</span> <span class="n">logs</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># print every 2000 mini-batches</span>
+                <span class="c1"># TODO uncomment print(&#39;\r[%d, %5d] loss: %.3f&#39; % (e + 1, idx + 1, running_loss / logs), end=&quot;&quot;)</span>
+                <span class="n">loss_history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">running_loss</span> <span class="o">/</span> <span class="n">logs</span><span class="p">)</span>
+                <span class="n">running_loss</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+            <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span> <span class="c1"># on calcule le gradient</span>
+            <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span> <span class="c1"># on fait un pas d&#39;optimisation</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\r</span><span class="s1">************* Training done! *************&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">loss_history</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Loss&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">model</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">train_and_plot</span><span class="p">(</span><span class="n">lr</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>************* Training done! *************
+</pre></div>
+</div>
+<img alt="../_images/6_adversarial_80_1.png" src="../_images/6_adversarial_80_1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="test-des-performances">
+<h3>Test des performances<a class="headerlink" href="#test-des-performances" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>  <span class="c1"># on passe le modele en mode evaluation</span>
+    <span class="n">correct</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">test_loader</span><span class="p">:</span>
+            <span class="n">images</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">data</span>
+            <span class="c1">#images = images.cuda()</span>
+            <span class="c1">#labels = labels.cuda()</span>
+            <span class="n">outputs</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">images</span><span class="p">)</span>
+            <span class="n">predicted</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">squeeze</span><span class="p">((</span><span class="n">outputs</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">())</span>
+        
+            <span class="n">total</span> <span class="o">+=</span> <span class="n">labels</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">correct</span> <span class="o">+=</span> <span class="p">(</span><span class="n">predicted</span> <span class="o">==</span> <span class="n">labels</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+            
+    <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>  <span class="c1"># on remet le modele en mode apprentissage</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Accuracy du modele sur le jeu de test: </span><span class="si">%d</span><span class="s1"> </span><span class="si">%%</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="n">correct</span> <span class="o">/</span> <span class="n">total</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy du modele sur le jeu de test: 99 %
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="construction-d-une-attaque-adversaire-dans-le-cas-du-modele-lineaire">
+<h3>Construction d’une attaque adversaire dans le cas du modèle linéaire<a class="headerlink" href="#construction-d-une-attaque-adversaire-dans-le-cas-du-modele-lineaire" title="Permalink to this headline">¶</a></h3>
+<p>En reprenant le problème de l’apprentissage robuste aux attaques adversaires tel que défini ci-dessus, notre loss n’est plus directement <span class="math notranslate nohighlight">\(\ell\)</span>. En effet, comme indiqué, nous devons non pas évaluer <span class="math notranslate nohighlight">\(\ell\)</span> en <span class="math notranslate nohighlight">\(x\)</span> mais dans un voisinage de <span class="math notranslate nohighlight">\(x\)</span> tel que le score de notre modèle y est le plus mauvais possible. La <em>loss</em> dans le pire des cas est décrite par l’équation suivante :</p>
+<div class="math notranslate nohighlight">
+\[\text{max}_{\delta\in\mathcal{B}_\epsilon}\ell(y\langle\omega, x+\delta\rangle)=\text{max}_{\delta\in\mathcal{B}_\epsilon}\text{log}(1+e^{-y\langle\omega, x+\delta\rangle}).\]</div>
+<p>Avant d’aller plus loin, observons notre fonction de perte logistique.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">z</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
+<span class="n">y</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">z</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;La fonction de perte logistique&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/6_adversarial_86_0.png" src="../_images/6_adversarial_86_0.png" />
+</div>
+</div>
+<p>Celle-ci semble monotone et décroissante (et convexe). Pour nous en convaincre, calculons la dérivée :</p>
+<div class="math notranslate nohighlight">
+\[\ell^\prime(z)=-\frac{1}{e^z+1}&lt;0,\]</div>
+<p>qui est bien toujours négative confirmant à la fois la monotonie et la décroissance. Pour le fun, constatons que notre fonction est bien également convexe :</p>
+<div class="math notranslate nohighlight">
+\[\ell^{\prime\prime}(z)=\frac{e^z}{(e^z+1)^2}&gt;0.\]</div>
+<p>La fonction de perte logistique est donc même strictement convexe.</p>
+<hr class="docutils" />
+<p>En constatant ainsi que la fonction de perte logistique est monotone ET décroissante et en exploitant la linéarité du produit scalaire, on obtient donc :</p>
+<div class="math notranslate nohighlight">
+\[\text{max}_{\delta\in\mathcal{B}_\epsilon}\ell(y\langle\omega, x+\delta\rangle)=\ell(\text{min}y\langle\omega, x+\delta\rangle)=\ell(y\langle\omega, x\rangle+\text{min}y\langle \omega, \delta\rangle).\]</div>
+<p>Il nous reste donc à chercher la solution du problème de minimisation <span class="math notranslate nohighlight">\(\text{min}_{\delta\in\mathcal{B}_\epsilon}y\langle \omega, \delta\rangle\)</span>
+qui, heureusement pour nous, est convexe avec un domaine de définition compact. Il y a donc un minimum local qui est le minimum global. La norme <span class="math notranslate nohighlight">\(\ell_\infty\)</span> nous permet de considérer chaque dimension séparément (le problème est séparable). Nous voulons donc calculer :</p>
+<div class="math notranslate nohighlight">
+\[\text{min}_{|\delta_j|\leq \epsilon}y\langle \omega_j, \delta_j\rangle.\]</div>
+<p>Si <span class="math notranslate nohighlight">\(\omega_j=0\)</span>, toutes les solutions se valent. Si <span class="math notranslate nohighlight">\(\omega_j\neq 0\)</span> et <span class="math notranslate nohighlight">\(y=-1\)</span>, alors le minimum est atteint lorsque <span class="math notranslate nohighlight">\(\delta_j=\epsilon\cdot\text{sign}(\omega_j)\)</span>. Enfin, si <span class="math notranslate nohighlight">\(y=1\)</span>, alors le minimum est atteint lorsque <span class="math notranslate nohighlight">\(\delta_j=-\epsilon\cdot\text{sign}(\omega_j)\)</span>. De manière générale, nous avons :</p>
+<div class="math notranslate nohighlight">
+\[\delta^\star=-y \epsilon\cdot\text{sign}(\omega)\]</div>
+<p>Nous avons ainsi :</p>
+<div class="math notranslate nohighlight">
+\[\text{min}_{\delta\in\mathcal{B}_\epsilon}y\langle \omega, \delta\rangle=y\langle\omega, -y \epsilon\cdot\text{sign}(\omega)\rangle=-y^2\epsilon\langle \omega, \text{sign}(\omega)\rangle=-\epsilon\lVert\omega\rVert_1.\]</div>
+<p>Un apprentissage robuste aux attaques adversaires minimise donc la loss :</p>
+<div class="math notranslate nohighlight">
+\[\text{max}_{\delta\in\mathcal{B}_\epsilon}\text{log}(1+e^{-y\langle\omega, x\rangle+\epsilon\lVert\omega\rVert_1})=\ell(y\langle\omega, x\rangle-\epsilon\lVert\omega\rVert_1)\]</div>
+<p>On retombe quasiment sur un problème d’optimisation avec une pénalité <span class="math notranslate nohighlight">\(\ell_1\)</span>. On cherche le vecteur <span class="math notranslate nohighlight">\(\omega\)</span> qui maximise les bonnes prédictions mais qui en même temps possède une norme <span class="math notranslate nohighlight">\(\ell_1\)</span> faible.</p>
+<div class="admonition-exercice admonition">
+<p class="admonition-title">Exercice</p>
+<p>En vous appuyant sur les “résultats théoriques” précédent, proposez un code permettant de générer un bruit adversaire.</p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">generate_adversarial_noise</span><span class="p">(</span><span class="n">image_and_label</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
+    <span class="n">imagesize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">)</span>
+    <span class="n">image</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="n">image_and_label</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="n">label</span><span class="o">==</span><span class="mi">0</span> <span class="k">else</span> <span class="n">label</span>
+    <span class="c1">############### COMPLETE HERE ###############</span>
+    <span class="n">noise</span> <span class="o">=</span> <span class="o">...</span>
+    <span class="c1">#############################################</span>
+    
+    <span class="k">return</span> <span class="n">noise</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_images_and_noise</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">noise</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="mi">18</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">131</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Notre image $x$&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">detach</span><span class="p">())</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">132</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Notre image transformée $x + \delta^\star$&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">squeeze</span><span class="p">((</span><span class="n">image</span><span class="o">+</span><span class="n">noise</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">())</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">133</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Notre bruit $\delta^\star$&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">noise</span><span class="o">.</span><span class="n">detach</span><span class="p">()))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">iterator</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">train_loader</span><span class="p">)</span>
+
+<span class="n">images</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">iterator</span><span class="p">)</span>
+<span class="n">noise</span> <span class="o">=</span> <span class="n">generate_adversarial_noise</span><span class="p">((</span><span class="n">images</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">labels</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">model</span><span class="p">)</span>
+
+<span class="n">plot_images_and_noise</span><span class="p">(</span><span class="n">images</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">noise</span><span class="p">)</span>
+
+<span class="n">prediction</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">model</span><span class="p">(</span><span class="n">images</span><span class="p">[</span><span class="mi">0</span><span class="p">])[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">1</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Prédiction:&#39;</span><span class="p">,</span> <span class="n">prediction</span><span class="p">)</span>
+<span class="n">prediction</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">model</span><span class="p">(</span><span class="n">images</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">noise</span><span class="p">)[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">1</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Prédiction avec du bruit:&#39;</span><span class="p">,</span> <span class="n">prediction</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="apprentissage-robuste-aux-attaques-adversaires">
+<h3>Apprentissage robuste aux attaques adversaires<a class="headerlink" href="#apprentissage-robuste-aux-attaques-adversaires" title="Permalink to this headline">¶</a></h3>
+<p>Un apprentissage robuste aux exemples adversaires cherche tout simplement à minimiser le pire des scénarios :</p>
+<div class="math notranslate nohighlight">
+\[\omega^\star=\text{argmin}_{\omega\in\mathbb{R}^d}\frac{1}{n}\sum_i\text{max}_{\delta\in\mathcal{B}_\epsilon}\ell(y_i\langle\omega, x_i +\delta\rangle)=\text{argmin}_{\omega\in\mathbb{R}^d}\frac{1}{n}\sum_i\ell(y_i\langle\omega, x_i\rangle-\epsilon\lVert\omega\rVert_1).\]</div>
+<div class="admonition-exercice admonition">
+<p class="admonition-title">Exercice</p>
+<p>En vous appuyant sur les “résultats théoriques” précédent, proposez un code permettant de construire une loss robuste aux attaques adversaires.</p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">RobustLogisticLoss</span><span class="p">(</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">RobustLogisticLoss</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">epsilon</span> <span class="o">=</span> <span class="n">epsilon</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">weights</span> <span class="o">=</span> <span class="n">weights</span>
+        
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y_hat</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="c1"># we flatten the image into a vector</span>
+        <span class="n">y_hat</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">y_hat</span><span class="p">)</span>
+        <span class="n">batch_size</span> <span class="o">=</span> <span class="n">y_hat</span><span class="o">.</span><span class="n">size</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">y</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="c1">############### COMPLETE HERE ###############</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="o">......</span>
+        <span class="c1">#############################################</span>
+        
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">z</span><span class="p">)))</span> <span class="o">/</span> <span class="n">batch_size</span>
+    
+<span class="n">model</span> <span class="o">=</span> <span class="n">train_and_plot</span><span class="p">(</span><span class="n">lr</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">logs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">criterion</span><span class="o">=</span><span class="n">RobustLogisticLoss</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">weights</span><span class="o">.</span><span class="n">weight</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+<span class="n">iterator</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">train_loader</span><span class="p">)</span>
+
+<span class="n">images</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">iterator</span><span class="p">)</span>
+<span class="n">noise</span> <span class="o">=</span> <span class="n">generate_adversarial_noise</span><span class="p">((</span><span class="n">images</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">labels</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">model</span><span class="p">)</span>
+
+<span class="n">plot_images_and_noise</span><span class="p">(</span><span class="n">images</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">noise</span><span class="p">)</span>
+
+<span class="n">prediction</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">model</span><span class="p">(</span><span class="n">images</span><span class="p">[</span><span class="mi">0</span><span class="p">])[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">1</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Prédiction:&#39;</span><span class="p">,</span> <span class="n">prediction</span><span class="p">)</span>
+<span class="n">prediction</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">model</span><span class="p">(</span><span class="n">images</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">noise</span><span class="p">)[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">1</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Prédiction avec du bruit:&#39;</span><span class="p">,</span> <span class="n">prediction</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Il se trouve que les modèles linéaires sont déjà beaucoup plus robustes aux attaques adversaires que les réseaux de neurones. Malheureusement, les choses sont plus compliquées pour ces dernières puisque il n’y a déjà pas de solution analytique…</p>
+</div>
+</div>
+<div class="section" id="en-resume">
+<h2>En résumé<a class="headerlink" href="#en-resume" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Nous avons vu comment formaliser la notion d’attaque adversaire via un problème d’optimisation sous contrainte :</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\delta^\star=\text{argmin}_{\delta\in\mathcal{B}_\epsilon}-\ell(h_{\theta}(x+\delta), y),\]</div>
+<ul class="simple">
+<li><p>Nous avons vu une manière de cibler l’attaque afin de “forcer” notre modèle à prédire une classe particulière :</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\delta^\star=\text{argmin}_{\delta\in\mathcal{B}_\epsilon}-\ell(h_{\theta}(x+\delta), y)+\ell(h_{\theta}(x+\delta), y_{\text{target}}),\]</div>
+<ul class="simple">
+<li><p>Nous avons contourné le processus d’optimisation via une heuristique, la méthode <em>fast-sign</em> :</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\hat{\delta}=-\epsilon\cdot\text{sign}(\nabla_\delta\ell(h_{\theta}(x+\delta), y)),\]</div>
+<ul class="simple">
+<li><p>Nous avons également formalisé le problème d’apprentissage robuste aux attaques :</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\theta^\star=\text{argmin}_{\theta\in\mathbb{R}^p}\frac{1}{n}\sum_i \text{max}_{\delta\in\mathcal{B}_\epsilon}\ell(h_\theta(x_i+\delta), y_i),\]</div>
+<ul class="simple">
+<li><p>Et avons résolu la maximisation dans le cadre d’un classifieur linéaire :</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\omega^\star=\text{argmin}_{\omega\in\mathbb{R}^d}\frac{1}{n}\sum_i\ell(y_i\langle\omega, x_i\rangle-\epsilon\lVert\omega\rVert_1).\]</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./6_deeplearning"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+            <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="5_transfer_multitask.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title"><em>Transfer learning</em> et apprentissage multi-tâches ☕️☕️</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../7_unsupervised/0_propos_liminaire.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">L’apprentissage non-supervisé</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+        
+        </div>
+    </div>
+    <footer class="footer">
+    <div class="container">
+      <p>
+        
+          By Servajean, Leveau & Chailan<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>

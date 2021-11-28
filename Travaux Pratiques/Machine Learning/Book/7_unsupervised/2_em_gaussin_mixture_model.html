@@ -1,0 +1,1235 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Modèle de Mélange Gaussien et algorithme Expectation-Maximization &#8212; Machine Learning</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet">
+  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Prédiction d’ensembles" href="../8_set_prediction/0_propos_liminaire.html" />
+    <link rel="prev" title="L’Analyse en Composantes Principales ☕️☕️☕️" href="1_principal_component_analysis.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-72WWYCKNK6"></script>
+<script>
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){ dataLayer.push(arguments); }
+                    gtag('js', new Date());
+                    gtag('config', 'G-72WWYCKNK6');
+                </script>
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/logo.jpg" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Machine Learning</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   Introduction
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../0_requisite/rappels_python.html">
+   Rappels de Python et Numpy
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../1_what_is_ml/0_propos_liminaire.html">
+   <em>
+    Machine Learning
+   </em>
+   , initiation
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../1_what_is_ml/1_introduction_ml.html">
+     <em>
+      Machine learning
+     </em>
+     et malédiction de la dimension
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../1_what_is_ml/2_regression_and_classification_trees.html">
+     Les arbres de régression et de classification
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../2_regression/0_propos_liminaire.html">
+   La
+   <em>
+    régression
+   </em>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_regression/1_linear_regression.html">
+     La régression linéaire ☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_regression/2_optimization.html">
+     L’optimisation ☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_regression/3_interpolation.html">
+     Interpolation ☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_regression/4_algo_proximal_lasso.html">
+     Sous-différentiel et le cas du Lasso ☕️☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_regression/5_least_square_qr.html">
+     Les moindres carrés via une décomposition QR (et plus)☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_regression/6_ridge.html">
+     Une analyse de la régularisation Ridge ☕️☕️☕️
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../3_classification/0_propos_liminaire.html">
+   La
+   <em>
+    classification
+   </em>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../3_classification/1_logistic_regression.html">
+     La régression logistique ☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../3_classification/2_fonctions_proxy.html">
+     Les fonctions de perte (loss function) ☕️☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../3_classification/3_bayes_classifier.html">
+     Le classifieur de Bayes ☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../3_classification/4_VC_theory.html">
+     Un modèle formel de l’apprentissage ☕️☕️☕️☕️ (💆‍♂️)
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../4_kernel_methods/0_propos_liminaire.html">
+   Les méthodes à noyaux
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../4_kernel_methods/1_svm.html">
+     Le SVM ou l’hypothèse max-margin ☕️☕️
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../5_ensembles/0_propos_liminaire.html">
+   Les méthodes
+   <em>
+    ensemblistes
+   </em>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../5_ensembles/1_ensembles.html">
+     Méthodes ensemblistes ☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../5_ensembles/2_bayesian_linear_regression.html">
+     Bayesian linear regression ☕️☕️☕️☕️
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../6_deeplearning/0_propos_liminaire.html">
+   <em>
+    deep learning
+   </em>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../6_deeplearning/1_autodiff.html">
+     La différentiation automatique et un début de
+     <em>
+      deep learning
+     </em>
+     ☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../6_deeplearning/2_filters_representation.html">
+     Filtres et espace de représentation des réseaux de neurones ☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../6_deeplearning/3_probabilities_calibration.html">
+     Calibration des probabilités et quelques notions ☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../6_deeplearning/4_regularization_deep.html">
+     Régularisation en
+     <em>
+      deep learning
+     </em>
+     ☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../6_deeplearning/5_transfer_multitask.html">
+     <em>
+      Transfer learning
+     </em>
+     et apprentissage multi-tâches ☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../6_deeplearning/6_adversarial.html">
+     Les attaques adversaires ☕️
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="0_propos_liminaire.html">
+   L’apprentissage non-supervisé
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="1_principal_component_analysis.html">
+     L’Analyse en Composantes Principales ☕️☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Modèle de Mélange Gaussien et algorithme
+     <em>
+      Expectation-Maximization
+     </em>
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../8_set_prediction/0_propos_liminaire.html">
+   Prédiction d’ensembles
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <label for="toctree-checkbox-8">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../8_set_prediction/1_well_defined.html">
+     Jeu d’apprentissage
+     <em>
+      set-valued
+     </em>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../8_set_prediction/2_ill_defined.html">
+     Jeu d’apprentissage uniquement multi-classes ☕️
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../biblio.html">
+   Bibliographie
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/7_unsupervised/2_em_gaussin_mixture_model.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/maximiliense/lmiprp"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/maximiliense/lmiprp/issues/new?title=Issue%20on%20page%20%2F7_unsupervised/2_em_gaussin_mixture_model.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/maximiliense/lmiprp/blob/master/Travaux Pratiques/Machine Learning/Book/7_unsupervised/2_em_gaussin_mixture_model.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="../_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Modèle de Mélange Gaussien et algorithme
+   <em>
+    Expectation-Maximization
+   </em>
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#i-introduction">
+   I. Introduction
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#a-generalites-sur-les-modeles-generatifs">
+     A. Généralités sur les modèles génératifs
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#b-les-variables-cachees">
+     B. Les variables cachées
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#ii-le-modele-de-melange-gaussien-vu-sous-l-angle-des-modeles-a-variables-cachees">
+   II. Le modèle de mélange Gaussien vu sous l’angle des modèles à variables cachées
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#a-echantillonage-et-visualisation-d-un-melange-gaussien">
+     A. Echantillonage et visualisation d’un mélange Gaussien
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#b-l-algortihme-em-pour-estimer-un-modele-de-melange-gaussien">
+     B. L’algortihme EM pour estimer un modèle de mélange gaussien
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#i-premiere-difference-avec-l-estimation-d-une-gaussienne-multivariee-simple">
+       i. Première différence avec l’estimation d’une gaussienne multivariée simple
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ii-optimisation-des-boldsymbol-mu-k">
+       ii. Optimisation des
+       <span class="math notranslate nohighlight">
+        \(\boldsymbol{\mu}_k\)
+       </span>
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#iii-optimisation-des-boldsymbol-sigma-k">
+       iii. Optimisation des
+       <span class="math notranslate nohighlight">
+        \(\boldsymbol{\Sigma}_k\)
+       </span>
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#iv-optimisation-des-pi-k">
+       iv. Optimisation des
+       <span class="math notranslate nohighlight">
+        \(\pi_k\)
+       </span>
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#v-l-algortihme-em">
+       V. L’algortihme EM
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#c-justification-de-l-algorithme-em-approfondissement">
+     C. Justification de l’algorithme EM (approfondissement)
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#i-retour-sur-le-cas-du-melange-gaussien">
+       i. Retour sur le cas du mélange Gaussien
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ii-preuve-que-chaque-iteration-de-em-augmente-la-log-vraissemblance">
+       ii. Preuve que chaque itération de EM augmente la log-vraissemblance
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="modele-de-melange-gaussien-et-algorithme-expectation-maximization">
+<h1>Modèle de Mélange Gaussien et algorithme <em>Expectation-Maximization</em><a class="headerlink" href="#modele-de-melange-gaussien-et-algorithme-expectation-maximization" title="Permalink to this headline">¶</a></h1>
+<div class="admonition-objectifs-de-la-sequence admonition">
+<p class="admonition-title">Objectifs de la séquence</p>
+<ul class="simple">
+<li><p>Être sensibilisé :</p>
+<ul>
+<li><p>aux modèles à variables cachées.</p></li>
+</ul>
+</li>
+<li><p>Être capable :</p>
+<ul>
+<li><p>d’implémenter une GMM avec <span class="math notranslate nohighlight">\(\texttt{sklearn}\)</span>.</p></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="tex2jax_ignore mathjax_ignore section" id="i-introduction">
+<h1>I. Introduction<a class="headerlink" href="#i-introduction" title="Permalink to this headline">¶</a></h1>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/2_em_gaussin_mixture_model_2_0.png" src="../_images/2_em_gaussin_mixture_model_2_0.png" />
+</div>
+</div>
+<p>Dans ce chapitre nous allons considérer des méthodes d’apprentissage non-supervisées probabilistes et plus particulièrement des modèles génératifs dont l’idée générale est de considérer l’échantillon de données observées <span class="math notranslate nohighlight">\(\mathcal{S}_n = \{x_1,  \dots, x_n\}\)</span> comme des variable aléatoires i.i.d de processus générateur <span class="math notranslate nohighlight">\(p_{\mathcal{D}} : x \sim p_{\mathcal{D}}\)</span>. Le cas du mélange gaussien est intéressant car il part du principe que nos échantillons sont simulées selon une loi dont la densité a la forme suivante :</p>
+<div class="math notranslate nohighlight">
+\[q(x;\theta)=\sum_{j=1}^K\pi_jf(x;\mu_j,\sigma_j),\]</div>
+<p>où <span class="math notranslate nohighlight">\(\theta=\{\pi, \mu, \sigma\}\)</span>. Le processus générateur d’un tel modèle, comme nous allons le voir, fonctionne de la manière suivante :</p>
+<ol class="simple">
+<li><p>On simule, selon une catégorielle de paramètre <span class="math notranslate nohighlight">\(\pi\)</span>,</p></li>
+<li><p>On simule selon la loi <span class="math notranslate nohighlight">\(f\)</span> associée au “groupe” choisi précédemment.</p></li>
+</ol>
+<p>Notre objectif est de calculer <span class="math notranslate nohighlight">\(\theta\)</span> tel que la vraisemblance de nos données <span class="math notranslate nohighlight">\(\mathcal{S}_n\)</span> est maximisée. Cela se passe par des algorithmes comme le <em>Expectation-Maximization</em> qui introduiront une variable latente <span class="math notranslate nohighlight">\(z\)</span> indiquant le “groupe” utilisé afin de générer nos échantillon. Dans ces approches, les représentations des données seront considérées comme ces nouvelles variables aléatoires <span class="math notranslate nohighlight">\(z\)</span> qu’on appellera des variables latentes (ou cachées) qui prendront leur valeur conjointement avec les données observées <span class="math notranslate nohighlight">\(x\)</span>.</p>
+<div class="tip admonition">
+<p class="admonition-title">Loi et processus générateur</p>
+<p>On utilisera par abus de langage l’expression <span class="math notranslate nohighlight">\(p\)</span> ou <span class="math notranslate nohighlight">\(q_{\theta}\)</span> pour dénoter à la fois le processus générateur des données, la loi de probabilité lui correspondant et la densité de probabilité associée.</p>
+</div>
+<div class="section" id="a-generalites-sur-les-modeles-generatifs">
+<h2>A. Généralités sur les modèles génératifs<a class="headerlink" href="#a-generalites-sur-les-modeles-generatifs" title="Permalink to this headline">¶</a></h2>
+<p>Nous pouvons dans un premier temps introduire un objectif général des modèles non-supervisés génératifs. Il s’agit de trouver dans une famille paramétrique de distributions de probabilité <span class="math notranslate nohighlight">\(\mathcal{Q}=\{q_\theta, \theta\in\mathbb{R}^p\}\)</span> une paramétrisation <span class="math notranslate nohighlight">\(q_{\theta}(x) = q(x|{\theta})\)</span> qui “explique le mieux” les données observées. Comme pour le cas de l’apprentissage supervisé, nous pouvons considérer le critère de maximum de vraisemblance. Nous cherchons donc :</p>
+<div class="math notranslate nohighlight">
+\[\theta_{\text{ML}} = \arg \max_{\theta} \Big[q(\mathcal{S}_n|\theta)\Big] = \arg \max_{\theta } \Big[\prod_i q(x_i|\theta)\Big].\]</div>
+<p>Ou bien, de manière équivalente, le maximum de la log-vraissemblance :</p>
+<div class="math notranslate nohighlight">
+\[\theta_{\text{ML}} = \arg \max_{\theta} \Big[\sum_i \ln\Big(q(x_i|\theta)\Big)\Big].\]</div>
+<div class="admonition-exercice admonition">
+<p class="admonition-title">Exercice</p>
+<p>Soit <span class="math notranslate nohighlight">\(\mathcal{S}_n\sim \mathcal{N}(\mu,1)^n\)</span> un échantillon simulé selon une loi normale de variance <span class="math notranslate nohighlight">\(1\)</span> et de moyenne <span class="math notranslate nohighlight">\(\mu\)</span>. Quel est le <span class="math notranslate nohighlight">\(\mu\)</span> qui maximise la vraisemblance ?</p>
+</div>
+</div>
+<div class="section" id="b-les-variables-cachees">
+<h2>B. Les variables cachées<a class="headerlink" href="#b-les-variables-cachees" title="Permalink to this headline">¶</a></h2>
+<p>Le calcul de ce maximum de vraisemblance dans le cas d’un modèle de mélange nécessite d’introduire de nouvelles variables : les variables cachées. Ces dernières seront les représentations de nos observations. Cela se fait en démarginalisant </p>
+<div class="math notranslate nohighlight">
+\[q_{\theta}(x) = \int q_{\theta}(x,z)dz = \int q_{\theta}(z) q_{\theta}(x|z)dz\]</div>
+<div class="tip admonition">
+<p class="admonition-title">Remarque</p>
+<p>On souhaite éviter de tomber sur une distribution où les variables <span class="math notranslate nohighlight">\(z\)</span> et <span class="math notranslate nohighlight">\(x\)</span> sont indépendantes :</p>
+<div class="math notranslate nohighlight">
+\[q_{\theta}(x,z) = q_{\theta}(x)q_{\theta}(z) \Leftrightarrow q_{\theta}(z|x) = q_{\theta}(z)\]</div>
+<p>car on souhaite décomposer notre loi initiale en atomes qui seraient plus faciles à estimer. Pour le mélange, si on “connait” le groupe d’un de nos points (ce serait notre <span class="math notranslate nohighlight">\(z\)</span>), alors on peut plus facilement estimer la loi du groupe (i.e. c’est l’estimation simple de la loi et non du mélange complet). De plus, dans le cas où les <span class="math notranslate nohighlight">\(x\)</span> seraient indépendants des <span class="math notranslate nohighlight">\(z\)</span>, ce dernier ne pourrait en aucun cas être une bonne représentation.</p>
+</div>
+<p>Nous allons donc chercher à ajouter une variable latente <span class="math notranslate nohighlight">\(z\)</span> pertinente ! Dans le cas de variables cachées discrètes (comme c’est le cas dans ce TP) :</p>
+<div class="math notranslate nohighlight">
+\[q_{\theta}(x) = \sum_{k=1}^K q_{\theta}(z=k)q_{\theta}(x|z=k)\]</div>
+<p>Nous allons donc chercher à maximiser la log-vraissemblance de la forme :</p>
+<div class="math notranslate nohighlight">
+\[\theta_{\text{ML}} = \arg\max_{\theta } \Big[\sum_i \ln\Big(\sum_{k=1}^c q_{\theta}(z=k)q_{\theta}(x_i|z=k)\Big)\Big]\]</div>
+<div class="tip admonition">
+<p class="admonition-title">Remarque</p>
+<p>Une façon de voir les variables cachées qui va nous intéresser dans le cadre de l’apprentissage de représentation est comme des facteurs explicatifs des données. C’est-à-dire un nombre restreint de variables telles qu’on peut expliquer/prédire une observation sachant ces variables. On peut voir ça comme des facteurs causaux tels que si on connait la cause première d’une chose on peut en déduire une observation complexes qui en découle ou du moins une part significative. En ce sens, les facteurs explicatifs peuvent être considérés comme une abstraction, une représentation plus structurée et compacte des observations. Ainsi une manière de voir le processus générateur des données est d’échantillonner la cause, la valeur du facteur explicatif <span class="math notranslate nohighlight">\(z_i \sim p(z)\)</span>, puis sachant la cause, échantillonner l’observation qui en découle par la conditionnelle <span class="math notranslate nohighlight">\(x_i \sim p(x |z=z_i)\)</span>.</p>
+</div>
+</div>
+</div>
+<div class="tex2jax_ignore mathjax_ignore section" id="ii-le-modele-de-melange-gaussien-vu-sous-l-angle-des-modeles-a-variables-cachees">
+<h1>II. Le modèle de mélange Gaussien vu sous l’angle des modèles à variables cachées<a class="headerlink" href="#ii-le-modele-de-melange-gaussien-vu-sous-l-angle-des-modeles-a-variables-cachees" title="Permalink to this headline">¶</a></h1>
+<p>La famille des mixtures de distributions mettent en jeu des densités de probabilité sous la forme d’une combinaison pondérée de densités d’une même famille. Dans ce TP nous allons nous concentrer sur le cas des mixtures de gaussiennes multi-variées. Les modèles de mixtures de gausiennes consistent à modéliser une densité de probabilité où les données sont distribuées localement selon des distributions normales multi-variées. Dans ce cas, l’indice de la gaussienne à laquelle apaprtient une donnée particulière est la variable cachée qui lui est associée. La totalité de l’information résiduelle est ensuite portée par la densité de probabilité de la composante gaussienne. En notant <span class="math notranslate nohighlight">\(z=k\)</span> l’identifiant d’une gausienne qui possède ces paramètres propres <span class="math notranslate nohighlight">\((\boldsymbol{\mu}_k, \boldsymbol{\Sigma}_k)\)</span>, la densité de probabilité du processus générateur des données prend la forme suivante :</p>
+<div class="math notranslate nohighlight">
+\[p(\boldsymbol{x}; \boldsymbol{\mu},\boldsymbol{\Sigma}) = \sum_{Z=k}^K p(z=k) f(\boldsymbol{x};\boldsymbol{\mu}_k, \boldsymbol{\Sigma}_k)\]</div>
+<p>où on notera par la suite <span class="math notranslate nohighlight">\(p(z=k) = \pi_k\)</span> qui correspond à la probabilité a priori de la <span class="math notranslate nohighlight">\(k\)</span>-ième composante (on a donc <span class="math notranslate nohighlight">\(\sum_k \pi_k = 1\)</span>) et <span class="math notranslate nohighlight">\(f(\boldsymbol{x};\boldsymbol{\mu}_k, \boldsymbol{\Sigma}_k)\)</span> correspond à la densité de probabilité de la loi normale multi-variée <span class="math notranslate nohighlight">\(\mathcal{N}(\boldsymbol{x}|\boldsymbol{\mu}_k, \boldsymbol{\Sigma}_k)\)</span> de moyenne et matrice de variance-covariance <span class="math notranslate nohighlight">\((\boldsymbol{\mu}_k, \boldsymbol{\Sigma}_k)\)</span> :</p>
+<div class="math notranslate nohighlight">
+\[f(\boldsymbol{x};\boldsymbol{\mu}_k, \boldsymbol{\Sigma}_k) = \frac{1}{(2\pi)^{\frac{d}{2}}|\boldsymbol{\Sigma}_k|^{\frac{1}{2}}} \exp^{-\frac{1}{2}(\boldsymbol{x} - \boldsymbol{\mu}_k)^T)\boldsymbol{\Sigma}_k^{-1}(\boldsymbol{x} - \boldsymbol{\mu}_k)}\]</div>
+<p>Il s’agit de la densité de probabilité d’observer une variable <span class="math notranslate nohighlight">\(x\)</span> sachant la valeur de la variable cachée que l’on pourra noter <span class="math notranslate nohighlight">\(f_k(\boldsymbol{x})\)</span> par la suite par soucis de lisibilité. On peut aussi calculer quelques quantités d’intérêt qui vont nous servir par la suite comme la densité de probabilité de la variable cachée a posteriori de l’observation <span class="math notranslate nohighlight">\(x\)</span> grace à la formule de Bayes :</p>
+<div class="math notranslate nohighlight">
+\[p(z=k|x) = \frac{p(z=k)p(x|z=k)}{\sum_j p(z=j)p(x|z=j)} = \frac{\pi_k f(\boldsymbol{x};\boldsymbol{\mu}_k, \boldsymbol{\Sigma}_k)}{\sum_j \pi_j f(\boldsymbol{x};\boldsymbol{\mu}_j, \boldsymbol{\Sigma}_j)}\]</div>
+<div class="section" id="a-echantillonage-et-visualisation-d-un-melange-gaussien">
+<h2>A. Echantillonage et visualisation d’un mélange Gaussien<a class="headerlink" href="#a-echantillonage-et-visualisation-d-un-melange-gaussien" title="Permalink to this headline">¶</a></h2>
+<p>Comme expliqué précédemment, on peut donc voir le processus générateur correspondant à une mixture gaussienne comme se structurant en deux étapes. La première étape consiste en une variable catégorielle à <span class="math notranslate nohighlight">\(K\)</span> valeurs dont les probabilités respectives sont les <span class="math notranslate nohighlight">\(\pi_k\)</span>. Puis connaissant la valeur tirée <span class="math notranslate nohighlight">\(k\)</span>; il s’agit ensuite d’échantillonner selon une loi normale multivariée de paramètres <span class="math notranslate nohighlight">\((\boldsymbol{\mu}_k, \boldsymbol{\Sigma}_k)\)</span>. Le code ce dessous nous permet selon ce procédé d’échantillonnage de générer et visualiser un jeu de données distribué selon une mixture de gaussienne ou les composantes ont été choisies avec des paramètres aléatoires.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">multivariate_normal</span> 
+<span class="o">%</span><span class="k">matplotlib</span> inline
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">12.0</span><span class="p">,</span> <span class="mf">8.0</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;ggplot&#39;</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">MultivariateGaussianMixture</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>        
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">probas</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_components</span> <span class="o">=</span> <span class="n">n_components</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mu</span> <span class="o">=</span> <span class="p">[]</span>
+        
+        <span class="k">if</span> <span class="n">probas</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">probas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n_components</span><span class="p">)</span><span class="o">/</span><span class="n">n_components</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">probas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">probas</span><span class="p">)</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">probas</span><span class="p">)</span>
+            <span class="k">assert</span> <span class="n">s</span> <span class="o">&lt;</span> <span class="mf">1.0</span> <span class="o">+</span> <span class="mf">1e-10</span> <span class="ow">and</span> <span class="n">s</span> <span class="o">&gt;</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="mf">1e-10</span><span class="p">,</span> <span class="s2">&quot;Probabilites should add up to 1, but s = </span><span class="si">%f</span><span class="s2">&quot;</span><span class="o">%</span><span class="k">s</span>
+
+        <span class="n">scale</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">scater</span> <span class="o">=</span> <span class="mi">10</span>
+        <span class="n">sigma</span> <span class="o">=</span> <span class="n">scale</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_components</span><span class="p">):</span>
+            <span class="n">Q</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">random_rotation</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">sigma</span> <span class="p">),</span> <span class="n">Q</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mu</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="n">scater</span><span class="p">,</span><span class="n">scater</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="n">d</span><span class="p">))</span>
+            
+    <span class="k">def</span> <span class="nf">random_rotation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+        <span class="n">Q</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">qr</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="n">d</span><span class="p">,</span><span class="n">d</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="n">Q</span>
+    
+    <span class="k">def</span> <span class="nf">sample_categorical</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">N</span><span class="p">):</span>
+        <span class="n">idx_sort</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">probas</span><span class="p">)</span>
+        <span class="n">probas_sort</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">probas</span><span class="p">[</span><span class="n">idx_sort</span><span class="p">]</span>
+
+        <span class="n">c_probas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">probas_sort</span><span class="p">[:</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_components</span><span class="p">)])</span>   
+        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">N</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+            <span class="n">c</span> <span class="o">=</span> <span class="n">c_probas</span><span class="o">-</span><span class="n">x</span>
+            <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">idx_sort</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">n_components</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="n">c</span><span class="o">&gt;=</span><span class="mi">0</span><span class="p">])]</span>
+        <span class="k">return</span> <span class="n">X</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">generate_samples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">N</span><span class="p">):</span>
+        <span class="n">Z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sample_categorical</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mu</span><span class="p">[</span><span class="n">z</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span><span class="p">[</span><span class="n">z</span><span class="p">])</span> <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="n">Z</span><span class="p">]),</span> <span class="n">Z</span>
+    
+    
+<span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">means</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">gmd</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_std</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">cumul</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="c1"># Plot the dataset</span>
+    <span class="k">if</span> <span class="n">c</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">c</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span>
+        
+    <span class="c1"># Plot the means</span>
+    <span class="k">if</span> <span class="n">means</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">means</span><span class="p">:</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">([</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">s</span><span class="o">=</span><span class="mi">55</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Plot the concentric ellipses to vizualize covariance matrixes of the components</span>
+    <span class="k">if</span> <span class="n">gmd</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">stds</span> <span class="o">=</span> <span class="p">[</span><span class="n">n_std</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">cumul</span><span class="p">:</span>
+            <span class="n">stds</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_std</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+
+        <span class="k">for</span> <span class="n">std</span> <span class="ow">in</span> <span class="n">stds</span><span class="p">:</span>
+            <span class="c1"># For each component, we look for the maximum variance direction carried by the eigen vectors</span>
+            <span class="c1"># The parameters of the elipse are defined by the std deviations ssociated to the sqrt of the eigen values.</span>
+            <span class="k">for</span> <span class="n">mu_k</span><span class="p">,</span> <span class="n">sigma_k</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">gmd</span><span class="o">.</span><span class="n">mu</span><span class="p">,</span> <span class="n">gmd</span><span class="o">.</span><span class="n">sigma</span><span class="p">):</span>
+                <span class="n">e</span><span class="p">,</span><span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">sigma_k</span><span class="p">)</span>
+                <span class="n">top_e</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="o">-</span><span class="n">e</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+                <span class="n">a</span><span class="o">=</span><span class="n">std</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">e</span><span class="p">[</span><span class="n">top_e</span><span class="p">])</span>
+                <span class="n">b</span><span class="o">=</span><span class="n">std</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">e</span><span class="p">[</span><span class="n">top_e</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+                <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+                <span class="n">Ell</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">a</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="p">,</span> <span class="n">b</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">t</span><span class="p">)])</span>  
+
+                <span class="n">cos_rot</span><span class="o">=</span><span class="n">w</span><span class="p">[</span><span class="n">top_e</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">w</span><span class="p">[</span><span class="n">top_e</span><span class="p">])</span>
+                <span class="n">sin_rot</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">cos_rot</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+                <span class="n">R_rot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">cos_rot</span> <span class="p">,</span> <span class="o">-</span><span class="n">sin_rot</span><span class="p">],[</span><span class="n">sin_rot</span> <span class="p">,</span><span class="n">cos_rot</span><span class="p">]])</span>
+
+                <span class="n">Ell_rot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="n">Ell</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Ell</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+                    <span class="n">Ell_rot</span><span class="p">[:,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">R_rot</span><span class="p">,</span><span class="n">Ell</span><span class="p">[:,</span><span class="n">i</span><span class="p">])</span>
+
+                <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">mu_k</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">Ell_rot</span><span class="p">[</span><span class="mi">0</span><span class="p">,:]</span> <span class="p">,</span> <span class="n">mu_k</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">Ell_rot</span><span class="p">[</span><span class="mi">1</span><span class="p">,:],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+
+<span class="n">MGM</span> <span class="o">=</span> <span class="n">MultivariateGaussianMixture</span><span class="p">(</span><span class="n">n_components</span> <span class="o">=</span> <span class="mi">6</span><span class="p">)</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">MGM</span><span class="o">.</span><span class="n">generate_samples</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+
+<span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2_em_gaussin_mixture_model_6_0.png" src="../_images/2_em_gaussin_mixture_model_6_0.png" />
+</div>
+</div>
+<p>Ici nous visualisons une mixture de <span class="math notranslate nohighlight">\(K=6\)</span> composantes gaussiennes tirées aléatoirement (avec les <span class="math notranslate nohighlight">\(\pi_k\)</span> choisis de manière uniforme: <span class="math notranslate nohighlight">\(\pi_k=\frac{1}{K} \forall k\)</span>).  Dans la suite de ce TP, nous allons voir comment nous pouvons estimer les paramètres d’un modèle génératif de ce type par un algorithme itératif qui, à chaque itération, va proposer un jeu de paramètres qui maximise de plus en plus la log-vraissemblance de ce modèle : l’algorithme Expectation Maximization (EM).</p>
+<p>Une application ce genre de modèles génératifs qui vient directement à l’esprit est le clustering. C’est-à-dire  qu’on veut trouver des groupes de données similaires. La particularité ici est que nous choisissons dans une famille de distributions où les clusters sont décrits par des normales multi-variées. On peut donc voir ce modèle de mixtures gaussien comme une sorte de généralisation de l’algorithme <em>K-means</em> (nous reviendrons sur le lien entre ces deux concepts un peu plus loin).</p>
+</div>
+<div class="section" id="b-l-algortihme-em-pour-estimer-un-modele-de-melange-gaussien">
+<h2>B. L’algortihme EM pour estimer un modèle de mélange gaussien<a class="headerlink" href="#b-l-algortihme-em-pour-estimer-un-modele-de-melange-gaussien" title="Permalink to this headline">¶</a></h2>
+<p>Dans cette partie nous allons tenter uniquement à partir du jeu de données généré précédement de retrouver les paramètres <span class="math notranslate nohighlight">\(\theta^{\star} = \Big\{ \pi_k^{\star}, \boldsymbol{\mu}_k^{\star}, \boldsymbol{\Sigma}_k^{\star} \Big\}_{k \leq K}\)</span> du vrai processus qui nous a permis de générer ce jeu de données. On va donc se placer dans une famille paramétrique de distributions <span class="math notranslate nohighlight">\(\mathcal{Q}\)</span> telle que chaque distribution <span class="math notranslate nohighlight">\(q_{\theta} \in \mathcal{Q}\)</span> s’écrit sous la forme :</p>
+<div class="math notranslate nohighlight">
+\[q_{\theta}(\boldsymbol{x}) =  \sum_{k=1}^K \pi_k f(\boldsymbol{x};\boldsymbol{\mu}_k, \boldsymbol{\Sigma}_k)\]</div>
+<p>Et on cherchera donc à trouver le jeu de paramètres qui va maximiser la log-vraissemblance suivante :</p>
+<div class="math notranslate nohighlight">
+\[\ln\Big(q_{\theta}(\mathcal{S}_n)\Big) = \sum_i^n \ln \Bigg(\sum_k^K \pi_k f(\boldsymbol{x}_i;\boldsymbol{\mu}_k, \boldsymbol{\Sigma}_k) \Bigg)\]</div>
+<div class="section" id="i-premiere-difference-avec-l-estimation-d-une-gaussienne-multivariee-simple">
+<h3>i. Première différence avec l’estimation d’une gaussienne multivariée simple<a class="headerlink" href="#i-premiere-difference-avec-l-estimation-d-une-gaussienne-multivariee-simple" title="Permalink to this headline">¶</a></h3>
+<p>On rappelle que dans le cas d’une loi gausienne multivariée simple, la log-vraissemblance est :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\ln\Big(q_{\theta}(\mathcal{S}_n)\Big) &amp;= \sum_i^n \ln \Big(f(\boldsymbol{x}_i;\boldsymbol{\mu}_k, \boldsymbol{\Sigma}_k)\Big)= \sum_i^n \ln \Bigg( \frac{1}{(2\pi)^{\frac{d}{2}}|\boldsymbol{\Sigma}|^{\frac{1}{2}}}  \exp^{-\frac{1}{2}(\boldsymbol{x}_i - \boldsymbol{\mu})^T)\boldsymbol{\Sigma}^{-1}(\boldsymbol{x}_i - \boldsymbol{\mu})} \Bigg)\\
+&amp; = -\frac{1}{2} \Bigg[\sum_i^n d\ln (2\pi) + ln\Big(|\boldsymbol{\Sigma}|\Big) + (\boldsymbol{x}_i - \boldsymbol{\mu})^T\boldsymbol{\Sigma}^{-1}(\boldsymbol{x}_i - \boldsymbol{\mu})\Bigg]
+\end{aligned}\end{split}\]</div>
+<p>Il existe donc une forme close où annuler le gradient de cette expression par rapport à <span class="math notranslate nohighlight">\(\boldsymbol{\mu}\)</span> et <span class="math notranslate nohighlight">\(\boldsymbol{\Sigma}\)</span> conduit à une unique solution.</p>
+<div class="admonition-exercice admonition">
+<p class="admonition-title">Exercice</p>
+<p>Calculer le gradient de la log-vraissemblance de la loi normale multivariée par rapport à ses paramètres <span class="math notranslate nohighlight">\(\boldsymbol{\mu}\)</span> et <span class="math notranslate nohighlight">\(\boldsymbol{\Sigma}\)</span> puis trouver l’expression qui annule le gradient.</p>
+</div>
+<div class="hint dropdown admonition">
+<p class="admonition-title">Indices</p>
+<p><span class="math notranslate nohighlight">\(\nabla_{\Sigma}log(|\Sigma|) = \Sigma^{-1}\)</span> et <span class="math notranslate nohighlight">\(\nabla_{\Sigma}\boldsymbol{a}^T\Sigma^{-1}\boldsymbol{b} = -\Sigma^{-1}\boldsymbol{b}\boldsymbol{a}^T\Sigma^{-1}\)</span>.</p>
+</div>
+<p>Dans la suite nous allons voir que ce qui nous arrange dans le cas la loi normale multivariée simple est que le logarithme de l’expression de la log-vraissemblance “annule” l’exponentielle ce qui rend l’expression de la log-vraisemblance et son gradient tractable. Malheureusement, dans le cas du mélange gaussien, une somme d’exponentielles se trouve dans le logarithme et cela rend les expressions beaucoup plus complexes. C’est là que l’algorithme EM prend toute sa pertinence car il va nous permettre malgré tout de trouver un processus itératif qui augmente la log-vraisemblance a chaque itération.</p>
+</div>
+<div class="section" id="ii-optimisation-des-boldsymbol-mu-k">
+<h3>ii. Optimisation des <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_k\)</span><a class="headerlink" href="#ii-optimisation-des-boldsymbol-mu-k" title="Permalink to this headline">¶</a></h3>
+<p>Calculons l’expression du gradient de la log vraissemblance par rapports aux paramètres <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_k\)</span> :</p>
+<div class="math notranslate nohighlight">
+\[\nabla_{\boldsymbol{\mu}_k} \ln\Big(q_{\theta}\mathcal{S}_n\Big) = \Bigg[\sum_i^n  \frac{\partial ln\Big( \sum_j \pi_j f_j(\boldsymbol{x}_i) \Big)}{\partial f_k(\boldsymbol{x}_i)}  \nabla_{\boldsymbol{\mu}_k} f_k(\boldsymbol{x}_i) \Bigg] = \boldsymbol{0}\]</div>
+<p>où l’on a utilisé la règle de composition des dérivées. Le premier facteur nous donne :</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial ln\Big( \sum_j \pi_j f_j(\boldsymbol{x}_i) \Big)}{\partial f_k(\boldsymbol{x}_i)} = \frac{\pi_k }{\sum_{j}^K \pi_j f(\boldsymbol{x}_i;\boldsymbol{\mu}_j, \boldsymbol{\Sigma}_j)}\]</div>
+<hr class="docutils" />
+<p>Concernant <span class="math notranslate nohighlight">\(\nabla_{\boldsymbol{\mu}_k} f_k(\boldsymbol{x}_i)\)</span>, introduisons pour des raisons de lisibilité les notations suivnates :</p>
+<div class="math notranslate nohighlight">
+\[f(\boldsymbol{x}_i;\boldsymbol{\mu}_k, \boldsymbol{\Sigma}_k)  = f_k(\boldsymbol{x}_i) = \frac{e^{g(\boldsymbol{x}_i, \boldsymbol{\mu}_k,\boldsymbol{\Sigma}_k)}}{C(\boldsymbol{\Sigma_k})}\]</div>
+<p>où :</p>
+<div class="math notranslate nohighlight">
+\[C(\boldsymbol{\Sigma_k}) = (2\pi)^{\frac{d}{2}}|\boldsymbol{\Sigma}_k|^{\frac{1}{2}}\]</div>
+<p>et :</p>
+<div class="math notranslate nohighlight">
+\[g(\boldsymbol{x}_i, \boldsymbol{\mu}_k,\boldsymbol{\Sigma}_k) = g_k(\boldsymbol{x}_i) = -\frac{1}{2}(\boldsymbol{x}_i - \boldsymbol{\mu}_k)^T)\boldsymbol{\Sigma}_k^{-1}(\boldsymbol{x}_i - \boldsymbol{\mu}_k).\]</div>
+<hr class="docutils" />
+<p>En utilisant à nouveau la règle de dérivation d’une composition, nous obtenons :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\nabla_{\boldsymbol{\mu}_k} f_k(\boldsymbol{x}_i) &amp;= \underbrace{\partial_{g_k(\boldsymbol{x}_i)}\Bigg(\frac{e^{g_k(\boldsymbol{x}_i)}}{C(\boldsymbol{\Sigma_k})}\Bigg)}_{ = \frac{e^{g_k(\boldsymbol{x}_i)}}{C(\boldsymbol{\Sigma_k})} = f(\boldsymbol{x}_i; \boldsymbol{\mu}_k,\boldsymbol{\Sigma}_k)} \nabla_{{\boldsymbol{\mu}_k}} g(\boldsymbol{x}_i, \boldsymbol{\mu}_k,\boldsymbol{\Sigma}_k)\\
+&amp; = f(\boldsymbol{x}_i; \boldsymbol{\mu}_k,\boldsymbol{\Sigma}_k)
+\underbrace{
+    \nabla_{\boldsymbol{\mu}_k}\Bigg[ -\frac{1}{2}(\boldsymbol{x}_i - \boldsymbol{\mu}_k)^T)\boldsymbol{\Sigma}_k^{-1}(\boldsymbol{x}_i - \boldsymbol{\mu}_k)\Bigg]
+}_{
+    =(-\frac{1}{2})(-2)\boldsymbol{\Sigma}_k^{-1}(\boldsymbol{x}_i - \boldsymbol{\mu}_k)
+}
+\end{aligned}\end{split}\]</div>
+<p>En injectant nos résultats intermédiaires, nous obtenons finalement :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\nabla_{\boldsymbol{\mu}_k} \ln\Big(q_{\theta}\mathcal{S}^n\Big) &amp;= \Bigg[\sum_i^n  \underbrace{\frac{\pi_k }{\sum_{j}^K \pi_j f(\boldsymbol{x}_i;\boldsymbol{\mu}_j, \boldsymbol{\Sigma}_j)}f(\boldsymbol{x}_i;\boldsymbol{\mu}_k, \boldsymbol{\Sigma}_k) }_{q_{\theta}(z=k|\boldsymbol{x}_i, \boldsymbol{\mu}_k,\boldsymbol{\Sigma}_k)} (-\frac{1}{2}) (-2) \boldsymbol{\Sigma}^{-1}(\boldsymbol{x}_i - \boldsymbol{\mu}_k)\Bigg]\\
+&amp; = \Bigg[\sum_i^n  q_{\theta}(z=k|\boldsymbol{x}_i, \boldsymbol{\mu}_k,\boldsymbol{\Sigma}_k) \boldsymbol{\Sigma}^{-1}(\boldsymbol{x}_i - \boldsymbol{\mu}_k)\Bigg] = \boldsymbol{0}
+\end{aligned}\end{split}\]</div>
+<p>Remarquons qu’apparait la probabilité a posteriori “que le facteur explicatif <span class="math notranslate nohighlight">\(k\)</span> ait causé” l’observation <span class="math notranslate nohighlight">\(x_i\)</span>.</p>
+<p>Nous noterons ce terme <span class="math notranslate nohighlight">\( \gamma_k^i = q_{\theta}(z=k|\boldsymbol{x}_i, \boldsymbol{\mu}_k,\boldsymbol{\Sigma}_k)\)</span>. En multipliant par <span class="math notranslate nohighlight">\(\boldsymbol{\Sigma}_k\)</span> des deux coté nous pouvons résoudre et nous trouvons :</p>
+<div class="math notranslate nohighlight">
+\[\boldsymbol{\mu}_k = \frac{1}{\sum_i^n \gamma_k^i}\sum_i^n  \gamma_k^i\boldsymbol{x}_i\]</div>
+<p>Remarquons qu’il s’agit quasiment du paramètre de maximum de vraisemblance pour une unique loi normale auquel on rajoute la pondération d’appartenance à la <span class="math notranslate nohighlight">\(k\)</span>-ième composante.</p>
+<div class="tip admonition">
+<p class="admonition-title">Lien avec KMeans</p>
+<p>Constatons un premier lien avec <em>K-Means</em> en analysant ce à quoi correspond la probabilité <em>a posteriori</em> <span class="math notranslate nohighlight">\(\gamma_k^i = q_{\theta}(z=k|\boldsymbol{x}_i, \boldsymbol{\mu}_k,\boldsymbol{\Sigma}_k)\)</span> :</p>
+<div class="math notranslate nohighlight">
+\[\gamma_k^i = \frac{\pi_k f(\boldsymbol{x}_i;\boldsymbol{\mu}_k, \lambda\boldsymbol{I}) }{\sum_j \pi_j f(\boldsymbol{x}_i;\boldsymbol{\mu}_j, \lambda\boldsymbol{I}) } \propto \frac{\pi_k \exp(-\frac{1}{2\lambda}\lVert\boldsymbol{x}_i - \boldsymbol{\mu}_k\rVert_2^2 )}{\sum_j \pi_j \exp(-\frac{1}{2\lambda}\lVert\boldsymbol{x}_i - \boldsymbol{\mu}_j\rVert_2^2)}\]</div>
+<p>où la matrice de covariance est fixée à la matrice identité. Nous pouvons remarquer qu’il s’agit d’un score de la distance au centre de la composante normalisée. Plus une observation se rapproche du centre <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_k\)</span> d’une gaussienne, plus la contribution qui domine au dénominateur correspond à la contribution de la <span class="math notranslate nohighlight">\(k\)</span>-ième composante et donc plus probabilité à posteriori <span class="math notranslate nohighlight">\(q_{\theta}(z=k|\boldsymbol{x}_i, \boldsymbol{\mu}_k,\boldsymbol{\Sigma}_k)\)</span> tend vers <span class="math notranslate nohighlight">\(1\)</span> et toutes les autres <span class="math notranslate nohighlight">\(q_{\theta}(z=j|\boldsymbol{x}_i, \boldsymbol{\mu}_j,\boldsymbol{\Sigma}_j) \forall j \neq k\)</span> tendent vers <span class="math notranslate nohighlight">\(0\)</span>. Il est possible de voir <span class="math notranslate nohighlight">\(\gamma_k^i\)</span> comme un score d’assignation d’une observation <span class="math notranslate nohighlight">\(x_i\)</span> à la <span class="math notranslate nohighlight">\(k\)</span>-ième gaussienne.</p>
+<p>De plus, remarquons que si la variance des composantes tend vers <span class="math notranslate nohighlight">\(0\)</span>, alors la probabilité <em>a posteriori</em> tend vers <span class="math notranslate nohighlight">\(1\)</span> pour une observation <span class="math notranslate nohighlight">\(\boldsymbol{x}_i\)</span> :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\lim\limits_{\lambda \rightarrow 0} q_{\theta}(z=k|\boldsymbol{x}_i, \boldsymbol{\mu}_k, \lambda \boldsymbol{I}) = \lim\limits_{\lambda \rightarrow 0} \frac{\pi_k \exp(-\frac{1}{2\lambda}\lVert\boldsymbol{x}_i - \boldsymbol{\mu}_k\rVert_2^2 )}{\sum_j \pi_j \exp(-\frac{1}{2\lambda}\lVert\boldsymbol{x}_i - \boldsymbol{\mu}_j\rVert_2^2)} = r_k^i =
+\begin{cases}
+1 \text{ si } k = \arg \min_j\lVert\boldsymbol{x}_i - \boldsymbol{\mu}_j\rVert_2^2 \\
+0 \text{ sinon }
+\end{cases}\end{split}\]</div>
+<p>et nous retrouvons exactement la fonction d’assignation de KMeans et le calcul de <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_k\)</span> devient:</p>
+<div class="math notranslate nohighlight">
+\[\boldsymbol{\mu}_k = \frac{1}{\sum_i^n r_k^i}\sum_i^n  r_k^i\boldsymbol{x}_i\]</div>
+<p>qui correspond exactement à la procédure de mise à jour des centroïde de l’algorithme de K-Means en calculant le barycentre des points assignés du <span class="math notranslate nohighlight">\(k\)</span>_ième cluster.</p>
+<p>Une autre quantité intéréssante à considérer est la suivante:</p>
+<div class="math notranslate nohighlight">
+\[N_k  = \sum_i^n q_{\theta}(z=k|\boldsymbol{x}_i, \boldsymbol{\mu}_k,\boldsymbol{\Sigma}_k) = \sum_i^n \gamma_k^i\]</div>
+<p>qui n’est d’autre que l’estimateur de l’espérance du nombre d’observations assignées à la <span class="math notranslate nohighlight">\(k\)</span>-ième composante gaussienne. Observons l’analogie avec KMeans où <span class="math notranslate nohighlight">\(N_k = \sum_i^n r_k^i\)</span> est exactement le nombre de points associés au <span class="math notranslate nohighlight">\(k\)</span>_ième cluster.</p>
+</div>
+</div>
+<div class="section" id="iii-optimisation-des-boldsymbol-sigma-k">
+<h3>iii. Optimisation des <span class="math notranslate nohighlight">\(\boldsymbol{\Sigma}_k\)</span><a class="headerlink" href="#iii-optimisation-des-boldsymbol-sigma-k" title="Permalink to this headline">¶</a></h3>
+<p>Procédons de manière très similaire pour le calcul des matrices de variance-covariances. La seule différence sera que cette fois-ci, il faudra calculer le gradient de <span class="math notranslate nohighlight">\(f_k(\boldsymbol{x}_i)\)</span> par rapport à <span class="math notranslate nohighlight">\(\boldsymbol{\Sigma}_k\)</span> :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\nabla_{\boldsymbol{\Sigma}_k} \ln\Big(q_{\theta}\mathcal{S}_n\Big) &amp;= \Bigg[\sum_i^n  \frac{\partial ln\Big( \sum_j \pi_j f_j(\boldsymbol{x}_i) \Big)}{\partial f_k(\boldsymbol{x}_i)}  \nabla_{\boldsymbol{\Sigma}_k} f_k(\boldsymbol{x}_i) \Bigg] \\
+&amp;=  \Bigg[\sum_i^n  \frac{\pi_k  }{\sum_{j}^K \pi_j f(\boldsymbol{x}_i;\boldsymbol{\mu}_j, \boldsymbol{\Sigma}_j)} \nabla_{{\boldsymbol{\Sigma}_k}} \Bigg(\frac{e^{g_k(\boldsymbol{x}_i)}}{C(\boldsymbol{\Sigma_k})}\Bigg) \Bigg]
+\end{aligned}\end{split}\]</div>
+<p>En rappellant l’expression de la dérivée d’un quotient <span class="math notranslate nohighlight">\(\Big(\frac{u}{v}\Big)' = \frac{u'v-uv'}{v^2}\)</span> :</p>
+<div class="math notranslate nohighlight">
+\[\nabla_{{\boldsymbol{\Sigma}_k}} \Bigg(\frac{e^{g_k(\boldsymbol{x}_i)}}{C(\boldsymbol{\Sigma_k})}\Bigg) = \frac{\nabla_{\boldsymbol{\Sigma}_k} \Big(e^{g_k(\boldsymbol{x}_i)}\Big) C(\boldsymbol{\Sigma_k}) -  e^{g_k(\boldsymbol{x}_i)} \nabla_{\boldsymbol{\Sigma}_k} \Big(C(\boldsymbol{\Sigma_k})\Big)}{C(\boldsymbol{\Sigma_k})^2}\]</div>
+<p>avec :</p>
+<div class="math notranslate nohighlight">
+\[\nabla_{\boldsymbol{\Sigma}_k} \Big(e^{g_k(\boldsymbol{x}_i)}\Big) = \underbrace{\partial_{g_k(\boldsymbol{x}_i)}\Big(e^{g_k(\boldsymbol{x}_i)}\Big)}_{e^{g_k(\boldsymbol{x}_i)}} \nabla_{\boldsymbol{\Sigma}_k} \Big(g_k(\boldsymbol{x}_i)\Big)\]</div>
+<p>En factorisant par <span class="math notranslate nohighlight">\(\frac{e^{g_k(\boldsymbol{x}_i)}}{C(\boldsymbol{\Sigma_k})} = f_k(\boldsymbol{x}_i)\)</span>, et en se rappellant que <span class="math notranslate nohighlight">\(\frac{u'}{u} = ln(u)'\)</span>, nous obtenons :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\nabla_{{\boldsymbol{\Sigma}_k}} \Bigg(\frac{e^{g_k(\boldsymbol{x}_i)}}{C(\boldsymbol{\Sigma_k})}\Bigg)&amp;= f_k(\boldsymbol{x}_i)
+\Bigg[
+\nabla_{\boldsymbol{\Sigma}_k} \Big(g_k(\boldsymbol{x}_i)\Big) - \underbrace{\frac{\nabla_{\boldsymbol{\Sigma}_k} \Big(C(\boldsymbol{\Sigma_k})\Big)}{C(\boldsymbol{\Sigma_k})}}_{ = \nabla_{\boldsymbol{\Sigma}_k} ln \Big(C(\boldsymbol{\Sigma_k})\Big)}
+\Bigg]\\
+&amp;= f_k(\boldsymbol{x}_i)
+\Bigg[
+\nabla_{\boldsymbol{\Sigma}_k} \Big[-\frac{1}{2}(\boldsymbol{x}_i - \boldsymbol{\mu}_k)^T)\boldsymbol{\Sigma}_k^{-1}(\boldsymbol{x}_i - \boldsymbol{\mu}_k)\Big] - \nabla_{\boldsymbol{\Sigma}_k} \Big[ \frac{d}{2} ln(2\pi) + \frac{1}{2}ln\Big(|\boldsymbol{\Sigma}_k| \Big) \Big]
+\Bigg]\\
+&amp;= f_k(\boldsymbol{x}_i) (-\frac{1}{2})\Bigg[-\boldsymbol{\Sigma}^{-1} (\boldsymbol{x}_i - \boldsymbol{\mu})(\boldsymbol{x}_i - \boldsymbol{\mu})^T\boldsymbol{\Sigma}^{-1} + \boldsymbol{\Sigma}_k^{-1}\Bigg]
+\end{aligned}\end{split}\]</div>
+<p>Ainsi, afin d’annuler le gradient, nous obtenons :</p>
+<div class="math notranslate nohighlight">
+\[\nabla_{\boldsymbol{\Sigma}_k} \ln\Big(q_{\theta}\mathcal{S}^n\Big)  = -\frac{1}{2} \sum_i^n  \Bigg[ \underbrace{\Bigg[ \frac{\pi_k  f_k(\boldsymbol{x}_i)}{\sum_{j}^K \pi_j f(\boldsymbol{x}_i;\boldsymbol{\mu}_j, \boldsymbol{\Sigma}_j)}\Bigg]}_{\gamma_k^i} \Bigg[-\boldsymbol{\Sigma}^{-1} (\boldsymbol{x}_i - \boldsymbol{\mu})(\boldsymbol{x}_i - \boldsymbol{\mu})^T\boldsymbol{\Sigma}^{-1} + \boldsymbol{\Sigma}_k^{-1}\Bigg]\Bigg] = \boldsymbol{0}\]</div>
+<p>Multiplions à droite et à gauche par <span class="math notranslate nohighlight">\(\boldsymbol{\Sigma}_k\)</span> et résolvons :</p>
+<div class="math notranslate nohighlight">
+\[\boldsymbol{\Sigma}_k = \frac{1}{N_k}\sum_i^n  \gamma_k^i (\boldsymbol{x}_i - \boldsymbol{\mu}_k)(\boldsymbol{x}_i - \boldsymbol{\mu}_k)^T\]</div>
+<p>Où nous retrouvons, de manière analogue au calculs des <span class="math notranslate nohighlight">\(\mu_k\)</span>, les expression des matrices de covariances empiriques et où la contribution de chaque échantillon est pondérées par sa probabilité a posteriori d’avoir été généré par la <span class="math notranslate nohighlight">\(k\)</span>-ième composante gaussienne.</p>
+</div>
+<div class="section" id="iv-optimisation-des-pi-k">
+<h3>iv. Optimisation des <span class="math notranslate nohighlight">\(\pi_k\)</span><a class="headerlink" href="#iv-optimisation-des-pi-k" title="Permalink to this headline">¶</a></h3>
+<p>Concernant l’opimisation des <span class="math notranslate nohighlight">\(\pi_k\)</span>, il ne suffit pas simplement d’annuler le gradient de log vraissemblance car nous avons la contrainte que leur somme sur <span class="math notranslate nohighlight">\(k\)</span> doit valoir <span class="math notranslate nohighlight">\(1\)</span> (il s’agit d’une distribution de probabilité). Pour cela, nous allons donc considerer un problème d’optimisation sous contrainte. Définissons le Lagrangien <span class="math notranslate nohighlight">\(\mathcal{L}\Big( \ln(q_{\theta}\mathcal{S}_n) , \lambda\Big)\)</span> (voir la séquence “L’optimisation”) qui intègre cette contrainte :</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{L}\Big( \ln(q_{\theta}\mathcal{S}_n) , \lambda\Big) = \sum_i^n ln \Big(\sum_k \pi_k f_k(\boldsymbol{x}_i) \Big) + \lambda \Big(\sum_k \pi_k - 1\Big)\]</div>
+<p>Annuler la dérivée du Lagrangien par rapport à notre multiplicateur de Lagrange <span class="math notranslate nohighlight">\(\lambda\)</span> nous permet bien de retrouver notre contrainte :</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial \mathcal{L}\Big( \ln(q_{\theta}\mathcal{S}_n) , \lambda\Big)}{\partial \lambda} =  \Big(\sum_k \pi_k - 1\Big) = 0 \Leftrightarrow \sum_k \pi_k  =  1\]</div>
+<p>Annulons maintenant la dérivée par rapport à un <span class="math notranslate nohighlight">\(\pi_k\)</span> donnée :</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial \mathcal{L}\Big( \ln(q_{\theta}\mathcal{S}_n) , \lambda\Big)}{\partial \pi_k} = \sum_i^n \frac{\partial ln\Big( \sum_j \pi_j f_j(\boldsymbol{x}_i) \Big)}{\partial \pi_k}  + \lambda = \sum_i^n \frac{f_k(\boldsymbol{x}_i)}{\sum_j \pi_j f_j(\boldsymbol{x}_i)} + \lambda = 0\]</div>
+<p>En mutipliant par <span class="math notranslate nohighlight">\(\pi_k\)</span> des deux cotés et en sommant sur <span class="math notranslate nohighlight">\(k\)</span>, nous obtenons :</p>
+<div class="math notranslate nohighlight">
+\[\sum_k \pi_k\sum_i^n \frac{f_k(\boldsymbol{x}_i)}{\sum_j \pi_j f_j(\boldsymbol{x}_i)} + \lambda  \sum_k \pi_k= 0 = \sum_i^n \underbrace{\frac{\sum_k \pi_kf_k(\boldsymbol{x}_i)}{\sum_j \pi_j f_j(\boldsymbol{x}_i)}}_{=1} + \lambda  \underbrace{\sum_k \pi_k}_{=1}\]</div>
+<p>et le multiplicateur de Lagrange vaut ainsi <span class="math notranslate nohighlight">\(\lambda = -n\)</span>. Nous avons également :</p>
+<div class="math notranslate nohighlight">
+\[\underbrace{\sum_i^n \frac{\pi_k f_k(\boldsymbol{x}_i)}{\sum_j \pi_j f_j(\boldsymbol{x}_i)}}_{=\sum_i^n \gamma_k^i=N_k} + \lambda \pi_k = 0 \Leftrightarrow \lambda = -\frac{N_k}{\pi_k} = -n\]</div>
+<p>ce qui nous donne :</p>
+<div class="math notranslate nohighlight">
+\[\pi_k  = \frac{N_k}{n}\]</div>
+<p>C’est ainsi l’estimateur de l’espérance de la fraction de points assignés à la composante <span class="math notranslate nohighlight">\(k\)</span>.</p>
+</div>
+<div class="section" id="v-l-algortihme-em">
+<h3>V. L’algortihme EM<a class="headerlink" href="#v-l-algortihme-em" title="Permalink to this headline">¶</a></h3>
+<p>Les formules précédentes de nous donnent pas une solution en forme close. En effet, ces dernières sont reliées mutuellement :</p>
+<div class="math notranslate nohighlight">
+\[\gamma_k^i = \frac{\pi_k f(\boldsymbol{x}_i;\boldsymbol{\mu}_k, \boldsymbol{\Sigma}_k) }{\sum_j \pi_j f(\boldsymbol{x}_i;\boldsymbol{\mu}_j, \boldsymbol{\Sigma}_j)}.\]</div>
+<p>À chaque fois que nous changerons la valeurs de ces paramètres, les probabilités <em>a posteriori</em> changerons aussi ce qui donnera lieu à de nouvelles valeurs des paramètres et ainsi de suite.</p>
+<p>Nous pouvons néanmoins définir une procédure itérative en alternant ces deux phases de calculs des <span class="math notranslate nohighlight">\(\gamma_k^i\)</span> puis des valeurs optimales des paramêtres en gardant fixe les probabilités <em>a posteriori</em>. Cela donne lieu à l’algorithme Expectation Maximization (EM) qui dans le cas de l’estimateur de modèles de mélange Gaussien peut se formuler ainsi :</p>
+<ol>
+<li><p><strong>Etape E (Expectation)</strong> : Calculer les valeurs en utilisant la valeur courante des paramètres <span class="math notranslate nohighlight">\(\theta(t) = \Big\{ \pi_k(t), \boldsymbol{\mu}_k(t), \boldsymbol{\Sigma}_k(t) \Big\}_{k \leq K}\)</span> (qu’on initialisera aléatoirement pour la première itération) :</p>
+<div class="math notranslate nohighlight">
+\[\gamma_k^i (t+1) = \frac{\pi_k(t) f(\boldsymbol{x}_i;\boldsymbol{\mu}_k(t), \boldsymbol{\Sigma}_k(t) }{\sum_j \pi_j f(\boldsymbol{x}_i;\boldsymbol{\mu}_j(t), \boldsymbol{\Sigma}_j(t)}\]</div>
+<p>et :</p>
+<div class="math notranslate nohighlight">
+\[N_k(t+1) = \sum_i \gamma_k^i(t+1)\]</div>
+</li>
+<li><p><strong>Etape M (Maximization)</strong> : Calculer les nouvelles valeurs des paramètres en utilisant les valeurs des probabilités <em>a posteriori</em> calculées à l’étape précédente:</p>
+<div class="math notranslate nohighlight">
+\[\pi_k(t+1) =   \frac{N_k(t+1)}{n}\]</div>
+<div class="math notranslate nohighlight">
+\[\boldsymbol{\mu}_k(t+1) = \frac{1}{N_k(t+1)}\sum_i^n  \gamma_k^i(t+1)\boldsymbol{x}_i \]</div>
+<div class="math notranslate nohighlight">
+\[\boldsymbol{\Sigma}_k(t+1) = \frac{1}{N_k(t+1)}\sum_i^n  \gamma_k^i(t+1) (\boldsymbol{x}_i - \boldsymbol{\mu}_k(t))(\boldsymbol{x}_i - \boldsymbol{\mu}_k(t))^T\]</div>
+</li>
+</ol>
+<p>Etant donné ce que nous avons vu précédement sur le lien entre l’algorithme EM et KMeans, il est possible d’initialiser les paramètres <span class="math notranslate nohighlight">\(\big\{\boldsymbol{\mu}_k(0)\big\}_{k \leq K}\)</span> non pas aléatoirement, mais avec les centroïdes calculés par un algorithme KMeans. C’est souvent ce qui est fait en pratique à la fois pour la qualité et le temps de convergence notamment dans les cas où <span class="math notranslate nohighlight">\(d\)</span> est grand et que le nombre de paramètres l’est aussi. Par la suite, nous allons implémenter les éléments de base de l’algorithme EM dans le cas du mélange Gaussien et nous utiliserons les deux modes d’initialisation.</p>
+<div class="admonition-exercice admonition">
+<p class="admonition-title">Exercice</p>
+<p>Dans le code qui suit, remplissez les méthodes <em>compute_posteriors</em>, <em>compute_priors</em>, <em>compute_mu</em>, <em>compute_sigma</em> correspondant respectivement aux calculs des <span class="math notranslate nohighlight">\(\gamma_k^i(t)\)</span>, <span class="math notranslate nohighlight">\(\pi_k(t)\)</span>, <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_k(t)\)</span>, <span class="math notranslate nohighlight">\(\boldsymbol{\Sigma}_k(t)\)</span>. Complétez aussi le code <em>evaluate_log_likelyhood</em> qui vous permettra d’évaluer la log-vraissemblance pour les valeurs courantes des paramètres du modèle&amp;nbsp:</p>
+<div class="math notranslate nohighlight">
+\[\ln\Big(q_{\theta(t)}(\mathcal{S}^n)\Big) = \sum_i^n \ln \Bigg(\sum_k^K \pi_k(t) f(\boldsymbol{x}_i;\boldsymbol{\mu}_k(t), \boldsymbol{\Sigma}_k(t)) \Bigg)\]</div>
+<p>On utilisera la méthode <em>multivariate_normal(mu, sigma).pdf(X)</em> de <em>scipy.stats</em> pour calculer les <span class="math notranslate nohighlight">\(f(\boldsymbol{x}_i|\boldsymbol{\mu}_k(t), \boldsymbol{\Sigma}_k(t))\)</span>.</p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
+<span class="k">class</span> <span class="nc">GMM</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="s2">&quot;kmeans&quot;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_components</span> <span class="o">=</span> <span class="n">n_components</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_iter</span> <span class="o">=</span> <span class="n">n_iter</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">init</span> <span class="o">=</span> <span class="n">init</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">pi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n_components</span><span class="p">)</span><span class="o">/</span><span class="n">n_components</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span>  <span class="o">=</span> <span class="p">[</span><span class="mi">20</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_components</span><span class="p">)]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mu</span>     <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">d</span><span class="p">))</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_components</span><span class="p">)]</span>
+        
+    <span class="k">def</span> <span class="nf">evaluate_log_likelihood</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="c1">#### Complete the code here #### or die #######################################</span>
+        <span class="k">return</span> <span class="o">...</span>
+        <span class="c1">################################################################################</span>
+    
+    <span class="k">def</span> <span class="nf">compute_posteriors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="c1">#Compute numerator of the posterior from Baye&#39;s Rule</span>
+        <span class="c1">#### Complete the code here #### or die #######################################</span>
+        <span class="o">...</span>
+            
+        <span class="k">return</span> <span class="o">...</span>
+        <span class="c1">################################################################################</span>
+    
+    <span class="k">def</span> <span class="nf">compute_priors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+        <span class="c1">#### Complete the code here #### or die #######################################</span>
+        <span class="k">return</span> <span class="o">...</span>
+        <span class="c1">################################################################################</span>
+               
+    <span class="k">def</span> <span class="nf">compute_mu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">pi</span><span class="p">):</span>
+        <span class="c1">#### Complete the code here #### or die #######################################</span>
+        <span class="k">return</span> <span class="o">...</span>
+        <span class="c1">################################################################################</span>
+    
+    <span class="k">def</span> <span class="nf">compute_sigma</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">pi</span><span class="p">,</span> <span class="n">mu</span><span class="p">):</span>
+        <span class="c1">#### Complete the code here #### or die #######################################</span>
+        <span class="k">return</span> <span class="o">...</span>
+        <span class="c1">################################################################################</span>
+        
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">compute_posteriors</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)[:,</span> <span class="mi">0</span><span class="p">]</span>
+    
+    <span class="k">def</span> <span class="nf">fit_predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="n">LLH</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">LLH</span>
+    
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="n">LLH_history</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># Initialize mu with KMeans</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">init</span> <span class="o">==</span> <span class="s2">&quot;kmeans&quot;</span><span class="p">:</span>      
+            <span class="bp">self</span><span class="o">.</span><span class="n">mu</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_components</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">cluster_centers_</span>
+        
+        <span class="c1"># Peform EM iterations</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_iter</span><span class="p">):</span>
+            <span class="n">LLH_history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">evaluate_log_likelihood</span><span class="p">(</span><span class="n">X</span><span class="p">))</span>
+            <span class="c1"># TODO uncomment print(&quot;\rIteration: %d - LogLikelyHood = %f&quot;%(i,LLH_history[-1]), end=&quot;&quot;)</span>
+                
+            <span class="c1">#E step:</span>
+            <span class="n">gamma</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_posteriors</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+            <span class="c1">#M step:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pi</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_priors</span><span class="p">(</span><span class="n">gamma</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mu</span>      <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_mu</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_sigma</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mu</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">LLH_history</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">n_iter</span><span class="o">=</span><span class="mi">50</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">GMM</span><span class="p">(</span><span class="n">n_iter</span><span class="o">=</span><span class="n">n_iter</span><span class="p">,</span> <span class="n">n_components</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="s2">&quot;random&quot;</span><span class="p">)</span>
+<span class="n">Z</span><span class="p">,</span> <span class="n">LLH_random</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">GMM</span><span class="p">(</span><span class="n">n_iter</span><span class="o">=</span><span class="n">n_iter</span><span class="p">,</span> <span class="n">n_components</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="s2">&quot;kmeans&quot;</span><span class="p">)</span>
+<span class="n">Z</span><span class="p">,</span> <span class="n">LLH_kmeans</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+
+<span class="c1"># Plot LogLikelyHood</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">LLH_random</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)],</span> <span class="n">LLH_random</span><span class="p">,</span> 
+         <span class="n">label</span><span class="o">=</span><span class="s1">&#39;LogLikeliHood Random init&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">LLH_kmeans</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)],</span> <span class="n">LLH_kmeans</span><span class="p">,</span> 
+         <span class="n">label</span><span class="o">=</span><span class="s1">&#39;LogLikeliHood KMeans init&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Plot gaussian components</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">means</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">mu</span><span class="p">,</span> <span class="n">gmd</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="c-justification-de-l-algorithme-em-approfondissement">
+<h2>C. Justification de l’algorithme EM (approfondissement)<a class="headerlink" href="#c-justification-de-l-algorithme-em-approfondissement" title="Permalink to this headline">¶</a></h2>
+<p>Nous allons maintenant montrer que cette procédure qui peut sembler arbitraire possède en fait une justification théorique qui garantit que la vraissemblance de notre modèle croît bien à chaque itération (sauf si on se trouve dejà dans un maximum local). Au-delà de la croissance, il est également possible de démontrer la convergence de cette méthode. Une première chose à constater est que si nous possédions pour chaque observation <span class="math notranslate nohighlight">\(\boldsymbol{x}_i\)</span> la valeur de sa représentation associées <span class="math notranslate nohighlight">\(\boldsymbol{z}_i\)</span>, alors notre objectif serait de maximiser la log-vraissemblance suivante :</p>
+<div class="math notranslate nohighlight">
+\[\hat{\theta} = \arg \max_{\theta} \sum_i^n \ln \Big(q_{\theta}(\boldsymbol{x}_i,\boldsymbol{z}_i)\Big)\]</div>
+<p>L’objectif est de trouver la paramétrisation qui maximise la probabilité d’observer conjointement une observation et sa “vraie” variable cachée. il est possible de démontrer que c’est ce qu’on fait en pratique avec l’algorithme EM. Cependant, n’ayant accès à ces variables cachées, nous utilisons la meilleure information disponible, à savoir sa distribution <em>a posteriori</em> à l’instant <span class="math notranslate nohighlight">\(t\)</span> : <span class="math notranslate nohighlight">\(q_{\theta(t)}(\boldsymbol{z} | \boldsymbol{x})\)</span>. Nous effectuons en pratique une optimisation de l’espérance de cette log-vraissemblance sur la distribution a posteriori :</p>
+<div class="math notranslate nohighlight">
+\[\theta(t+1) = \arg \max_{\theta} \Bigg[\mathbb{E}_{z_i\sim q_{\theta(t)}(z_i|x_i)} \Bigg[\sum_i^n ln \Big(q_{\theta}(\boldsymbol{x}_i,\boldsymbol{z}_i)\Big)\Bigg]\Bigg].\]</div>
+<p>Notons </p>
+<div class="math notranslate nohighlight">
+\[\mathcal{L}(\theta, \theta(t)) = \mathbb{E}_{z_i\sim q_{\theta(t)}(z_i|x_i)} \Bigg[\sum_i^n ln \Big(q_{\theta}(\boldsymbol{x}_i,\boldsymbol{z}_i)\Big)\Bigg]\]</div>
+<p>Comme tous les échantillons sont indépendants et identiquement distribués et que <span class="math notranslate nohighlight">\(z\)</span> est une variable discrète, nous pouvons réécrire cette quantité de la manière suivante :</p>
+<div class="math notranslate nohighlight">
+\[\theta(t+1) = \arg \max_{\theta} \Bigg[\sum_i^n \sum_k^K q_{\theta(t)}(z_i=k|\boldsymbol{x}_i) \Big[ \ln (q_{\theta}(z_i=k)) + \ln (q_{\theta}(\boldsymbol{x}_i|z_i=k))\Big]\Bigg]\]</div>
+<p>Remarquons que cela revient à pondérer chaque terme de la log-vraissemblance associée à chaque valeur de la variable cachée par la probabilité <em>a posteriori</em> de cette variable cachée sachant l’observation associée.</p>
+<p>Ainsi, dans le cadre général de traitement des modèles à variables cachées par l’algorithme EM, ce dernier peut se décrire ainsi :</p>
+<ol>
+<li><p><strong>Expectation</strong> : Utiliser la valeur du paramêtre <span class="math notranslate nohighlight">\(\theta(t)\)</span> pour en déduire la distribution <em>a postériori</em> :</p>
+<div class="math notranslate nohighlight">
+\[q_{\theta(t)}(z|\boldsymbol{x})\]</div>
+</li>
+<li><p><strong>Maximization</strong> : Utiliser cette dernière pour définir l’expression :</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{L}(\theta, \theta(t)) =  \sum_i^n \sum_k^K q_{\theta(t)}(z_i=k|\boldsymbol{x}_i) \Big[ \ln (q_{\theta}(z_i=k)) + \ln (q_{\theta}(\boldsymbol{x}_i|z_i=k))\Big]\]</div>
+<p>qui dépend du paramêtre général <span class="math notranslate nohighlight">\(\theta\)</span> et optimiser <span class="math notranslate nohighlight">\(\mathcal{L}(\theta, \theta(t))\)</span> par rapport à ce dernier :</p>
+<div class="math notranslate nohighlight">
+\[\theta(t) = \arg \max_{\theta} \Bigg[\mathcal{L}(\theta, \theta(t))\Bigg]\]</div>
+</li>
+</ol>
+<div class="section" id="i-retour-sur-le-cas-du-melange-gaussien">
+<h3>i. Retour sur le cas du mélange Gaussien<a class="headerlink" href="#i-retour-sur-le-cas-du-melange-gaussien" title="Permalink to this headline">¶</a></h3>
+<p>Si l’on se replace dans le cas du mélange Gaussien, en rappellant qu’on appelle <span class="math notranslate nohighlight">\(\gamma_k^i = q_{\theta(t)}(z_i=k|\boldsymbol{x}_i)\)</span> la probabilité <em>a posteriori</em> de la <span class="math notranslate nohighlight">\(k\)</span>-ième composante en gardant les paramètres de l’instant <span class="math notranslate nohighlight">\(t\)</span> fixes, l’expression à maximiser devient :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\mathcal{L}(\theta, \theta(t)) &amp;= \sum_i^n \sum_k^K \gamma_k^i \Big[ ln (\pi_k) + ln \big(f(\boldsymbol{x}_i ; \boldsymbol{\mu}_k, \boldsymbol{\Sigma}_k)\big)\Big]\\
+&amp; = \sum_i^n \sum_k^K \gamma_k^i \Big[ ln (\pi_k) - \frac{d}{2}ln(2\pi) - \frac{1}{2} ln(|\boldsymbol{\Sigma}_k|)- \frac{1}{2} (\boldsymbol{x}_i - \boldsymbol{\mu}_k)^T \boldsymbol{\Sigma}_k^{-1}  (\boldsymbol{x}_i - \boldsymbol{\mu}_k) \Big]
+\end{aligned}\end{split}\]</div>
+<p>Il est possible de vérifier que nous retombons bien sur les paramètres obtenus dans la partie précédente.</p>
+<div class="admonition-exercice admonition">
+<p class="admonition-title">Exercice</p>
+<p>Retrouvez le terme <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_k(t+1)\)</span> à partir de cette expression :</p>
+<div class="math notranslate nohighlight">
+\[\nabla_{\mu_k} \Big(\mathcal{L}(\theta, \theta(t))\Big) = \sum_i^n\gamma_k^i(t) \Big[- \frac{1}{2} (-2) \boldsymbol{\Sigma}_k^{-1}  (\boldsymbol{x}_i - \boldsymbol{\mu}_k) \Big] = \boldsymbol{0}\]</div>
+</div>
+<p>Un avantage avec cette formulation est que le terme intervenant dans le logarithme n’étant plus une somme de densité gaussienne mais directement une densité gaussienne, les calculs de gradient sont beaucoup plus faciles à manipuler.</p>
+</div>
+<div class="section" id="ii-preuve-que-chaque-iteration-de-em-augmente-la-log-vraissemblance">
+<h3>ii. Preuve que chaque itération de EM augmente la log-vraissemblance<a class="headerlink" href="#ii-preuve-que-chaque-iteration-de-em-augmente-la-log-vraissemblance" title="Permalink to this headline">¶</a></h3>
+<div class="tip admonition">
+<p class="admonition-title">Croissance et convergence</p>
+<p>Montrer que l’algorithme améliore  la fonction objectif (ici la vraisemblance) n’est pas suffisant pour garantir que notre algorithme est bon. Il faudrait démontrer qu’il converge effectivement vers la quantité souhaitée, mais cela est plus compliqué.</p>
+</div>
+<p>Même si nous avons donné une vision un peu plus générale de l’algorithme EM et que nous avons donné une intuition de sa justification, nous n’avons pas encore montré rigoureusement pourquoi nous somme garantis que procéder ainsi permet effectivement d’accroître la log-vraissemblance <span class="math notranslate nohighlight">\(ln\Big(q_{\theta}\Big(\mathcal{S}^n\Big)\Big)\)</span> de notre modèle génératif à chaque itération (si nous ne sommes pas déjà dans un maximum local).</p>
+<p>Pour cela il convient d’exprimer cette log-vraissemblance de la manière suivante :</p>
+<div class="math notranslate nohighlight">
+\[\ln\Big(q_{\theta}\Big(\mathcal{S}_n\Big)\Big) = \ln\Big(q_{\theta}\Big(\mathcal{S}_n, \mathcal{Z}_n\Big)\Big) -  \ln\Big(q_{\theta}\Big(\mathcal{Z}^n | \mathcal{S}_n\Big)\Big)\]</div>
+<p>Où nous notons <span class="math notranslate nohighlight">\(\mathcal{Z}_n\)</span> la variable aléatoire “cachée” correspondant à un échantillon de taille <span class="math notranslate nohighlight">\(n\)</span>. Une astuce nous permet d’écrire cette expression de la manière suivante :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\ln\Big(q_{\theta}\Big(\mathcal{S}_n\Big)\Big) 
+&amp;= \Bigg[\ln\Big(q_{\theta}\Big(\mathcal{S}_n, \mathcal{Z}_n\Big)\Big) - \ln\Big(q'\Big(\mathcal{Z}_n\Big)\Big)\Bigg] -\Bigg[- \ln\Big(q'\Big(\mathcal{Z}_n\Big)\Big) +  \ln\Big(q_{\theta}\Big(\mathcal{Z}_n | \mathcal{S}_n\Big)\Big)\Bigg]\\
+&amp;=\ln\Bigg( \frac{q_{\theta}\Big(\mathcal{S}_n, \mathcal{Z}_n\Big)}{q'\Big(\mathcal{Z}_n\Big)}\Bigg) - \ln\Bigg(\frac{q_{\theta}\Big(\mathcal{Z}_n | \mathcal{S}_n\Big)}{q'\Big(\mathcal{Z}_n\Big)}\Bigg)
+\end{aligned}\end{split}\]</div>
+<p>Où l’on note <span class="math notranslate nohighlight">\(q'\Big(\mathcal{Z}_n\Big)\)</span> comme n’importe quelle distribution sur les variables cachées dans <span class="math notranslate nohighlight">\(\mathcal{Q}\)</span>. En notant que la marginale de cette dernière sur les échantillon s’intègre à <span class="math notranslate nohighlight">\(1\)</span>, on en déduit en calculant l’espérance sur <span class="math notranslate nohighlight">\(q'\Big(\mathcal{Z}^n\Big)\)</span> des deux cotés :</p>
+<div class="math notranslate nohighlight">
+\[\underbrace{\mathbb{E}_{\mathcal{Z}_n \sim q'(z)^n}\Bigg[\ln\Big(q_{\theta}\Big(\mathcal{S}_n\Big)\Big)\Bigg]}_{=  \ln\Big(q_{\theta}\Big(\mathcal{S}_n\Big)\Big)} = \underbrace{\mathbb{E}_{\mathcal{Z}_n \sim q'(z)^n} \Bigg[\ln\Bigg( \frac{q_{\theta}\Big(\mathcal{S}_n, \mathcal{Z}_n\Big)}{q'\Big(\mathcal{Z}_n\Big)}\Bigg)\Bigg]}_{= L(q', \theta)}  \underbrace{-\mathbb{E}_{\mathcal{Z}_n \sim q'(z)^n}\Bigg[ln\Bigg(\frac{q_{\theta}\Big(\mathcal{Z}_n | \mathcal{S}_n\Big)}{q'\Big(\mathcal{Z}_n\Big)}\Bigg)\Bigg]}_{= \mathbb{KL}\big(q'||q\big)}\]</div>
+<p>soit :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\\ln\Big(q_{\theta}\Big(\mathcal{S}^n\Big)\Big)= L(q', \theta) + \mathbb{KL}\big(q'||q_{\theta}\big)\end{split}\]</div>
+<div class="tip admonition">
+<p class="admonition-title">Divergence de Kullback Liebler</p>
+<p>Soit <span class="math notranslate nohighlight">\(P\)</span> et <span class="math notranslate nohighlight">\(Q\)</span> deux distributions de probabilité. La divergence de Kullback Liebler est donnée par </p>
+<div class="math notranslate nohighlight">
+\[\mathbb{KL}\big(P\lVert Q)=\int p(x)\ln\frac{p(x)}{q(x)}dx.\]</div>
+<p>Celle-ci est minimale lorsque <span class="math notranslate nohighlight">\(P=Q\)</span> est vaut alors <span class="math notranslate nohighlight">\(0\)</span>. Notez cependant son manque de symétrie :</p>
+<div class="math notranslate nohighlight">
+\[\mathbb{KL}\big(P\lVert Q)\neq \mathbb{KL}\big(Q\lVert P).\]</div>
+</div>
+<p>où <span class="math notranslate nohighlight">\(\mathbb{KL}\big(q'||q_{\theta}\big)\)</span> correspond à la divergence de Kullback Liebler. Pour tout choix de <span class="math notranslate nohighlight">\(q'\)</span> et <span class="math notranslate nohighlight">\(\theta\)</span> nous avons nécessairement :</p>
+<div class="math notranslate nohighlight">
+\[L(q', \theta)  = \ln\Big(q_{\theta}\Big(\mathcal{S}_n\Big)\Big) - \underbrace{ \mathbb{KL}\big(q'||q_{\theta}\big)}_{\geq 0} \leq \ln\Big(q_{\theta}\Big(\mathcal{S}_n\Big)\Big)\]</div>
+<p>Et <span class="math notranslate nohighlight">\(L(q', \theta)\)</span> est donc forcément un minorant de la log-vraissemblance pour tout choix de <span class="math notranslate nohighlight">\(q'\)</span> et <span class="math notranslate nohighlight">\(\theta\)</span>.</p>
+<p>Ce qui est intéressant, c’est que si dans une première étape (que l’on constatera être exactement l’étape E de l’algorithme EM) on essaie de trouver la distribution <span class="math notranslate nohighlight">\(q'\)</span> qui maximise cette borne inférieure en gardant notre valeur courante de <span class="math notranslate nohighlight">\(\theta(t)\)</span> fixe, alors nous obtenons :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+&amp;\arg \max_{q' \in \mathcal{Q}} \Big[ ln\Big(q_{\theta}\Big(\mathcal{S}^n\Big)\Big) - \mathbb{KL}\big(q'||q_{\theta(t)}\big) \Big] \\&amp;=
+\arg \min_{q' \in \mathcal{Q}} \Big[ \mathbb{KL}\big(q'\Big(\mathcal{Z}^n\Big)||q_{\theta(t)}\Big(\mathcal{Z}^n | \mathcal{S}^n\Big)\big) \Big] \\&amp;= q_{\theta(t)}\Big(\mathcal{Z}^n | \mathcal{S}^n\Big)
+\end{aligned}\end{split}\]</div>
+<p>En fixant <span class="math notranslate nohighlight">\(q'\Big(\mathcal{Z}^n\Big) = q_{\theta(t)}\Big(\mathcal{Z}^n | \mathcal{S}^n\Big)\)</span>, c’est-à-dire comme la distribution a posteriori (en se fixant un vecteur de paramètres en cours <span class="math notranslate nohighlight">\(\theta(t)\)</span>), alors ce terme de divergence KL dvient nul et on obtient pour <span class="math notranslate nohighlight">\(\theta = \theta(t)\)</span> :</p>
+<div class="math notranslate nohighlight">
+\[L\Big(q_{\theta(t)}\Big(\mathcal{Z}_n | \mathcal{S}^n\Big), \theta(t)\Big) = \ln\Big(q_{\theta(t)}\Big(\mathcal{S}_n\Big)\Big)\]</div>
+<p>Rappellons que pour n’importe quelle autre valeur de <span class="math notranslate nohighlight">\(\theta \neq \theta(t)\)</span> nous aurons toujours :</p>
+<div class="math notranslate nohighlight">
+\[L\Big(q_{\theta(t)}\Big(\mathcal{Z}^n | \mathcal{S}^n\Big), \theta\Big)  \leq ln\Big(q_{\theta}\Big(\mathcal{S}^n\Big)\Big)\]</div>
+<p>Autrement dit la log-vraissemblance  <span class="math notranslate nohighlight">\(\ln\Big(q_{\theta}\Big(\mathcal{S}^n\Big)\Big)\)</span> et son minorant <span class="math notranslate nohighlight">\(L\Big(q_{\theta(t)}\Big(\mathcal{Z}_n | \mathcal{S}_n\Big), \theta\Big)\)</span> sont tangents en la valeur courante du paramètre <span class="math notranslate nohighlight">\(\theta(t)\)</span> et par définition la première est toujours strictement au dessus de la deuxième. Par conséquent, une valeur <span class="math notranslate nohighlight">\(\theta= \theta(t+1)\)</span> qui accroît <span class="math notranslate nohighlight">\(L\Big(q_{\theta(t)}\Big(\mathcal{Z}^n | \mathcal{S}^n\Big), \theta\Big)\)</span> correspondra aussi à une valeur de paramètre permettant d’accoître <span class="math notranslate nohighlight">\(\ln\Big(q_{\theta}\Big(\mathcal{S}^n\Big)\Big)\)</span>.</p>
+<p>Nous allons voir que fixer <span class="math notranslate nohighlight">\(q'\Big(\mathcal{Z}_n\Big) = q_{\theta(t)}\Big(\mathcal{Z}_n | \mathcal{S}_n\Big)\)</span> correspond à l’étape E de l’algorithme EM, maximiser <span class="math notranslate nohighlight">\(L\Big(q_{\theta(t)}\Big(\mathcal{Z}^n | \mathcal{S}^n\Big), \theta\Big)\)</span>  par rapport à <span class="math notranslate nohighlight">\(\theta\)</span>(en gardant fixe <span class="math notranslate nohighlight">\(q'\)</span>) revient exactement à l’étape M de l’algorithme EM. Pour cela, il convient de vérifier que l’expression de <span class="math notranslate nohighlight">\(L\Big(q_{\theta(t)}\Big(\mathcal{Z}^n | \mathcal{S}^n\Big), \theta\Big)\)</span> correspond bien à la quantité à maximiser vue précédemment :</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{L}(\theta, \theta(t)) = \mathbb{E}_{z_i\sim q_{\theta(t)}(z_i|x_i)} \Bigg[\sum_i^n ln \Big(q_{\theta}(\boldsymbol{x}_i,\boldsymbol{z}_i)\Big)\Bigg]\]</div>
+<p>On développe donc l’expression de <span class="math notranslate nohighlight">\(L\Big(q_{\theta(t)}\Big(\mathcal{Z}_n | \mathcal{S}_n\Big), \theta\Big)\)</span> :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+L\Big(q_{\theta(t)}\Big(\mathcal{Z}_n | \mathcal{S}_n\Big), \theta\Big)&amp;= \mathbb{E}_{\mathcal{Z}_n \sim q_{\theta(t)}(z|x)^n}\Bigg[ ln\Bigg( \frac{q_{\theta}\Big(\mathcal{S}_n, \mathcal{Z}_n\Big)}{q_{\theta(t)}\Big(\mathcal{Z}_n | \mathcal{S}_n\Big)}\Bigg)\Bigg]\\
+&amp;= \mathbb{E}_{\mathcal{Z}_n \sim q_{\theta(t)}(z|x)_n}\Bigg[ ln\Bigg( q_{\theta}\Big(\mathcal{S}_n, \mathcal{Z}_n\Big)\Bigg)\Bigg]- \mathbb{E}_{z_i \sim q_{\theta(t)}(z_i|x_i)}\Bigg[ \ln\Big( q_{\theta(t)}(z_i | x_i)\Big)\Bigg]\\
+&amp;= \mathbb{E}_{z_i \sim q_{\theta(t)}(z_i|x_i)}\Bigg[\sum_i^n ln\Big( q_{\theta}(x_i, z_i)\Big)\Bigg] - \text{const}\\
+&amp;= \mathcal{L}(\theta, \theta(t)) - \text{const}
+\end{aligned}\end{split}\]</div>
+<p>Où nous retrouvons le premier terme comme étant exactement égal à la quantité à maximizer dans le cadre de l’algorithme EM vu précédement, et le deuxième terme ne dépend pas de <span class="math notranslate nohighlight">\(\theta\)</span> mais seulement de <span class="math notranslate nohighlight">\(\theta(t)\)</span> qu’on a fixé à la première étape où l’on à choisi <span class="math notranslate nohighlight">\(q'\)</span>. On vient donc de montrer que :</p>
+<ol>
+<li><p><strong>étape E</strong>: en fixant :</p>
+<div class="math notranslate nohighlight">
+\[q'\Big(\mathcal{Z}_n\Big) = q_{\theta(t)}\Big(\mathcal{Z}_n | \mathcal{S}_n\Big)\]</div>
+</li>
+<li><p><strong>étape M</strong>: en maximisant la log vraissemblance par rapport à theta en gardant fixe ce <span class="math notranslate nohighlight">\(q'\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\theta(t+1) = \arg \max_{\theta} \Bigg[\mathbb{E}_{z_i \sim q_{\theta(t)}(z_i|x_i)}\Bigg[\sum_i^n \ln\Big( q_{\theta}(x_i, z_i)\Big)\Bigg]\Bigg]\]</div>
+</li>
+</ol>
+<p>alors la quantité qu’on maximise est un minorant qui vaut exactement la log-vraissemblance <span class="math notranslate nohighlight">\(\ln\Big(q_{\theta}\Big(\mathcal{S}^n\Big)\Big)\)</span>. En itérant sur ces deux étapes on garantit donc de maximiser à chaque fois la log-vraissemblance sauf si à un instant <span class="math notranslate nohighlight">\(t\)</span> on se trouve avec une valeur de <span class="math notranslate nohighlight">\(\theta(t)\)</span> qui maximise localement cette dernière (le gradient sera nul).</p>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./7_unsupervised"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+            <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="1_principal_component_analysis.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">L’Analyse en Composantes Principales ☕️☕️☕️</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../8_set_prediction/0_propos_liminaire.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Prédiction d’ensembles</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+        
+        </div>
+    </div>
+    <footer class="footer">
+    <div class="container">
+      <p>
+        
+          By Servajean, Leveau & Chailan<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>

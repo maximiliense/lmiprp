@@ -1,0 +1,1662 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Un modèle formel de l’apprentissage ☕️☕️☕️☕️ (💆‍♂️) &#8212; Machine Learning</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet">
+  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Les méthodes à noyaux" href="../4_kernel_methods/0_propos_liminaire.html" />
+    <link rel="prev" title="Le classifieur de Bayes ☕️" href="3_bayes_classifier.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-72WWYCKNK6"></script>
+<script>
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){ dataLayer.push(arguments); }
+                    gtag('js', new Date());
+                    gtag('config', 'G-72WWYCKNK6');
+                </script>
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/logo.jpg" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Machine Learning</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   Introduction
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../0_requisite/rappels_python.html">
+   Rappels de Python et Numpy
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../1_what_is_ml/0_propos_liminaire.html">
+   <em>
+    Machine Learning
+   </em>
+   , initiation
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../1_what_is_ml/1_introduction_ml.html">
+     <em>
+      Machine learning
+     </em>
+     et malédiction de la dimension
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../1_what_is_ml/2_regression_and_classification_trees.html">
+     Les arbres de régression et de classification
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../2_regression/0_propos_liminaire.html">
+   La
+   <em>
+    régression
+   </em>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_regression/1_linear_regression.html">
+     La régression linéaire ☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_regression/2_optimization.html">
+     L’optimisation ☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_regression/3_interpolation.html">
+     Interpolation ☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_regression/4_algo_proximal_lasso.html">
+     Sous-différentiel et le cas du Lasso ☕️☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_regression/5_least_square_qr.html">
+     Les moindres carrés via une décomposition QR (et plus)☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_regression/6_ridge.html">
+     Une analyse de la régularisation Ridge ☕️☕️☕️
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="0_propos_liminaire.html">
+   La
+   <em>
+    classification
+   </em>
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="1_logistic_regression.html">
+     La régression logistique ☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2_fonctions_proxy.html">
+     Les fonctions de perte (loss function) ☕️☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="3_bayes_classifier.html">
+     Le classifieur de Bayes ☕️
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Un modèle formel de l’apprentissage ☕️☕️☕️☕️ (💆‍♂️)
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../4_kernel_methods/0_propos_liminaire.html">
+   Les méthodes à noyaux
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../4_kernel_methods/1_svm.html">
+     Le SVM ou l’hypothèse max-margin ☕️☕️
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../5_ensembles/0_propos_liminaire.html">
+   Les méthodes
+   <em>
+    ensemblistes
+   </em>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../5_ensembles/1_ensembles.html">
+     Méthodes ensemblistes ☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../5_ensembles/2_bayesian_linear_regression.html">
+     Bayesian linear regression ☕️☕️☕️☕️
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../6_deeplearning/0_propos_liminaire.html">
+   <em>
+    deep learning
+   </em>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../6_deeplearning/1_autodiff.html">
+     La différentiation automatique et un début de
+     <em>
+      deep learning
+     </em>
+     ☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../6_deeplearning/2_filters_representation.html">
+     Filtres et espace de représentation des réseaux de neurones ☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../6_deeplearning/3_probabilities_calibration.html">
+     Calibration des probabilités et quelques notions ☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../6_deeplearning/4_regularization_deep.html">
+     Régularisation en
+     <em>
+      deep learning
+     </em>
+     ☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../6_deeplearning/5_transfer_multitask.html">
+     <em>
+      Transfer learning
+     </em>
+     et apprentissage multi-tâches ☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../6_deeplearning/6_adversarial.html">
+     Les attaques adversaires ☕️
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../7_unsupervised/0_propos_liminaire.html">
+   L’apprentissage non-supervisé
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../7_unsupervised/1_principal_component_analysis.html">
+     L’Analyse en Composantes Principales ☕️☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../7_unsupervised/2_em_gaussin_mixture_model.html">
+     Modèle de Mélange Gaussien et algorithme
+     <em>
+      Expectation-Maximization
+     </em>
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../8_set_prediction/0_propos_liminaire.html">
+   Prédiction d’ensembles
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <label for="toctree-checkbox-8">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../8_set_prediction/1_well_defined.html">
+     Jeu d’apprentissage
+     <em>
+      set-valued
+     </em>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../8_set_prediction/2_ill_defined.html">
+     Jeu d’apprentissage uniquement multi-classes ☕️
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../biblio.html">
+   Bibliographie
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/3_classification/4_VC_theory.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/maximiliense/lmiprp"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/maximiliense/lmiprp/issues/new?title=Issue%20on%20page%20%2F3_classification/4_VC_theory.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/maximiliense/lmiprp/blob/master/Travaux Pratiques/Machine Learning/Book/3_classification/4_VC_theory.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="../_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#introduction">
+   Introduction
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#i-inegalites-de-concentration-et-union-bound">
+   I. Inégalités de concentration et
+   <em>
+    union bound
+   </em>
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#a-inegalites-de-concentration">
+     A. Inégalités de concentration
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#b-union-bound">
+     B.
+     <em>
+      Union bound
+     </em>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#c-reverse-union-bound">
+     C.
+     <em>
+      Reverse union bound
+     </em>
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#ii-en-supposant-mathcal-h-infty">
+   II. En supposant
+   <span class="math notranslate nohighlight">
+    \(|\mathcal{H}|&lt;\infty\)
+   </span>
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#a-aucune-hypothese-sur-eta">
+     A. Aucune hypothèse sur
+     <span class="math notranslate nohighlight">
+      \(\eta\)
+     </span>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#b-en-supposant-eta-in-0-1">
+     B. En supposant
+     <span class="math notranslate nohighlight">
+      \(\eta\in\{0, 1\}\)
+     </span>
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#iii-le-cas-general-mathcal-h-infty">
+   III. Le cas général :
+   <span class="math notranslate nohighlight">
+    \(|\mathcal{H}|=\infty\)
+   </span>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#iv-la-dimension-vc">
+   IV. La dimension VC
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#v-une-formule-generale">
+   V. Une formule générale
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#vi-un-resultat-avec-une-marge-et-mathcal-h-infty">
+   VI. Un résultat avec une marge (et
+   <span class="math notranslate nohighlight">
+    \(|\mathcal{H}|&lt;\infty\)
+   </span>
+   )
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#vii-la-sample-complexity">
+   VII. La
+   <em>
+    sample complexity
+   </em>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#viii-pac-learnability-et-theoreme-fondamental-du-machine-learning">
+   VIII. PAC
+   <em>
+    learnability
+   </em>
+   et théorème fondamental du
+   <em>
+    machine learning
+   </em>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#ix-decidabilite-de-l-apprentissage">
+   IX. Décidabilité de l’apprentissage
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#x-l-approche-train-test-ou-validation-croisee">
+   X. L’approche train-test (ou validation croisée)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#xi-en-conclusion">
+   XI. En conclusion
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#a-difficulte-epistemique-incertitude-du-modele">
+     A. Difficulté épistémique (incertitude du modèle)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#b-difficulte-aleatorique-incertitude-des-donnees">
+     B. Difficulté aléatorique (incertitude des données)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#c-autres-mesures-de-complexite">
+     C. Autres mesures de complexité
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="un-modele-formel-de-l-apprentissage">
+<h1>Un modèle formel de l’apprentissage ☕️☕️☕️☕️ (💆‍♂️)<a class="headerlink" href="#un-modele-formel-de-l-apprentissage" title="Permalink to this headline">¶</a></h1>
+<div class="admonition-objectifs-de-la-sequence admonition">
+<p class="admonition-title">Objectifs de la séquence</p>
+<ul class="simple">
+<li><p>Comprendre :</p>
+<ul>
+<li><p>les principes liés à la minimisation du risque empirique,</p></li>
+<li><p>les quantités qui entrent en jeu dans l’apprentissage et entraînent le sur-apprentissage,</p></li>
+<li><p>les raisons qui peuvent rendrent l’apprentissage difficile.</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>La théorie de Vapnik et Chervonenkis, ou théorie VC, cherche à expliquer via des approches statistiques pourquoi l’apprentissage automatique fonctionne dans certains cas. Cette section du cours de <em>machine learning</em>, plus théorique, nous permettra de démontrer plusieurs résultats fondamentaux dans le cas d’un problème de classification binaire. Ces résultats se généralisent bien entendu à d’autres problèmes de <em>machine learning</em>.</p>
+<p>Notons <span class="math notranslate nohighlight">\(\mathcal{X}\subseteq\mathbb{R}^d\)</span> notre espace d’entrée de dimension <span class="math notranslate nohighlight">\(d\)</span> et <span class="math notranslate nohighlight">\(\mathcal{Y}=\{0, 1\}\)</span> l’espace de nos labels que nous restreindrons dans cette section au cas binaire. Notons <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> l’ensemble des fonctions de <span class="math notranslate nohighlight">\(\mathcal{X}\)</span> dans <span class="math notranslate nohighlight">\(\mathcal{Y}\)</span> parmi lesquelles nous voulons réaliser notre apprentissage. Comme toujours, notre objectif est de trouver une fonction <span class="math notranslate nohighlight">\(h\in\mathcal{H}\)</span> qui fait peu d’erreur relativement au risque suivant :</p>
+<div class="math notranslate nohighlight">
+\[L(h)=\mathbb{E}\big[\textbf{1}\{h(X)\neq Y\}\big]=\mathbb{P}\big(h(X)\neq Y\big).\]</div>
+<p>C’est tout simplement la probabilité que notre fonction <span class="math notranslate nohighlight">\(h\in\mathcal{H}\)</span> prédise le mauvais label pour un <span class="math notranslate nohighlight">\(X\)</span> observé. Bien sûr, nous ne connaissons pas le processus générateurs de nos données ni le modèle probabiliste le décrivant. Pour cela, nous devons estimer ce risque en échantillonnant. Notons <span class="math notranslate nohighlight">\(S_n=\{(X_i, Y_i)\}_{i\leq n}\sim\mathbb{P}^n\)</span> un jeu de données de taille <span class="math notranslate nohighlight">\(n\)</span> où les couples sont iid. Nous pouvons maintenant utiliser ce jeu de données afin de déterminer empiriquement le risque de chaque fonction <span class="math notranslate nohighlight">\(h\in\mathcal{H}\)</span> de la manière suivante :</p>
+<div class="math notranslate nohighlight">
+\[L_n(h)=\frac{1}{n}\sum_i \textbf{1}\{h(X_i)\neq Y_i\}\text{ où }\mathbb{E}\big[L_n(h)\big]=L(h)\]</div>
+<p>C’est juste le nombre moyen d’erreurs commises par la fonction <span class="math notranslate nohighlight">\(h\)</span> sur le jeu de données <span class="math notranslate nohighlight">\(S_n\)</span>. Notre objectif devient donc :</p>
+<div class="math notranslate nohighlight">
+\[h_n=\text{argmin}_{h\in\mathcal{H}}L_n(h),\]</div>
+<p>où on appellera <span class="math notranslate nohighlight">\(h_n\)</span> le minimiseur du risque empirique. C’est la fonction dans <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> qui fait le moins d’erreurs en moyenne sur notre jeu de données. On espère qu’elle ne fera pas non plus beaucoup d’erreurs sur le vrai risque <span class="math notranslate nohighlight">\(L\)</span>. Nous pouvons quantifier ce “mauvais choix” via la formule suivante :</p>
+<div class="math notranslate nohighlight">
+\[L(h_n)-\inf_{h\in\mathcal{H}}L(h).\]</div>
+<p>C’est l’écart entre le vrai risque de notre minimiseur du risque empirique et le vrai risque de la meilleure fonction dans <span class="math notranslate nohighlight">\(\mathcal{H}\)</span>.</p>
+<p>L’idée de la théorie VC est que finalement, si nous sommes capable d’estimer précisément le risque de chacune des fonctions en utilisant notre jeu de données, <em>a priori</em>, nous ne devrions pas faire un mauvais choix en choisissant le minimiseur du risque empirique. Le lemme suivant valide cette idée :</p>
+<div class="admonition-lemme-1 admonition">
+<p class="admonition-title">Lemme 1</p>
+<div class="math notranslate nohighlight">
+\[L(h_n)-\inf_{h\in\mathcal{H}}L(h)\leq 2\sup_{h\in\mathcal{H}}|L_n(h)-L(h)|\]</div>
+</div>
+<div class="caution dropdown admonition">
+<p class="admonition-title">Preuve</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+L(h_n)-\inf_{h\in\mathcal{H}}L(h)&amp;=L(h_n)-L_n(h_n)+L_n(h_n)-\inf_{h\in\mathcal{H}}L(h)\\
+&amp;\leq L(h_n)-L_n(h_n)+\sup_{h\in\mathcal{H}}|L_n(h)-L(h)|\\
+&amp;\leq 2\sup_{h\in\mathcal{H}}|L_n(h)-L(h)|
+\end{aligned}\end{split}\]</div>
+</div>
+<p>Dit autrement, <span class="math notranslate nohighlight">\(\sup_{h\in\mathcal{H}}|L_n(h)-L(h)|\)</span> est la plus grosse erreur d’estimation du risque sur notre jeu de données <span class="math notranslate nohighlight">\(S_n\)</span> dans notre classe de fonctions <span class="math notranslate nohighlight">\(\mathcal{H}\)</span>. Cette dernière permet de majorer le choix du minimiseur du risque empirique. Naïvement, si <span class="math notranslate nohighlight">\(\sup_{h\in\mathcal{H}}|L_n(h)-L(h)|=0\)</span> (on estime parfaitement nos fonctions), alors <span class="math notranslate nohighlight">\(L(h_n)-\inf_{h\in\mathcal{H}}L(h)=0\)</span> et on choisit la meilleure fonction par rapport au vrai risque.</p>
+<p>L’objectif de la théorie VC va être de trouver des stratégies permettant de quantifier l’évolution de <span class="math notranslate nohighlight">\(\sup_{h\in\mathcal{H}}|L_n(h)-L(h)|\)</span>. La calculer exactement étant impossible, nous allons donc la majorer par des quantités plus simples à estimer. Et si nos quantités convergent vers <span class="math notranslate nohighlight">\(0\)</span>, alors <span class="math notranslate nohighlight">\(\sup_{h\in\mathcal{H}}|L_n(h)-L(h)|\)</span>, en étant majoré par quelque chose qui converge vers <span class="math notranslate nohighlight">\(0\)</span> et en restant positif devra nécessairement converger vers <span class="math notranslate nohighlight">\(0\)</span> également.</p>
+</div>
+<div class="section" id="i-inegalites-de-concentration-et-union-bound">
+<h2>I. Inégalités de concentration et <em>union bound</em><a class="headerlink" href="#i-inegalites-de-concentration-et-union-bound" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="a-inegalites-de-concentration">
+<h3>A. Inégalités de concentration<a class="headerlink" href="#a-inegalites-de-concentration" title="Permalink to this headline">¶</a></h3>
+<p>La théorie VC fait souvent appel à ce qu’on appelle une inégalité de concentration. L’idée d’une inégalité de concentration est de constater que nos variables aléatoires ne peuvent finalement pas trop s’écarter de certaines valeurs où elles se retrouvent “concentrées”. La plus simple d’entre elle est <a class="reference external" href="https://fr.wikipedia.org/wiki/In%C3%A9galit%C3%A9_de_Markov">l’inégalité de Markov</a>:</p>
+<div class="admonition-l-inegalite-de-markov admonition">
+<p class="admonition-title">L’inégalité de Markov </p>
+<p>Soit <span class="math notranslate nohighlight">\(X\)</span> une variable aléatoire réelle <strong>positive</strong>, nous avons :</p>
+<div class="math notranslate nohighlight">
+\[\forall a\in\mathbb{R}^+,\ \mathbb{P}\big(X\geq a\big)\leq \frac{\mathbb{E}\big[X\big]}{a}.\]</div>
+</div>
+<div class="caution dropdown admonition">
+<p class="admonition-title">Preuve</p>
+<p>Soit <span class="math notranslate nohighlight">\(a\in\mathbb{R}^+\)</span> et <span class="math notranslate nohighlight">\(\textbf{1}\{X\geq a\}\)</span> la fonction qui vaut <span class="math notranslate nohighlight">\(1\)</span> si <span class="math notranslate nohighlight">\(X\)</span> est supérieur ou égal à <span class="math notranslate nohighlight">\(a\)</span> et <span class="math notranslate nohighlight">\(0\)</span> sinon. Nous avons nécessairement :</p>
+<div class="math notranslate nohighlight">
+\[a \textbf{1}\{X\geq a\}\leq X\textbf{1}\{X\geq a\}\leq X,\]</div>
+<p>quelque soit la réalisation de <span class="math notranslate nohighlight">\(X\)</span>. En effet si <span class="math notranslate nohighlight">\(X&lt;a\)</span> alors <span class="math notranslate nohighlight">\(\textbf{1}\{X\geq a\}\)</span> vaut <span class="math notranslate nohighlight">\(0\)</span>. L’espérance étant croissante, nous avons :</p>
+<div class="math notranslate nohighlight">
+\[\mathbb{E}\Big[a\textbf{1}\{X\geq a\}\Big]\leq\mathbb{E}\Big[X\Big].\]</div>
+<p>Par définition de l’espérance, nous avons :</p>
+<div class="math notranslate nohighlight">
+\[\mathbb{E}\Big[a\textbf{1}\{X\geq a\}\Big]=a \mathbb{P}\big(X\geq a\big) + 0\mathbb{P}\big(X&lt; a\big)=a \mathbb{P}\big(X\geq a\big).\]</div>
+<p>Ainsi, en combinant le tout, nous avons :</p>
+<div class="math notranslate nohighlight">
+\[a \mathbb{P}\big(X\geq a\big)\leq \mathbb{E}\Big[X\Big]\Leftrightarrow \mathbb{P}\big(X\geq a\big)\leq \frac{\mathbb{E}\big[X\big]}{a}.\]</div>
+</div>
+<p>En d’autres termes, pour une variable aléatoire <span class="math notranslate nohighlight">\(X\)</span> de loi fixée sa masse ne se situe pas à l’infinie et plus <span class="math notranslate nohighlight">\(a\)</span> sera grand, plus il sera improbable que <span class="math notranslate nohighlight">\(X\)</span> soit au-delà.</p>
+<p>Convainquons-nous du résultat précédent via une simulation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># on simule une variable uniforme entre 0 et 100</span>
+<span class="k">def</span> <span class="nf">simulate_random_variable</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">nb_times</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">nb_times</span><span class="p">)</span>
+    <span class="n">empirical_expectation</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="n">empirical_probability</span> <span class="o">=</span> <span class="p">(</span><span class="n">X</span><span class="o">&gt;</span><span class="n">a</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="n">nb_times</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;P(X&gt;=a)&lt;= E[X]/a :&#39;</span><span class="p">,</span> <span class="n">empirical_probability</span><span class="p">,</span> <span class="s1">&#39;&lt;=&#39;</span><span class="p">,</span> <span class="n">empirical_expectation</span><span class="o">/</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">simulate_random_variable</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="mi">75</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>P(X&gt;=a)&lt;= E[X]/a : 0.242 &lt;= 0.6807126390404562
+</pre></div>
+</div>
+</div>
+</div>
+<p>Et c’est là tout l’intérêt ! Supposons que nous ne sachions pas calculer <span class="math notranslate nohighlight">\(\mathbb{P}\big(X\geq a)\)</span> mais que nous sachions calculer <span class="math notranslate nohighlight">\(\mathbb{E}\big[X\big]\)</span>. Nous pouvons alors garantir un “pire scénario” de la vitesse à la quelle la probabilité converge vers <span class="math notranslate nohighlight">\(0\)</span> lorsque <span class="math notranslate nohighlight">\(a\)</span> augmente.</p>
+<p>Considérons une variable uniforme entre <span class="math notranslate nohighlight">\(0\)</span> et <span class="math notranslate nohighlight">\(100\)</span>. Son espérance et <span class="math notranslate nohighlight">\(\frac{100-0}{2}=50\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">999</span><span class="p">)</span>
+
+<span class="n">probability</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">a</span><span class="o">/</span><span class="mi">100</span>
+<span class="n">expectation</span> <span class="o">=</span> <span class="mi">50</span><span class="o">/</span><span class="n">a</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">probability</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$\mathbb</span><span class="si">{P}</span><span class="s1">(X\geq a)$ (inconnue)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">expectation</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\mathbb</span><span class="si">{E}</span><span class="s1">[X]/a$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/4_VC_theory_6_0.png" src="../_images/4_VC_theory_6_0.png" />
+</div>
+</div>
+<p>La quantité <span class="math notranslate nohighlight">\(\mathbb{E}\big[X\big]/a\)</span> est potentiellement supérieure à <span class="math notranslate nohighlight">\(1\)</span> et nous avons contraint matplotlib à n’afficher que les valeurs entre <span class="math notranslate nohighlight">\(0\)</span> et <span class="math notranslate nohighlight">\(1\)</span>. Pour cette exemple, nous aurions pu très naïvement calculer la probabilité nous-même et nous n’avions aucun intérêt à passer par une inégalité de concentration. Cependant, dans certains problèmes, c’est inévitable !</p>
+</div>
+<div class="section" id="b-union-bound">
+<h3>B. <em>Union bound</em><a class="headerlink" href="#b-union-bound" title="Permalink to this headline">¶</a></h3>
+<p>Nous avons tous vu au lycée la formule suivante :</p>
+<div class="math notranslate nohighlight">
+\[\mathbb{P}\big(A\cup B\big)=\mathbb{P}\big(A\big)+\mathbb{P}\big(B\big)-\mathbb{P}\big(A\cap B\big).\]</div>
+<p>Si on élimine la probabilité liée à l’intersection, nous avons :</p>
+<div class="math notranslate nohighlight">
+\[\mathbb{P}\big(A\cup B\big)\leq\mathbb{P}\big(A\big)+\mathbb{P}\big(B\big)\]</div>
+<p>De manière plus générale, imaginons une famille d’évènements <span class="math notranslate nohighlight">\(A_i\)</span>, <span class="math notranslate nohighlight">\(i\leq N\)</span>, tels que <span class="math notranslate nohighlight">\(\forall i\leq N\)</span>, nous avons <span class="math notranslate nohighlight">\(\mathbb{P}(A_i)\leq K\)</span> (la probabilité est majorée par une quantité <span class="math notranslate nohighlight">\(K\)</span>). Nous avons alors l’inégalité suivante :</p>
+<div class="math notranslate nohighlight">
+\[\mathbb{P}\big(\cup_i A_i\big)\leq \sum_i \mathbb{P}\big(A_i\big)\leq \sum_i K\leq KN.\]</div>
+<p>C’est ce qu’on appelle un <em>union bound</em> : on majore grâce à une inégalité liée à l’union.</p>
+</div>
+<div class="section" id="c-reverse-union-bound">
+<h3>C. <em>Reverse union bound</em><a class="headerlink" href="#c-reverse-union-bound" title="Permalink to this headline">¶</a></h3>
+<p>Soient <span class="math notranslate nohighlight">\(A\)</span> et <span class="math notranslate nohighlight">\(B\)</span> deux évènements. De manière étudiante, nous avons :</p>
+<div class="math notranslate nohighlight">
+\[\mathbb{P}\big(\bar{A}\big)=1-\mathbb{P}\big(A\big)\]</div>
+<p>Le <em>union bound</em> permettait de majorer l’union d’évènements. Le <em>reverse union bound</em> permet de minorer la probabilité de l’intersection d’évènements. Nous retrouvons cette formule de la manière suivante :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\mathbb{P}\big(A\cap B\big)&amp;=1-\mathbb{P}\big(\overline{A\cap B}\big)\\
+&amp;=1-\mathbb{P}\big(\overline{A}\cup\overline{B}\big)\\
+&amp;\geq 1-\Big(\mathbb{P}\big(\overline{A}\big)+\mathbb{P}\big(\overline{B}\big)\Big)
+\end{aligned}\end{split}\]</div>
+<p>De manière plus générale, imaginons une famille d’évènements <span class="math notranslate nohighlight">\(A_i\)</span>, <span class="math notranslate nohighlight">\(i\leq N\)</span>, tels que <span class="math notranslate nohighlight">\(\forall i\leq N\)</span>, nous avons <span class="math notranslate nohighlight">\(\mathbb{P}(\overline{A_i})\leq K\)</span> (la probabilité est majorée par une quantité <span class="math notranslate nohighlight">\(K\)</span>). Nous avons alors l’inégalité suivante :</p>
+<div class="math notranslate nohighlight">
+\[\mathbb{P}\big(\cap_i A_i\big)\geq 1- \Big(\sum_i \mathbb{P}(\overline{A_i})\Big)\geq 1-\sum_i K\geq 1-KN\]</div>
+</div>
+</div>
+<div class="section" id="ii-en-supposant-mathcal-h-infty">
+<h2>II. En supposant <span class="math notranslate nohighlight">\(|\mathcal{H}|&lt;\infty\)</span><a class="headerlink" href="#ii-en-supposant-mathcal-h-infty" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="a-aucune-hypothese-sur-eta">
+<h3>A. Aucune hypothèse sur <span class="math notranslate nohighlight">\(\eta\)</span><a class="headerlink" href="#a-aucune-hypothese-sur-eta" title="Permalink to this headline">¶</a></h3>
+<p>Commençons par un commentaire sur une autre inégalité très souvent utilisée.</p>
+<p>Soit une famille de fonctions <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> de <span class="math notranslate nohighlight">\(\mathcal{X}\)</span> dans <span class="math notranslate nohighlight">\(\mathcal{Y}\)</span> telle que <span class="math notranslate nohighlight">\(|\mathcal{H}|&lt;\infty\)</span>. Et soit <span class="math notranslate nohighlight">\(h\in\mathcal{H}\)</span>. Nous avons défini le risque et le risque empirique notés respectivement <span class="math notranslate nohighlight">\(L\)</span> et <span class="math notranslate nohighlight">\(L_n\)</span>. La probabilité que nous souhaiterions voir la plus petite possible est <span class="math notranslate nohighlight">\(\mathbb{P}\big(|L_n(h)-L(h)|&gt;\epsilon)\)</span>. Nous pouvons la majorer grâce à l’<a class="reference external" href="https://fr.wikipedia.org/wiki/In%C3%A9galit%C3%A9_de_Hoeffding">inégalité d’Hoeffding</a> :</p>
+<div class="math notranslate nohighlight">
+\[\mathbb{P}\big(|L_n(h)-L(h)|&gt;\epsilon) \leq 2 e^{-2\epsilon^2n}.\]</div>
+<p>Cela nous dit que la probabité que notre estimateur empirique s’écarte de plus de <span class="math notranslate nohighlight">\(\epsilon\)</span> de son espérance décroît exponentiellement vite lorsque la taille du jeu de données augmente !</p>
+<p>Cependant, pour pouvoir garantir que l’apprentissage se fera bien (i.e. qu’on choisira un bon minimiseur du risque empirique), nous devons majorer la probabilité que TOUTES les fonctions soient bien estimées.</p>
+<div class="admonition-theoreme admonition">
+<p class="admonition-title">Théorème</p>
+<p>Soit <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> une classe de fonctions de <span class="math notranslate nohighlight">\(\mathcal{X}\)</span> dans <span class="math notranslate nohighlight">\(\mathcal{Y}\)</span> et <span class="math notranslate nohighlight">\(n\)</span> la taille de notre jeu de données. Nous avons :</p>
+<div class="math notranslate nohighlight">
+\[\mathbb{P}\big(\sup_{h\in\mathcal{H}} |L_n(h)-L(h)|&gt;\epsilon\big)\leq |\mathcal{H}|2 e^{-2\epsilon^2n}\]</div>
+</div>
+<div class="caution admonition">
+<p class="admonition-title">Preuve</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\mathbb{P}\big(\sup_{h\in\mathcal{H}} |L_n(h)-L(h)|&gt;\epsilon\big)&amp;=\mathbb{P}\big(\cup_{h\in\mathcal{H}} |L_n(h)-L(h)|&gt;\epsilon\big)\\
+&amp;\leq \sum_{h\in\mathcal{H}}\mathbb{P}\big(|L_n(h)-L(h)|&gt;\epsilon\big)\\
+&amp;\leq |\mathcal{H}|2 e^{-2\epsilon^2n}.
+\end{aligned}\end{split}\]</div>
+</div>
+<p>C’est un premier résultat fondamental qui nous permet de dire que si <span class="math notranslate nohighlight">\(|\mathcal{H}|&lt;\infty\)</span>, alors on peut réduire uniformément (i.e. pour toutes fonctions de <span class="math notranslate nohighlight">\(\mathcal{H}\)</span>) les déviations entre le risque empirique et son espérance et donc que le choix du minimiseur empirique ne sera pas mauvais (pour peu que le jeu de données soit assez grand).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="n">scale</span><span class="p">):</span>
+    <span class="n">H_size</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="n">epsilon</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.04</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">2000</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">H_size</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">epsilon</span><span class="p">):</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="o">*</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">e</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">n</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\epsilon=$</span><span class="si">{}</span><span class="s1">, $|H|=$</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">k</span><span class="p">)))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="n">scale</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="kc">None</span> <span class="k">if</span> <span class="n">scale</span> <span class="o">==</span> <span class="s1">&#39;log&#39;</span> <span class="k">else</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot</span><span class="p">(</span><span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/4_VC_theory_11_0.png" src="../_images/4_VC_theory_11_0.png" />
+<img alt="../_images/4_VC_theory_11_1.png" src="../_images/4_VC_theory_11_1.png" />
+</div>
+</div>
+<p>Nous avons ainsi fixé l’erreur <span class="math notranslate nohighlight">\(\epsilon\)</span> et avons observé que la probabilité que la déviation “sup” entre le risque empirique et son espérance soit plus grande que <span class="math notranslate nohighlight">\(\epsilon\)</span> décroissait exponentiellement vite. Nous pouvons également prendre une perspective différente en fixant la probabilité et en regardant l’évolution de l’erreur à probabilité fixe :</p>
+<div class="admonition-proposition admonition">
+<p class="admonition-title">Proposition</p>
+<p>Soit <span class="math notranslate nohighlight">\(\delta&gt;0\)</span> et <span class="math notranslate nohighlight">\(|\mathcal{H}|\)</span>, alors, avec probabilité au moins <span class="math notranslate nohighlight">\(1-\delta\)</span>, on a :</p>
+<div class="math notranslate nohighlight">
+\[\sup_{h\in\mathcal{H}} |L_n(h)-L(h)| \leq \sqrt{\frac{\log|\mathcal{H}|+\log\frac{2}{\delta}}{2n}}.\]</div>
+</div>
+<div class="caution dropdown admonition">
+<p class="admonition-title">Preuve</p>
+<p>Nous avions :</p>
+<div class="math notranslate nohighlight">
+\[\mathbb{P}\big(\sup_{h\in\mathcal{H}} |L_n(h)-L(h)|&gt;\epsilon\big)\leq |\mathcal{H}|2 e^{-2\epsilon^2n}.\]</div>
+<p>Égalons la probabité à droite (i.e. de déviation) avec <span class="math notranslate nohighlight">\(\delta\)</span> et résolvons l’inégalité pour <span class="math notranslate nohighlight">\(\epsilon\)</span> :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+|\mathcal{H}|2e^{-2\epsilon^2n}&amp;= \delta\\
+\Leftrightarrow\ e^{-2\epsilon^2n}&amp;= \frac{\delta}{|\mathcal{H}|2}\\
+\Leftrightarrow \epsilon^2&amp;= \frac{\log|\mathcal{H}|+\log\frac{2}{\delta}}{2n}\\
+\Leftrightarrow \epsilon&amp;= \sqrt{\frac{\log|\mathcal{H}|+\log\frac{2}{\delta}}{2n}}
+\end{aligned}\end{split}\]</div>
+<p>Puisque <span class="math notranslate nohighlight">\(\delta\)</span> majore la probabilité d’une déviation plus grande que <span class="math notranslate nohighlight">\(\epsilon\)</span>, <span class="math notranslate nohighlight">\(1-\delta\)</span> minore la probabilité que la déviation soit au plus <span class="math notranslate nohighlight">\(\epsilon\)</span>. On obtient donc :</p>
+<div class="math notranslate nohighlight">
+\[\sup_{h\in\mathcal{H}} |L_n(h)-L(h)| \leq \sqrt{\frac{\log|\mathcal{H}|+\log\frac{2}{\delta}}{2n}}.\]</div>
+</div>
+<p>En réutilisant le lemme 1, nous en déduisons le corollaire suivant :</p>
+<div class="admonition-corollaire admonition">
+<p class="admonition-title">Corollaire</p>
+<p>Soit <span class="math notranslate nohighlight">\(\delta&gt;0\)</span> et une classe de fonctions de <span class="math notranslate nohighlight">\(\mathcal{X}\)</span> dans <span class="math notranslate nohighlight">\(\mathcal{Y}\)</span> notée <span class="math notranslate nohighlight">\(\mathcal{H}\)</span>. Notons <span class="math notranslate nohighlight">\(h_n\)</span> le minimiseur du risque empirique. Nous avons avec probabilité <span class="math notranslate nohighlight">\(1-\delta\)</span> :</p>
+<div class="math notranslate nohighlight">
+\[L(h_n)-\inf_{h\in\mathcal{H}}L(h)\leq 2\sqrt{\frac{\log|\mathcal{H}|+\log\frac{2}{\delta}}{2n}}\]</div>
+</div>
+<p>Ainsi, le minimiseur du risque empirique n’est pas un mauvais choix si le jeu de données est assez grand et <span class="math notranslate nohighlight">\(|\mathcal{H}|&lt;\infty\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="k">def</span> <span class="nf">plot</span><span class="p">():</span>
+    <span class="n">H_size</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="n">delta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1511</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">H_size</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="o">/</span><span class="n">e</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">n</span><span class="p">)),</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\delta=$</span><span class="si">{:.2f}</span><span class="s1">, $|H|=$</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">k</span><span class="p">)))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Majoration du gap de généralisation&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/4_VC_theory_14_0.png" src="../_images/4_VC_theory_14_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="b-en-supposant-eta-in-0-1">
+<h3>B. En supposant <span class="math notranslate nohighlight">\(\eta\in\{0, 1\}\)</span><a class="headerlink" href="#b-en-supposant-eta-in-0-1" title="Permalink to this headline">¶</a></h3>
+<p>Jusque là, nous n’avions pas d’hypothèse sur <span class="math notranslate nohighlight">\(\eta\)</span>. Les valeurs que peut prendre <span class="math notranslate nohighlight">\(\eta\)</span> influencent grandement la vitesse (en termes de taille de jeu de données) avec laquelle nous allons converger vers la meilleure fonction de notre classe de fonctions. En effet, imaginons que <span class="math notranslate nohighlight">\(\eta(x)\approx 0.5\)</span>, et notons <span class="math notranslate nohighlight">\(Y\sim\mathcal{B}(\eta(x))\)</span> (i.e. une Bernoulli). Nous avons environ une chance sur deux que <span class="math notranslate nohighlight">\(Y\)</span> soit la valeur qu’il faille retourner pour minimiser l’erreur et une chance sur deux que ce ne soit pas le cas. Ainsi, nous avons une chance sur deux de favoriser une “mauvaise” fonction. Être autour de <span class="math notranslate nohighlight">\(0.5\)</span> est bien sûr un cas extrême, mais cela ralentit la convergence. À l’inverse, si <span class="math notranslate nohighlight">\(\eta(x)\in\{0, 1\}\)</span> alors soit notre fonction retourne la bonne valeur et ne fait aucune erreur tout le temps, soit elle retourne une mauvaise valeur et est pénalisée tout le temps. On imagine bien ici que la convergence sera plus rapide.</p>
+<div class="admonition-proposition admonition">
+<p class="admonition-title">Proposition</p>
+<p>Soit <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> notre classe de fonctions et <span class="math notranslate nohighlight">\(\delta&gt;0\)</span>. Supposons <span class="math notranslate nohighlight">\(g^\star\in\mathcal{H}\)</span> et <span class="math notranslate nohighlight">\(\eta\in\{0, 1\}\)</span>. Alors, nous avons avec probabilité <span class="math notranslate nohighlight">\(1-\delta\)</span> :</p>
+<div class="math notranslate nohighlight">
+\[L(h_n)-\inf_{h\in\mathcal{H}}L(h)\leq  \frac{\log |\mathcal{H}|+\log\frac{1}{\delta}}{n}\]</div>
+</div>
+<div class="caution dropdown admonition">
+<p class="admonition-title">Preuve</p>
+<p>Tout d’abord, remarquons que puisque <span class="math notranslate nohighlight">\(\eta\in\{0, 1\}\)</span> ainsi que <span class="math notranslate nohighlight">\(g^\star\in\mathcal{H}\)</span> nous avons nécessairement :</p>
+<div class="math notranslate nohighlight">
+\[\inf_{h\in\mathcal{H}}L(h)=0\]</div>
+<p>mais aussi</p>
+<div class="math notranslate nohighlight">
+\[L_n(h_n)=0.\]</div>
+<p>Si la meilleure fonction fait toujours <span class="math notranslate nohighlight">\(0\)</span> erreur, alors celle qu’on choisira fera <span class="math notranslate nohighlight">\(0\)</span> erreur. Notons :</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{H}_b=\{h\in\mathcal{H}:L(h)&gt;\epsilon\}\]</div>
+<p>L’ensemble des mauvaises (bad) fonctions de notre classe de fonctions. Ainsi,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\mathbb{P}\left(L(h_n)-\inf_{h\in\mathcal{H}}L(h)&gt;\epsilon\right)&amp;=\mathbb{P}\left(L(h_n)&gt;\epsilon\right)\\
+&amp;\leq\mathbb{P}\left(\cup_{h\in\mathcal{H}_b} L_n(h)=0\right)
+\end{aligned}\end{split}\]</div>
+<p>Il y a une inégalité pour la raison suivante. La probabilité que le minimiseur du risque empirique fasse plus de <span class="math notranslate nohighlight">\(\epsilon\)</span> erreurs dépend de la probabilité des mauvaises fonctions à faire <span class="math notranslate nohighlight">\(0\)</span> erreur et que ce soit <strong>l’une de celles-là qu’on choisisse</strong>.</p>
+<p>Appliquons maintenant le <em>union bound</em> :</p>
+<div class="math notranslate nohighlight">
+\[\begin{aligned}
+\mathbb{P}\left(\cup_{h\in\mathcal{H}_b} L_n(h)=0\right)\leq \sum_{h\in\mathcal{H}_b}\mathbb{P}\left(L_n(h)=0\right)
+\end{aligned}\]</div>
+<p>Calculons maintenant :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\mathbb{P}\left(L_n(h)=0\right)&amp;=(1-L(h))^n\\
+&amp;\leq (1-\epsilon)^n\text{ (car }h\in\mathcal{H}_b\text{)}\\
+&amp;\leq (e^{-\epsilon})^n=e^{-\epsilon n}
+\end{aligned}\end{split}\]</div>
+<p>Reprenons tout :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\mathbb{P}\left(L(h_n)-\inf_{h\in\mathcal{H}}L(h)&gt;\epsilon\right)&amp;\leq \sum_{h\in\mathcal{H}_b}\mathbb{P}\left(L_n(h)=0\right)\\
+&amp;\leq \sum_{h\in\mathcal{H}_b}e^{-\epsilon n}\\
+&amp;\leq \sum_{h\in\mathcal{H}}e^{-\epsilon n}\\
+&amp;\leq |\mathcal{H}|e^{-\epsilon n}
+\end{aligned}\end{split}\]</div>
+<p>Soit <span class="math notranslate nohighlight">\(\delta&gt;0\)</span>, nous avons :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+|\mathcal{H}|e^{-\epsilon n}&amp;=\delta\\
+\Leftrightarrow\ e^{-\epsilon n}&amp;=\frac{\delta}{|\mathcal{H}|}\\
+\Leftrightarrow\ \epsilon &amp;= \frac{\log |\mathcal{H}|+\log\frac{1}{\delta}}{n}
+\end{aligned}\end{split}\]</div>
+<p>La probabilité de déviation est d’au plus <span class="math notranslate nohighlight">\(\delta\)</span>. Donc la probabilité de ne pas avoir de déviation est d’au moins <span class="math notranslate nohighlight">\(1-\delta\)</span> et nous avons :</p>
+<div class="math notranslate nohighlight">
+\[L(h_n)-\inf_{h\in\mathcal{H}}L(h)\leq  \frac{\log |\mathcal{H}|+\log\frac{1}{\delta}}{n}.\]</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="k">def</span> <span class="nf">plot</span><span class="p">():</span>
+    <span class="n">H_size</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">delta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1511</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">H_size</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="o">/</span><span class="n">e</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">n</span><span class="p">)),</span> 
+                     <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\delta=$</span><span class="si">{:.2f}</span><span class="s1">, $|H|=$</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">k</span><span class="p">)))</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">H_size</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">e</span><span class="p">))</span><span class="o">/</span><span class="n">n</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span>
+                     <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\eta\in${{0, 1}}, $g^\star\in\mathcal{{H}}$, $\delta=$</span><span class="si">{:.2f}</span><span class="s1">, $|H|=$</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">k</span><span class="p">)))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Majoration du gap de généralisation&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/4_VC_theory_17_0.png" src="../_images/4_VC_theory_17_0.png" />
+</div>
+</div>
+<p>Dans le premier cas, nous n’avions pas d’hypothèse sur la difficulté de la tâche (i.e. <span class="math notranslate nohighlight">\(\eta\)</span>). Dans le second, nous avons supposé que les labels étaient calculés de manière déterministe à partir de <span class="math notranslate nohighlight">\(x\)</span>. Nous avons également supposé que nous pouvions calculer le classifieur de Bayes (i.e. <span class="math notranslate nohighlight">\(g^\star\in\mathcal{H}\)</span>).</p>
+</div>
+</div>
+<div class="section" id="iii-le-cas-general-mathcal-h-infty">
+<h2>III. Le cas général : <span class="math notranslate nohighlight">\(|\mathcal{H}|=\infty\)</span><a class="headerlink" href="#iii-le-cas-general-mathcal-h-infty" title="Permalink to this headline">¶</a></h2>
+<p>Le cas général permet également de conclure pour des cas où le cardinal de <span class="math notranslate nohighlight">\(|\mathcal{H}|\)</span> serait fini.</p>
+<p>L’intuition derrière le cas général est qu’au lieu de considérer toutes les fonctions de <span class="math notranslate nohighlight">\(\mathcal{H}\)</span>, nous n’en considérerons que quelques une. Il s’agit de discrétiser la variable aléatoire <span class="math notranslate nohighlight">\(\sup_{h\in\mathcal{H}}|L_n(h)-L(h)|\)</span> de manière à ne considérer que les “valeurs effectives” que notre classe de fonctions peut prendre sur notre jeu de donnée.</p>
+<div class="admonition-exercice admonition">
+<p class="admonition-title">Exercice</p>
+<ol class="simple">
+<li><p><strong>Commençons par un exercice afin d’illustrer le point précédent. Soit le jeu de données <span class="math notranslate nohighlight">\(S_1=\{(X_1, Y_1)\}\)</span> (toujours dans le cadre d’un problème de classification binaire, i.e. <span class="math notranslate nohighlight">\(Y_i\in\{0, 1\}\)</span>). Quel est le plus grand nombre de manières de labelliser ce jeu de données indépendamment de <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> ?</strong></p></li>
+<li><p><strong>Soit un jeu de données de taille <span class="math notranslate nohighlight">\(n\)</span>, noté <span class="math notranslate nohighlight">\(S_n\)</span>. Quel est le plus grand nombre de manières de labelliser ce jeu de données ?</strong></p></li>
+</ol>
+</div>
+<p>Intuitivement, on se rend déjà compte (à quelques astuces près) que nous n’avons pas à considérer l’infini. Cependant, <span class="math notranslate nohighlight">\(2^n\)</span> reste une quantité trop grosse commme nous le verrons.</p>
+<div class="admonition-exercice admonition">
+<p class="admonition-title">Exercice</p>
+<p><strong>Soit <span class="math notranslate nohighlight">\(\mathcal{X}=\mathbb{R}\)</span> et <span class="math notranslate nohighlight">\(S_2=\{(X_1, Y_1), (X_2, Y_2)\}\)</span>. Sans perte de généralité supposons <span class="math notranslate nohighlight">\(X_1&lt;X_2\)</span>. Soit :</strong></p>
+<div class="math notranslate nohighlight">
+\[\mathcal{H}=\{h(x)=\mathbf{1}\{x&gt;\tau\},\ \tau\in\mathbb{R}\}\]</div>
+<p><strong>C’est l’ensemble des fonctions seuil qui valent <span class="math notranslate nohighlight">\(1\)</span> si <span class="math notranslate nohighlight">\(x\)</span> est plus grand qu’un paramètre <span class="math notranslate nohighlight">\(\tau\)</span> et <span class="math notranslate nohighlight">\(0\)</span> sinon. On a déjà vu que le nombre maximum de manières de labelliser un jeu de données de taille <span class="math notranslate nohighlight">\(2\)</span> était <span class="math notranslate nohighlight">\(4\)</span>. Quel est-il <em>via</em> la classe de fonctions <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> précédente ?</strong></p>
+</div>
+<p>Nous avons vu que de toute manière nous ne pouvions pas labelliser un jeu de données de taille <span class="math notranslate nohighlight">\(n\)</span> de plus de <span class="math notranslate nohighlight">\(2^n\)</span> manières différentes et nous avons que que certaines classes de fonctions n’atteignent pas <span class="math notranslate nohighlight">\(2^n\)</span>. <em>A priori</em>, le nombre de valeurs que peut prendre <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> sur un jeu de données <span class="math notranslate nohighlight">\(S_n\)</span> dépendra du tirage du jeu de données. Pour cela, nous pouvons majorer cette quantité en ne considérant que le “pire des cas”. C’est l’objet de la définition suivante :</p>
+<div class="admonition-definition-la-fonction-de-croissance admonition">
+<p class="admonition-title">Définition (La fonction de croissance)</p>
+<div class="math notranslate nohighlight">
+\[\tau_\mathcal{H}(n)=\max_{\{X_1, ..., X_n\}}|\{h(X_1), ..., h(X_n):\ h\in\mathcal{H}\}|.\]</div>
+</div>
+<p>C’est le plus grand nombre de manières différentes qu’une classe de fonctions pourrait labéliser un jeu de données de taille <span class="math notranslate nohighlight">\(n\)</span>. C’est le plus grand nombre configuration de taille <span class="math notranslate nohighlight">\(n\)</span> atteignables par notre classe de fonctions.</p>
+<p>Maintenant que nous avons donné les éléments de base, nous pouvons rédiger le théorème principal.</p>
+<div class="admonition-theoreme admonition">
+<p class="admonition-title">Théorème</p>
+<p>Soit <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> une classe de fonctions, un jeu de données de taille <span class="math notranslate nohighlight">\(n\)</span>, <span class="math notranslate nohighlight">\(L_n\)</span> et <span class="math notranslate nohighlight">\(L\)</span> respectivement le risque empirique et le risque et <span class="math notranslate nohighlight">\(\epsilon&gt;0\)</span>. Nous avons l’inégalité suivante :</p>
+<div class="math notranslate nohighlight">
+\[\mathbb{P}\Big(\sup_{h\in\mathcal{H}}|L_n(h)-L(h)|&gt;\epsilon\Big)\leq 8 \tau_{\mathcal{H}}(n)e^{-n\epsilon^2/32}\]</div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">Preuve (structure)</p>
+<p>On remarque tout d’abord que si <span class="math notranslate nohighlight">\(n\epsilon^2&lt;2\)</span>, alors la partie droite de l’inégalité est supérieure à <span class="math notranslate nohighlight">\(1\)</span> et l’inégalité est trivialement vraie (i.e. une probabilité vaut au plus <span class="math notranslate nohighlight">\(1\)</span>). Supposons <span class="math notranslate nohighlight">\(n\epsilon^2\geq 2\)</span>.</p>
+<p>Le reste de la preuve se struture en <span class="math notranslate nohighlight">\(3\)</span> étapes :</p>
+<ol class="simple">
+<li><p>La première étape consiste à remplacer le risque par un risque empirique sur un jeu de test “fantôme”. Comparer les performances avec un jeu de test est du même ordre de grandeur qu’avec le vrai risque. Notez que des coefficients multiplicatifs supplémentaires apparaîtront suite à cette manipulation,</p></li>
+<li><p>On va symmétriser avec des signes aléatoire. L’idée est de dire que si un point est dans le test ou le train, il a la même loi de probabilité. Une fois cela dit, on se rend compte que finalement, on peut éliminer le test et ne regarder que la “dynamique” de notre train,</p></li>
+<li><p>On conditionne sur un jeu de donné fixé et on regarde la dynamique de nos “signes aléatoires”. On constate qu’on peut majorer cela avec l’inégalité de Hoeffding. Enfin, on se rend compte qu’on peut faire un <em>union-bound</em> sur nos <span class="math notranslate nohighlight">\(\tau_\mathcal{H}(n)\)</span> fonctions.</p></li>
+</ol>
+</div>
+<div class="caution dropdown admonition">
+<p class="admonition-title">Étape 1 : Symétrisation par un échantillon fantôme (échantillon de test).</p>
+<p>Construisons un jeu de données de test virtuel <span class="math notranslate nohighlight">\(S_n^\prime=\{(X_i^\prime, Y_i^\prime)\}_{i\leq n}\)</span> tel que <span class="math notranslate nohighlight">\(S_n\sim S_n^\prime\)</span> (iid). Notons <span class="math notranslate nohighlight">\(L_n^\prime\)</span> le risque empirique associé à cet échantillon. Supposons <span class="math notranslate nohighlight">\(n\epsilon^2\geq 2\)</span>, alors nous avons :</p>
+<div class="admonition-un-jeu-de-test admonition">
+<p class="admonition-title">Un jeu de test</p>
+<p>Intuitivement, comparer notre <em>loss</em> de <em>train</em> avec sa valeur en espérance revient à peu près à la comparer avec la <em>loss</em> de <em>test</em>.</p>
+</div>
+<div class="math notranslate nohighlight">
+\[\mathbb{P}\Big(\sup_{h\in\mathcal{H}}|L_n(h)-L(h)|&gt;\epsilon\Big)\leq 2 \mathbb{P}\Big(\sup_{h\in\mathcal{H}}|L_n(h)-L_n^\prime(h)|&gt;\epsilon/2\Big)\]</div>
+<p>Pour voir cela, notons <span class="math notranslate nohighlight">\(h^\star\)</span> une fonction telle que <span class="math notranslate nohighlight">\(|L_n(h^\star)-L(h^\star)|&gt;\epsilon\)</span> si une telle fonction existe, sinon une fonction fixée au hasard. Nous avons alors :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\mathbb{P}\Big(\sup_{h\in\mathcal{H}}&amp;|L_n(h)-L_n^\prime(h)|&gt;\epsilon/2\Big)\geq \mathbb{P}\Big(|L_n(h^\star)-L_n^\prime(h^\star)|&gt;\epsilon/2\Big)\\
+&amp;\geq\mathbb{P}\Big(|L_n(h^\star)-L(h^\star)|&gt;\epsilon, |L_n^\prime(h^\star)-L(h^\star)|&lt;\epsilon/2\Big)\\
+&amp;=\mathbb{E}\Big[\textbf{1}\{|L_n(h^\star)-L(h^\star)|&gt;\epsilon\}\mathbb{P}\Big(|L_n^\prime(h^\star)-L(h^\star)|&lt;\epsilon/2|Z_1,\ldots, Z_n\Big)\Big]
+\end{aligned}\end{split}\]</div>
+<p>où <span class="math notranslate nohighlight">\(Z_i=(X_i, Y_i)\)</span>. En utilisant l’<a class="reference external" href="https://fr.wikipedia.org/wiki/In%C3%A9galit%C3%A9_de_Bienaym%C3%A9-Tchebychev">Inégalité de Bienaymé-Tchebychev</a>, nous avons :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\mathbb{P}\Big(|L_n^\prime(h^\star)-L(h^\star)|&lt;\epsilon/2|Z_1,\ldots, Z_n\Big)&amp;\geq 1-\frac{L(h^\star)(1-L(h^\star))/n}{(\epsilon/2)^2}\\
+&amp;\geq 1-\frac{1/4}{n\epsilon^2/4}\geq \frac{1}{2}.
+\end{aligned}\end{split}\]</div>
+<p>(car <span class="math notranslate nohighlight">\(n\epsilon^2&gt;2\)</span>).
+Ainsi :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}\mathbb{E}\Big[\textbf{1}\{|L_n(h^\star)-L(h^\star)|&gt;\epsilon\}\mathbb{P}&amp;\Big(|L_n^\prime(h^\star)-L(h^\star)|&lt;\epsilon/2|Z_1,\ldots, Z_n\Big)\Big]\\
+&amp;\geq \mathbb{E}\Big[\textbf{1}\{|L_n(h^\star)-L(h^\star)|&gt;\epsilon\}\Big]\frac{1}{2}\\&amp;=\mathbb{P}\Big(|L_n(h^\star)-L(h^\star)|&gt;\epsilon\Big)\frac{1}{2},\end{aligned}\end{split}\]</div>
+<p>et nous obtenons le résultat voulu.</p>
+<p>Cette première étape nous dit que comparer le score empirique de notre risque par rapport à son espérance est à peu près la même chose que le comparer avec un jeu de test. Testons cela au travers d’une petite expérience avec des tirages binomiaux normalisés.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">H</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">]</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">epsilon_list</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span>
+<span class="c1"># on répète l&#39;expérience pour calculer empiriquement la probabilité</span>
+<span class="n">size</span> <span class="o">=</span> <span class="mi">1000</span>
+
+<span class="k">for</span> <span class="n">epsilon</span> <span class="ow">in</span> <span class="n">epsilon_list</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;*&#39;</span> <span class="o">*</span> <span class="mi">20</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Epsilon=</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">epsilon</span><span class="p">))</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">H</span><span class="p">:</span>
+        <span class="n">Ln</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">h</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">)</span><span class="o">/</span><span class="n">n</span>
+        <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">Ln</span><span class="o">-</span><span class="n">h</span><span class="p">)</span><span class="o">&gt;</span><span class="n">epsilon</span><span class="p">)</span>
+    <span class="n">empirical_probability_1</span> <span class="o">=</span> <span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">results</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span> <span class="o">/</span> <span class="n">size</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;* P(sup |L_n-L|&gt;epsilon)=&#39;</span><span class="p">,</span> <span class="n">empirical_probability_1</span><span class="p">)</span>
+
+    <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">H</span><span class="p">:</span>
+        <span class="n">binom</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">h</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">)</span><span class="o">/</span><span class="n">n</span>
+        <span class="n">binom_ghost</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">h</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">)</span><span class="o">/</span><span class="n">n</span>
+        <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">binom</span><span class="o">-</span><span class="n">binom_ghost</span><span class="p">)</span><span class="o">&gt;</span><span class="n">epsilon</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="n">empirical_probability_2</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">results</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">size</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;* P(sup |L_n-L_n</span><span class="se">\&#39;</span><span class="s1">|&gt;epsilon)=&#39;</span><span class="p">,</span> <span class="n">empirical_probability_2</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;* 2xP(sup |L_n-L_n</span><span class="se">\&#39;</span><span class="s1">|&gt;epsilon)=&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">empirical_probability_2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>********************
+Epsilon=0.01
+* P(sup |L_n-L|&gt;epsilon)= 1.0
+* P(sup |L_n-L_n&#39;|&gt;epsilon)= 1.0
+* 2xP(sup |L_n-L_n&#39;|&gt;epsilon)= 2.0
+********************
+Epsilon=0.1
+* P(sup |L_n-L|&gt;epsilon)= 0.294
+* P(sup |L_n-L_n&#39;|&gt;epsilon)= 0.924
+* 2xP(sup |L_n-L_n&#39;|&gt;epsilon)= 1.848
+********************
+Epsilon=0.2
+* P(sup |L_n-L|&gt;epsilon)= 0.003
+* P(sup |L_n-L_n&#39;|&gt;epsilon)= 0.58
+* 2xP(sup |L_n-L_n&#39;|&gt;epsilon)= 1.16
+</pre></div>
+</div>
+</div>
+</div>
+<p>La seconde étape va nous permettre d’éliminer ce jeu fantôme auquel nous n’avons pas accès. Aussitôt mis, aussitôt retiré.</p>
+<div class="caution dropdown admonition">
+<p class="admonition-title">Étape 2 : Symétrisation avec des signes aléatoires.</p>
+<p>Nous avons donc la variable suivante :</p>
+<div class="math notranslate nohighlight">
+\[\sup_{h\in\mathcal{H}}|L_n(h)-L_n^\prime(h)|=\sup_{h\in\mathcal{H}}\frac{1}{n}|\sum_i\textbf{1}\{h(X_i)\neq Y_i\}-\textbf{1}\{h(X_i^\prime)\neq Y_i^\prime\}|\]</div>
+<p>Puisque nos variables <span class="math notranslate nohighlight">\(\textbf{1}\{h(X_i)\neq Y_i\}\)</span> et <span class="math notranslate nohighlight">\(\textbf{1}\{h(X_i^\prime)\neq Y_i^\prime\}\)</span> sont iid, cela revient exactement à</p>
+<div class="math notranslate nohighlight">
+\[\sup_{h\in\mathcal{H}}\frac{1}{n}|\sum_i\sigma_i(\textbf{1}\{h(X_i)\neq Y_i\}-\textbf{1}\{h(X_i^\prime)\neq Y_i^\prime\})|,\]</div>
+<p>où <span class="math notranslate nohighlight">\(\sigma_i\)</span> est une variable de Rademacher (i.e. <span class="math notranslate nohighlight">\(\mathbb{P}\big(\sigma_i=-1\big)=\mathbb{P}\big(\sigma_i=+1\big)=0.5\)</span>).</p>
+<p>Nous avons donc :</p>
+<div class="math notranslate nohighlight">
+\[\mathbb{P}\Big(\sup_{h\in\mathcal{H}}\frac{1}{n}|\sum_i\sigma_i\textbf{1}\{h(X_i)\neq Y_i\}-\sigma_i\textbf{1}\{h(X_i^\prime\neq Y_i^\prime\})|&gt;\epsilon/2\Big)\]</div>
+<p>Et au moins l’un deux deux termes <span class="math notranslate nohighlight">\(|\frac{1}{n}\sum_i\sigma_i\textbf{1}\{h(X_i)\neq Y_i\}|\)</span> doit être supérieur à <span class="math notranslate nohighlight">\(\epsilon/4\)</span> pour que la somme soit supérieure à <span class="math notranslate nohighlight">\(\epsilon/2\)</span> (vérifier par contradiction). Ainsi, en appliquant le <em>union bound</em>, nous avons :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\mathbb{P}\Big(\sup_{h\in\mathcal{H}}&amp;\frac{1}{n}|\sum_i\sigma_i\textbf{1}\{h(X_i)\neq Y_i\}-\sigma_i\textbf{1}\{h(X_i^\prime\neq Y_i^\prime\})|&gt;\epsilon/2\Big) \\
+&amp;\leq\mathbb{P}\Big(\sup_{h\in\mathcal{H}}\frac{1}{n}|\sum_i\sigma_i\textbf{1}\{h(X_i)\neq Y_i\}|&gt;\epsilon/4\Big)+\mathbb{P}\Big(\sup_{h\in\mathcal{H}}\frac{1}{n}|\sigma_i\textbf{1}\{h(X_i^\prime\neq Y_i^\prime\}|&gt;\epsilon/4\Big)\\
+&amp;=2\mathbb{P}\Big(\sup_{h\in\mathcal{H}}\frac{1}{n}|\sum_i\sigma_i\textbf{1}\{h(X_i)\neq Y_i\}|&gt;\epsilon/4\Big)
+\end{aligned}\end{split}\]</div>
+</div>
+<div class="caution dropdown admonition">
+<p class="admonition-title">Étape 3 : Conditionnement</p>
+<p>Jusqu’ici, nous considérions le jeu de données comme une variable aléatoire. Fixons le et étudions un cas particulier. Notons <span class="math notranslate nohighlight">\(z_1, \ldots, z_n=(x_1, y_1),\ldots, (x_n, y_n)\in\mathcal{X}\times\mathcal{Y}\)</span> cette réalisation.</p>
+<p>Nous avons donc :</p>
+<div class="math notranslate nohighlight">
+\[\mathbb{P}\Big(\sup_{h\in\mathcal{H}}\frac{1}{n}|\sum_i\sigma_i\textbf{1}\{h(X_i)\neq Y_i\}|&gt;\epsilon/4|Z_1=z_1, \ldots, Z_n=z_n\Big).\]</div>
+<p>Le nombre de configurations à tester est justement la fonction de croissance qui nous indique toutes les valeurs que peut prendre notre classe de fonctions <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> sur un jeu de données fixé de taille <span class="math notranslate nohighlight">\(n\)</span>. En appliquant le <em>union bound</em> à nouveau, nous obtenons donc :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\mathbb{P}\Big(\sup_{h\in\mathcal{H}}&amp;\frac{1}{n}|\sum_i\sigma_i\textbf{1}\{h(X_i)\neq Y_i\}|&gt;\epsilon/4|Z_1, \ldots, Z_n\Big)\\&amp;\leq\tau_\mathcal{H}(n)\sup_{h\in\mathcal{H}}\mathbb{P}\Big(\frac{1}{n}|\sum_i\sigma_i\textbf{1}\{h(X_i)\neq Y_i\}|&gt;\epsilon/4|Z_1, \ldots, Z_n\Big).
+\end{aligned}\end{split}\]</div>
+<p>De plus, en appliquant <a class="reference external" href="https://fr.wikipedia.org/wiki/In%C3%A9galit%C3%A9_de_Hoeffding">l’inégalité d’Hoeffding</a> , nous pouvons majorer la probabilité de droite quelque soit la fonction :</p>
+<div class="math notranslate nohighlight">
+\[\mathbb{P}\Big(\frac{1}{n}|\sum_i\sigma_i\textbf{1}\{h(X_i)\neq Y_i\}|&gt;\epsilon/4|Z_1, \ldots, Z_n\Big)\leq 2e^{-n\epsilon^2/32}\]</div>
+<p>Cette variable ne dépend pas du conditionnement et nous pouvons donc prendre l’espérance :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\mathbb{P}\Big(\frac{1}{n}|\sum_i\sigma_i\textbf{1}\{h(X_i)\neq Y_i\}|&gt;\epsilon/4\Big)&amp;=\mathbb{E}\Big[\mathbb{P}\Big(\frac{1}{n}|\sum_i\sigma_i\textbf{1}\{h(X_i)\neq Y_i\}|&gt;\epsilon/4|Z_1, \ldots, Z_n\Big)\Big] \\
+&amp;\leq 2e^{-n\epsilon^2/32}
+\end{aligned}\end{split}\]</div>
+<p><strong>Conclusion.</strong></p>
+<p>En combinait les 3 étapes précédentes, nous obtenons ainsi :</p>
+<div class="math notranslate nohighlight">
+\[\mathbb{P}\Big(\sup_{h\in\mathcal{H}}|L_n(h)-L(h)|&gt;\epsilon\Big)\leq 8 \tau_{\mathcal{H}}(n)e^{-n\epsilon^2/32}\]</div>
+</div>
+<p>Des résultats beaucoup plus stricts existent (avec une décroissance plus rapide du point de vue des constantes comme <span class="math notranslate nohighlight">\(32\)</span> ici).</p>
+<div class="admonition-exercice-star admonition">
+<p class="admonition-title">Exercice (<span class="math notranslate nohighlight">\(\star\)</span>)</p>
+<p><strong>La formule précédente permet de majorer l’évolution de la probabilité d’une déviation d’au moins <span class="math notranslate nohighlight">\(\epsilon\)</span> en fonction de <span class="math notranslate nohighlight">\(\tau_\mathcal{H}(n)\)</span> ainsi que <span class="math notranslate nohighlight">\(n\)</span>. Démontrez la variante suivante. Soit <span class="math notranslate nohighlight">\(\delta\in[0, 1]\)</span>, <span class="math notranslate nohighlight">\(\exists K&gt;0\)</span> tel qu’avec probabilité au moins <span class="math notranslate nohighlight">\(1-\delta\)</span>, nous avons :</strong></p>
+<div class="math notranslate nohighlight">
+\[\sup_{h\in\mathcal{H}}|L_n(h)-L(h)|&lt; K \sqrt{\frac{\text{ln}\big(\tau_{\mathcal{H}}(n)\big)-\text{ln}\big(\delta\big)}{n}}\]</div>
+</div>
+</div>
+<div class="section" id="iv-la-dimension-vc">
+<h2>IV. La dimension VC<a class="headerlink" href="#iv-la-dimension-vc" title="Permalink to this headline">¶</a></h2>
+<p>Le théorème précédent est très intéressant, mais sans hypothèse sur notre classe de fonctions <span class="math notranslate nohighlight">\(\mathcal{H}\)</span>, nous pourrions très bien avoir, comme nous l’avons vu :</p>
+<div class="math notranslate nohighlight">
+\[\tau_\mathcal{H}(n)=2^n,\]</div>
+<p>et cela nous donnerait :</p>
+<div class="math notranslate nohighlight">
+\[\lim_{n\rightarrow\infty}8 \cdot 2^ne^{-n\epsilon^2/32}=\infty,\]</div>
+<p>ce qui nous empêcherait de conclure !</p>
+<p>Il se trouve que pour certaines classes de fonctions (et nous verrons des exemples), quand bien même <span class="math notranslate nohighlight">\(|\mathcal{H}|=\infty\)</span>, nous n’aurions pas <span class="math notranslate nohighlight">\(\tau_\mathcal{H}(n)=2^n\)</span>.</p>
+<div class="admonition-exercice admonition">
+<p class="admonition-title">Exercice</p>
+<p><strong>Soit <span class="math notranslate nohighlight">\(\mathcal{X}=\mathbb{R}\)</span>, <span class="math notranslate nohighlight">\(\mathcal{Y}=\{0, 1\}\)</span> et <span class="math notranslate nohighlight">\(\mathcal{H}=\{h_s(x)=\textbf{1}\{x&gt;s\}:\ s\in\mathbb{R}\}\)</span>, l’ensemble des fonctions seuil (on retourne <span class="math notranslate nohighlight">\(1\)</span> si <span class="math notranslate nohighlight">\(x&gt;s\)</span> et <span class="math notranslate nohighlight">\(0\)</span> sinon). Montrer que <span class="math notranslate nohighlight">\(\tau_\mathcal{H}(2)=3\)</span> et non <span class="math notranslate nohighlight">\(2^2=4\)</span>.</strong></p>
+</div>
+<div class="admonition-definition-la-dimension-vc admonition">
+<p class="admonition-title">Définition (La dimension VC)</p>
+<p>Nous appelons la dimension VC ou VCdim d’une classe de fonctions <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> le plus grand jeu de données <span class="math notranslate nohighlight">\(S_n\)</span> tel que <span class="math notranslate nohighlight">\(\tau_\mathcal{H}(n)=2^n\)</span>. Plus formellement, nous avons :</p>
+<div class="math notranslate nohighlight">
+\[\text{VCdim}(\mathcal{H})=\max_{\tau_{\mathcal{H}}(n)=2^n}n\]</div>
+</div>
+<div class="margin sidebar">
+<p class="sidebar-title"><em>Understanding machine learning</em></p>
+<p>Une citation du livre <em>Understanding machine learning</em> décrit très bien l’idée derrière la dimension VC :</p>
+<p><em>If someone can explain every phenomenon, his explanations are worthless.</em></p>
+</div>
+<div class="admonition-exercice admonition">
+<p class="admonition-title">Exercice</p>
+<p><strong>Soit <span class="math notranslate nohighlight">\(\mathcal{X}=\mathbb{R}\)</span>, <span class="math notranslate nohighlight">\(\mathcal{Y}=\{0, 1\}\)</span> et <span class="math notranslate nohighlight">\(\mathcal{H}=\{h_s(x)=\textbf{1}\{x&gt;s\}:\ s\in\mathbb{R}\}\)</span>, l’ensemble des fonctions seuil (on retourne <span class="math notranslate nohighlight">\(1\)</span> si <span class="math notranslate nohighlight">\(x&gt;s\)</span> et <span class="math notranslate nohighlight">\(0\)</span> sinon). Quelle est la dimension VC ?</strong></p>
+</div>
+<p>L’intérêt clé de cette propriété nous vient du lemme suivant :</p>
+<div class="admonition-lemme-de-sauer admonition">
+<p class="admonition-title">Lemme de Sauer</p>
+<p>Soit <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> notre classe de fonctions telle que <span class="math notranslate nohighlight">\(\text{VCdim}(\mathcal{H})\leq d&lt;\infty\)</span>. Nous avons alors <span class="math notranslate nohighlight">\(\forall n&gt;0\)</span> :</p>
+<div class="math notranslate nohighlight">
+\[\tau_\mathcal{H}(n)\leq \sum_{i=0}^d{n\choose i}.\]</div>
+<p>De plus, si <span class="math notranslate nohighlight">\(n&gt;d+1\)</span>, alors :</p>
+<div class="math notranslate nohighlight">
+\[\tau_\mathcal{H}(n)\leq\Bigg(\frac{en}{d}\Bigg)^d.\]</div>
+</div>
+<div class="caution dropdown admonition">
+<p class="admonition-title">Preuve</p>
+<p>Tout d’abord, nous dirons qu’une classe de fonctions <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> <strong>éclate</strong> (<em>shatters</em> en anglais) un ensemble de points <span class="math notranslate nohighlight">\(C_n=\{(X_1)\}_{i\leq n}\)</span> si toutes les labellisation des points de <span class="math notranslate nohighlight">\(C_n\)</span> sont possibles par <span class="math notranslate nohighlight">\(\mathcal{H}\)</span>.</p>
+<p><strong>Première partie du lemme</strong></p>
+<p>Considérons l’ensemble <span class="math notranslate nohighlight">\(\{B\subseteq C_n: \mathcal{H}\text{ éclate } B\}\)</span>. C’est l’ensemble des parties de <span class="math notranslate nohighlight">\(C_n\)</span> qui sont éclatées par <span class="math notranslate nohighlight">\(\mathcal{H}\)</span>. Par définition, puisqu’il n’y a pas de jeu de données plus grand que <span class="math notranslate nohighlight">\(d\)</span> qui puissent être éclatés par <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> (cf. dimension VC), alors on a nécessairement :</p>
+<div class="math notranslate nohighlight">
+\[|\{B\subseteq C_n: \mathcal{H}\text{ éclate } B\}|\leq \sum_{i=0}^d{n\choose i}\]</div>
+<p>Notons <span class="math notranslate nohighlight">\(\mathcal{H}_C=\{h(X_1), ..., h(X_n):\ h\in\mathcal{H}\}\)</span>. Nous allons prouver :</p>
+<div class="math notranslate nohighlight">
+\[|\mathcal{H}_C|\leq |\{B\subseteq C_n: \mathcal{H}\text{ éclate } B\}|\]</div>
+<p>Considérons que <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> éclate toujours l’ensemble vide <span class="math notranslate nohighlight">\(\emptyset\)</span>.</p>
+<p>L’argument est par récurence.</p>
+<p>Si <span class="math notranslate nohighlight">\(n=1\)</span>, si <span class="math notranslate nohighlight">\(|\mathcal{H}_C|=1\)</span>, alors aucune fonction n’éclate <span class="math notranslate nohighlight">\(C\)</span>. Alors <span class="math notranslate nohighlight">\(|\{B\subseteq C_n: \mathcal{H}\text{ éclate } B\}|=1\)</span> grâce à <span class="math notranslate nohighlight">\(\emptyset\)</span>. Si <span class="math notranslate nohighlight">\(|\mathcal{H}_C|=2\)</span>, alors le point est éclaté par <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> et <span class="math notranslate nohighlight">\(|\{B\subseteq C_n: \mathcal{H}\text{ éclate } B\}|=2\)</span> grâce à <span class="math notranslate nohighlight">\(\emptyset\)</span> et au point de <span class="math notranslate nohighlight">\(C\)</span>. L’inégalité est vérifiée pour <span class="math notranslate nohighlight">\(n=1\)</span>.</p>
+<p>Supposons l’inégalité vérifiée <span class="math notranslate nohighlight">\(\forall k&lt;n\)</span> et montrons qu’elle l’est alors pour <span class="math notranslate nohighlight">\(k=n\)</span>. Pour rappel, <span class="math notranslate nohighlight">\(C=\{x_1,\ldots, x_n\}\)</span> et notons <span class="math notranslate nohighlight">\(C^\prime=\{x_2, \ldots, x_n\}\)</span>. Construisons les deux ensembles suivants :</p>
+<div class="math notranslate nohighlight">
+\[\mathbb{Y}_0=\{(y_2, \ldots, y_n): (0, y_2, \ldots, y_n)\in\mathcal{H}_C\lor(1, y_2, \ldots, y_n)\in\mathcal{H}_C\}\text{ ($\lor$ = or)}\]</div>
+<p>Il s’agit de toutes les labelisations de <span class="math notranslate nohighlight">\(C^\prime\)</span> peu importe le label de <span class="math notranslate nohighlight">\(x_1\)</span> .</p>
+<div class="math notranslate nohighlight">
+\[\mathbb{Y}_1=\{(y_2, \ldots, y_n): (0, y_2, \ldots, y_n)\in\mathcal{H}_C\land(1, y_2, \ldots, y_n)\in\mathcal{H}_C\}\text{ ($\land$ = and)}\]</div>
+<p>Il s’agit de toutes les labelisations de <span class="math notranslate nohighlight">\(C^\prime\)</span> telles que <span class="math notranslate nohighlight">\(x_1\)</span> puisse toujours être labellisé <span class="math notranslate nohighlight">\(1\)</span> et <span class="math notranslate nohighlight">\(0\)</span>. On a donc :</p>
+<div class="math notranslate nohighlight">
+\[|\mathbb{Y}_1|+|\mathbb{Y}_0|=|\mathcal{H}_C|\]</div>
+<p>car <span class="math notranslate nohighlight">\(\mathbb{Y}_0\)</span> contient toutes les labellisations de <span class="math notranslate nohighlight">\(C^\prime\)</span> et <span class="math notranslate nohighlight">\(\mathbb{Y}_1\)</span> double les cas où <span class="math notranslate nohighlight">\(x_1\)</span> est double (<span class="math notranslate nohighlight">\(1\)</span> et <span class="math notranslate nohighlight">\(0\)</span>). De plus, on peut remarquer que :</p>
+<div class="math notranslate nohighlight">
+\[\mathbb{Y}_0=\mathcal{H}_{C^\prime},\]</div>
+<p>Et puisque l’inégalité est vraie jusqu’à <span class="math notranslate nohighlight">\(n-1\)</span>, nous avons :</p>
+<div class="math notranslate nohighlight">
+\[|\mathbb{Y}_0|=|\mathcal{H}_{C^\prime}|\leq |\{B\subseteq C^\prime: \mathcal{H}\text{ éclate } B\}|=|\{B\subseteq C: x_1\not\in B\land\mathcal{H}\text{ éclate } B\}|\]</div>
+<p>Soit :</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{H}^\prime=\{h\in\mathcal{H}:\ \exists h^\prime\in\mathcal{H}\ s.t.\ (1-h(x_1), h(x_2),\ldots, h(x_n))=(h^\prime(x_1), h^\prime(x_2), \ldots, h^\prime(x_n))\}\]</div>
+<p>C’est l’ensemble des fonctions telles qu’il existe une autre fonction en accourd sur tous les points de <span class="math notranslate nohighlight">\(C\)</span> sauf le premier. Évidemment, si <span class="math notranslate nohighlight">\(\mathcal{H}^\prime\)</span> éclate <span class="math notranslate nohighlight">\(B\subseteq C^\prime\)</span>, alors il éclate aussi <span class="math notranslate nohighlight">\(B\cup x_1\)</span> (par construction de <span class="math notranslate nohighlight">\(\mathcal{H}^\prime\)</span>. Nous avons de fait <span class="math notranslate nohighlight">\(\mathcal{H}^\prime_{C^\prime}=\mathbb{Y}_1\)</span>.</p>
+<p>Par récurrence, nous avons à noveau :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}|\mathbb{Y}_1|=|\mathcal{H}^\prime_{C^\prime}|&amp;\leq  |\{B\subseteq C^\prime: \mathcal{H}^\prime\text{ éclate } B\}|\\
+&amp;=|\{B\subseteq C^\prime: \mathcal{H}^\prime\text{ éclate } B\cup \{x_1\}\}|\\
+&amp;=|\{B\subseteq C: x_1\in B\land\mathcal{H}^\prime\text{ éclate } B\}|\\
+&amp;\leq |\{B\subseteq C: x_1\in B\land\mathcal{H}\text{ éclate } B\}|
+\end{aligned}\end{split}\]</div>
+<p>En résumé, nous avons :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+|\mathcal{H}_C|=|\mathbb{Y}_0|+|\mathbb{Y}_1|&amp;\leq|\{B\subseteq C: x_1\not\in B\land\mathcal{H}\text{ éclate } B\}|+|\{B\subseteq C: x_1\in B\land\mathcal{H}\text{ éclate } B\}|\\
+&amp;=||\{B\subseteq C: \mathcal{H}\text{ éclate } B\}|
+\end{aligned}\end{split}\]</div>
+<p>Et donc :</p>
+<div class="math notranslate nohighlight">
+\[\tau_\mathcal{H}(n)\leq \sum_{i=0}^d{n\choose i}.\]</div>
+<p><strong>Seconde partie du lemme</strong></p>
+<p>Nous allons montrer l’inégalité suivante. Soit <span class="math notranslate nohighlight">\(n\)</span> et <span class="math notranslate nohighlight">\(d\)</span> deux entiers strictement positifs tels que <span class="math notranslate nohighlight">\(n&gt;d+1\)</span>, alors :</p>
+<div class="math notranslate nohighlight">
+\[\sum_{i=0}^d{n\choose i}\leq \Bigg(\frac{en}{d}\Bigg)^d.\]</div>
+<p>Nous allons à nouveau fonctionner par récurrence. Soit <span class="math notranslate nohighlight">\(d=1\)</span>. On a donc :</p>
+<div class="math notranslate nohighlight">
+\[\sum_{i=0}^d{n\choose i}={n\choose 0}+{n\choose 1}=1+n\]</div>
+<p>et :</p>
+<div class="math notranslate nohighlight">
+\[\Bigg(\frac{en}{d}\Bigg)^d=en\]</div>
+<p>et on a bien <span class="math notranslate nohighlight">\(1+n\leq en\)</span>. Supposons que l’inégalité tienne jusqu’à <span class="math notranslate nohighlight">\(d\)</span> et montrons <span class="math notranslate nohighlight">\(d+1\)</span> :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\sum_{i=0}^{d+1}{n\choose i}&amp;\leq \Bigg(\frac{en}{d}\Bigg)^d+{n\choose d+1}\\
+&amp;= \Bigg(\frac{en}{d}\Bigg)^d\left(1+ \Bigg(\frac{d}{en}\Bigg)^d\frac{n!}{(d+1)!(n-d-1)!}\right)\\
+&amp;= \Bigg(\frac{en}{d}\Bigg)^d\left(1+ \Bigg(\frac{d}{en}\Bigg)^d\frac{(n-d)}{(d+1)d!}\right)\\
+&amp;= \Bigg(\frac{en}{d}\Bigg)^d\left(1+ \Bigg(\frac{d}{e}\Bigg)^d\frac{n(n-1)\ldots(n-d+1)}{n^d}\frac{(n-d)}{(d+1)d!}\right)\\
+&amp;\leq \Bigg(\frac{en}{d}\Bigg)^d\left(1+ \Bigg(\frac{d}{e}\Bigg)^d\frac{(n-d)}{(d+1)d!}\right)\\
+\end{aligned}\end{split}\]</div>
+<hr class="docutils" />
+<p>La <a class="reference external" href="https://fr.wikipedia.org/wiki/Formule_de_Stirling">formule de Stirling</a> donne l’approximation suivante :</p>
+<div class="math notranslate nohighlight">
+\[n!\approx\sqrt{2\pi n}\left(\frac{n}{e}\right)^n.\]</div>
+<p>En réalité, nous avons même l’encadrement suivant :</p>
+<div class="math notranslate nohighlight">
+\[\sqrt{2\pi n}\left(\frac{n}{e}\right)^n\leq n! \leq \sqrt{2\pi n}\left(\frac{n}{e}\right)^ne^{\frac{1}{4n}}\]</div>
+<p>L’approximation initiale est donc un minorant de <span class="math notranslate nohighlight">\(n!\)</span>.</p>
+<hr class="docutils" />
+<p>Nous avons donc en appliquant la formule de Stirling à <span class="math notranslate nohighlight">\(n!\)</span> :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\Bigg(\frac{en}{d}\Bigg)^d\left(1+ \Bigg(\frac{d}{e}\Bigg)^d\frac{(n-d)}{(d+1)d!}\right)&amp;\leq \Bigg(\frac{en}{d}\Bigg)^d\left(1+ \Bigg(\frac{d}{e}\Bigg)^d\frac{(n-d)}{(d+1)\sqrt{2\pi d}\left(\frac{d}{e}\right)^d}\right)\\
+&amp;=\Bigg(\frac{en}{d}\Bigg)^d\left(1+\frac{(n-d)}{(d+1)\sqrt{2\pi d}}\right)\\
+&amp;=\Bigg(\frac{en}{d}\Bigg)^d\frac{d+1+(n-d)/\sqrt{2\pi d}}{(d+1)}\\
+&amp;\leq \Bigg(\frac{en}{d}\Bigg)^d\frac{d+1+(n-d)/2}{(d+1)}\\
+&amp;= \Bigg(\frac{en}{d}\Bigg)^d\frac{d/2+1+n/2}{(d+1)}\\
+\end{aligned}\end{split}\]</div>
+<p>De plus, par hypothèse, nous avons : <span class="math notranslate nohighlight">\(n&gt;d+1\Leftrightarrow n-2\geq d\)</span>. Cela nous donne :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\Bigg(\frac{en}{d}\Bigg)^d\frac{d/2+1+n/2}{(d+1)}&amp;\leq \Bigg(\frac{en}{d}\Bigg)^d\frac{(n-2)/2+1+n/2}{(d+1)}\\
+&amp;=\Bigg(\frac{en}{d}\Bigg)^d\frac{n}{(d+1)}\\
+&amp;\leq \Bigg(\frac{en}{d}\Bigg)^d\frac{n}{(d+1)}\frac{1}{e}\\
+&amp;= \Bigg(\frac{en}{d}\Bigg)^d\frac{en}{(d+1)}\frac{1}{e}\\
+&amp;\leq \Bigg(\frac{en}{d}\Bigg)^d\frac{en}{(d+1)}\frac{1}{(1+1/d)^d}\text{ (rappelez-vous $\lim_{x\rightarrow\infty}(1+1/x)^x=e$ et $(1+1/x)^x$ est croissante)}\\
+&amp;=\Bigg(\frac{en}{d}\Bigg)^d\frac{en}{(d+1)}\Bigg(\frac{d}{1+d}\Bigg)^d=\Bigg(\frac{en}{d+1}\Bigg)^{d+1}
+\end{aligned}\end{split}\]</div>
+</div>
+<p>Ainsi, la fonction de croissance ne croît plus exponentiellement vite mais polynomialement dès qu’on dépasse la dimension VC de notre classe de fonctions. Cela implique que notre majorant de généralisation converge vers <span class="math notranslate nohighlight">\(0\)</span>, qu’on puisse estimer l’erreur de nos fonctions correctement et donc que le choix du minimiseur du risque empirique est un bon choix : ce résultat (qui est l’agrégation de tous les éléments précédents) est ce qu’on appelle le <em>théorème fondamental du machine learning</em>. Ce dernier est détaillé plus bas.</p>
+<div class="admonition-exercice admonition">
+<p class="admonition-title">Exercice</p>
+<p><strong>En reprenant le résultat de l’exercice <em>(<span class="math notranslate nohighlight">\(\star\)</span>)</em>, remplacez la fonction de croissance par son majorant issu du Lemme de Sauer lorsque <span class="math notranslate nohighlight">\(n&gt;d+1\)</span>.</strong></p>
+</div>
+<div class="admonition-exercice admonition">
+<p class="admonition-title">Exercice</p>
+<p><strong>Soit <span class="math notranslate nohighlight">\(\mathcal{X}=\mathbb{R}^2\)</span>, <span class="math notranslate nohighlight">\(\mathcal{Y}=\{0, 1\}\)</span> et <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> l’ensemble des classifieurs linéaires de <span class="math notranslate nohighlight">\(\mathbb{R}^2\)</span>. Démontrer que la dimension VC de <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> est au moins <span class="math notranslate nohighlight">\(3\)</span>.</strong></p>
+</div>
+<div class="admonition-exercice admonition">
+<p class="admonition-title">Exercice</p>
+<p><strong>Soit <span class="math notranslate nohighlight">\(\mathcal{H}_{=k}\)</span> l’ensemble des classifieurs qui ne peuvent associer le label <span class="math notranslate nohighlight">\(1\)</span> qu’à <em>exactement</em> <span class="math notranslate nohighlight">\(k\)</span> éléments de <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>. Trouver la dimension VC. On supposera que <span class="math notranslate nohighlight">\(|\mathcal{X}|\geq k\)</span>.</strong></p>
+</div>
+</div>
+<div class="section" id="v-une-formule-generale">
+<h2>V. Une formule générale<a class="headerlink" href="#v-une-formule-generale" title="Permalink to this headline">¶</a></h2>
+<p>Nous avons vu dans le cas où <span class="math notranslate nohighlight">\(|\mathcal{H}|&lt;\infty\)</span> que si <span class="math notranslate nohighlight">\(\eta\in\{0, 1\}\)</span> et <span class="math notranslate nohighlight">\(g^\star\in\mathcal{H}\)</span>, alors la convergence était plus rapide car nous avions moins de bruit dans notre jeu de données. C’est bien sûr la même chose lorsque <span class="math notranslate nohighlight">\(|\mathcal{H}|=\infty\)</span>. Il est d’ailleurs possible de fournir une formule générale qui interpole les deux scénarios.</p>
+<div class="admonition-theoreme admonition">
+<p class="admonition-title">Théorème</p>
+<p>Soit <span class="math notranslate nohighlight">\(\delta&gt;0\)</span>, <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> notre classe de fonctions, <span class="math notranslate nohighlight">\(h_n\)</span> le minimiseur du risque empirique, <span class="math notranslate nohighlight">\(\delta&gt;0\)</span>. Notons <span class="math notranslate nohighlight">\(d\)</span> la dimension VC de <span class="math notranslate nohighlight">\(\mathcal{H}\)</span>. Alors, <span class="math notranslate nohighlight">\(\exists K\)</span> telle qu’avec probabilité <span class="math notranslate nohighlight">\(1-\delta\)</span>, nous avons :</p>
+<div class="math notranslate nohighlight">
+\[L(h_n)-\inf_{h\in\mathcal{H}}L(h)\leq K\left(\sqrt{\inf_{h\in\mathcal{H}}L(h)\frac{d\log n+\log\frac{1}{\delta}}{n}}+\frac{d\log n+\log\frac{1}{\delta}}{n}\right)\]</div>
+</div>
+<p>On retrouve le terme en racine qui implique une convergence lente. Ce terme tend vers <span class="math notranslate nohighlight">\(0\)</span> lorsque l’erreur minimale dans <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> tend vers <span class="math notranslate nohighlight">\(0\)</span>.</p>
+</div>
+<div class="section" id="vi-un-resultat-avec-une-marge-et-mathcal-h-infty">
+<h2>VI. Un résultat avec une marge (et <span class="math notranslate nohighlight">\(|\mathcal{H}|&lt;\infty\)</span>)<a class="headerlink" href="#vi-un-resultat-avec-une-marge-et-mathcal-h-infty" title="Permalink to this headline">¶</a></h2>
+<p>Nous avons vu que le problème de convergence lente apparaît lorsque <span class="math notranslate nohighlight">\(\eta(x)\)</span> est proche de <span class="math notranslate nohighlight">\(0.5\)</span>. Nous avons propsé une formule interpolatrice qui allait d’une convergence lente à une convergence rapide lorsque la meilleure fonction de notre classe de fonctions se rapprochait de <span class="math notranslate nohighlight">\(0\)</span> erreur. Il existe encore une autre manière d’obtenir une convergence rapide.</p>
+<div class="admonition-definition-marge-de-massart admonition">
+<p class="admonition-title">Définition (Marge de Massart)</p>
+<p>Soit <span class="math notranslate nohighlight">\(\nu(x)=\left|\eta(x)-\frac{1}{2}\right|\)</span>. On parle de marge de Massart de paramètre <span class="math notranslate nohighlight">\(\gamma\)</span> lorsque <span class="math notranslate nohighlight">\(\nu(x)\geq \gamma\)</span> preque sûrement.</p>
+</div>
+<p>Si nous avons une marge de Massart de paramètre <span class="math notranslate nohighlight">\(\gamma\)</span> alors soit <span class="math notranslate nohighlight">\(\eta(x)\geq \frac{1}{2}+\gamma\)</span>, soit <span class="math notranslate nohighlight">\(\eta(x)\leq \frac{1}{2}-\gamma\)</span> avec probabilité <span class="math notranslate nohighlight">\(1\)</span>. On ne peut plus se rapprocher de <span class="math notranslate nohighlight">\(0.5\)</span>.</p>
+<div class="admonition-theoreme-convergence-rapide-avec-une-marge admonition">
+<p class="admonition-title">Théorème (Convergence rapide avec une marge)</p>
+<p>Soit <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> notre classe de fonctions, <span class="math notranslate nohighlight">\(\gamma\)</span> le paramètre de notre marge, <span class="math notranslate nohighlight">\(h_n\)</span> le minimiseur de notre risque empirique et <span class="math notranslate nohighlight">\(\delta&gt;0\)</span>. Supposons <span class="math notranslate nohighlight">\(g^\star\in\mathcal{H}\)</span>. Alors nous avons avec probabilité <span class="math notranslate nohighlight">\(1-\delta\)</span> :</p>
+<div class="math notranslate nohighlight">
+\[L(h_n)-\inf_{h\in\mathcal{H}}L(h)\leq 2\frac{\log |\mathcal{H}|+\log\frac{1}{\delta}}{\gamma n}\]</div>
+</div>
+<div class="caution dropdown admonition">
+<p class="admonition-title">Preuve</p>
+<p>Soit <span class="math notranslate nohighlight">\(h\in\mathcal{H}\)</span>. Définissons la variable aléatoire suivante :</p>
+<div class="math notranslate nohighlight">
+\[Z_i(h)=\mathbf{1}\{g^\star(X_i)\neq Y_i\}-\mathbf{1}\{h(X_i)\neq Y_i\}.\]</div>
+<p>Nous avons par ailleurs :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+L(h_n)-\inf_{h\in\mathcal{H}}L(h)&amp;=L(h_n)-L(g^\star)\text{ (par hypothèse)}\\
+&amp;=\underbrace{L_n(h_n)-L_n(g^\star)}_{\leq 0}+L_n(g^\star)-L_n(h_n)-(L(g^\star)-L(h_n))\\
+&amp;\leq \frac{1}{n}\sum_{i=1}^n\left(Z_i(h_n)-\mathbb{E}\left[Z_i(h_n)\right]\right)
+\end{aligned}\end{split}\]</div>
+<p>et nous retombons sur un problème où nous souhaitons majorer la déviation entre une variable aléatoire et son espérance. L’astuce est d’utiliser une inégalité de concentration qui s’appuie sur la variance afin d’obtenir un résultat plus fin que l’inégalité d’Hoeffding : l’<a class="reference external" href="https://en.wikipedia.org/wiki/Bernstein_inequalities_(probability_theory)">inégalité de Bernstein</a>.</p>
+<p>Comme indiqué, celle-ci s’appuie sur la variance de notre variable aléatoire. Nous avons :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\text{Var}[Z_i(h)]&amp;\leq \mathbb{E}[Z_i(h)^2]\\
+&amp;=\mathbb{E}[\mathbf{1}\{g^\star(X_i)\neq Y_i\}-2\mathbf{1}\{g^\star(X_i)\neq Y_i\}\mathbf{1}\{h(X_i)\neq Y_i\}+\mathbf{1}\{h(X_i)\neq Y_i\}]\\
+&amp;=\mathbb{P}(h(X_i)\neq g^\star(X_i))
+\end{aligned}\end{split}\]</div>
+<p>Nous avons donc <span class="math notranslate nohighlight">\(\forall h\in\mathcal{H}\)</span> :</p>
+<div class="math notranslate nohighlight">
+\[\frac{1}{n}\sum_{i=1}^n \text{Var}[Z_i(h)]\leq \mathbb{P}(h(X)\neq g^\star(X))\]</div>
+<p>et notons :</p>
+<div class="math notranslate nohighlight">
+\[\sigma_h^2:=\mathbb{P}(h(X)\neq g^\star(X)).\]</div>
+<p>Nous avons via l’inégalité de Bernstein pour <span class="math notranslate nohighlight">\(h\in\mathcal{H}\)</span> :</p>
+<div class="math notranslate nohighlight">
+\[\mathbb{P}\left(\frac{1}{n}\sum_{i=1}^n Z_i(h)-\mathbb{E}[Z_i(h)]&gt;\epsilon\right)\leq \text{exp}\left(-\frac{n\epsilon^2}{2\sigma_h^2+\frac{2}{3}\epsilon}\right)\]</div>
+<p>Calculons maintenant :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\text{exp}\left(-\frac{n\epsilon^2}{2\sigma_h^2+\frac{2}{3}\epsilon}\right)&amp;=\frac{\delta}{|\mathcal{H}|}\\
+\Leftrightarrow\ \frac{n\epsilon^2}{2\sigma_h^2+\frac{2}{3}\epsilon}&amp;=\log\frac{|\mathcal{H}|}{\delta}\\
+\Leftrightarrow\ \epsilon^2&amp;=\frac{2\sigma_h^2\log\frac{|\mathcal{H}|}{\delta}}{n}+\frac{2\epsilon\log\frac{|\mathcal{H}|}{\delta}}{3n}
+\end{aligned}\end{split}\]</div>
+<p>Remarquons que <span class="math notranslate nohighlight">\(a+b\leq 2\max(a;b)\)</span>. Nous avons donc :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\epsilon^2&amp;\leq 2\max\left(\frac{2\sigma_h^2\log\frac{|\mathcal{H}|}{\delta}}{n};\frac{2\epsilon\log\frac{|\mathcal{H}|}{\delta}}{3n}\right)\\
+\Leftrightarrow\ \epsilon&amp;\leq 2\max\left(\sqrt{\frac{2\sigma_h^2\log\frac{|\mathcal{H}|}{\delta}}{n}};\frac{2\log\frac{|\mathcal{H}|}{\delta}}{3n}\right)
+\end{aligned}\end{split}\]</div>
+<p>Ainsi, avec probabilité <span class="math notranslate nohighlight">\(1-\frac{\delta}{|\mathcal{H}|}\)</span> pour <span class="math notranslate nohighlight">\(h\in\mathcal{H}\)</span> quelconque, nous avons :</p>
+<div class="math notranslate nohighlight">
+\[\frac{1}{n}\sum_{i=1}^n Z_i(h)-\mathbb{E}[Z_i(h)]\leq 2\max\left(\sqrt{\frac{2\sigma_h^2\log\frac{|\mathcal{H}|}{\delta}}{n}};\frac{2\log\frac{|\mathcal{H}|}{\delta}}{3n}\right)\]</div>
+<p>En appliquant un <em>union bound</em>, nous avons donc qu’avec probabilité <span class="math notranslate nohighlight">\(1-\sum_h\frac{\delta}{|\mathcal{H}|}=1-\delta\)</span>, <span class="math notranslate nohighlight">\(\forall h\in\mathcal{H}\)</span> l’inégalité est vérifiée. C’est en particulier vrai pour le minimiseur du risque empirique :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+L(h_n)-\inf_{h\in\mathcal{H}}L(h)&amp;\leq \frac{1}{n}\sum_{i=1}^nZ_i(h_n)-\mathbb{E}\left[Z_i(h_n)\right]\\
+&amp;\leq 2\max\left(\sqrt{\frac{2\sigma_{h_n}^2\log\frac{|\mathcal{H}|}{\delta}}{n}};\frac{2\log\frac{|\mathcal{H}|}{\delta}}{3n}\right)
+\end{aligned}\end{split}\]</div>
+<p>Nous avons de plus :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+L(h_n)-\inf_{h\in\mathcal{H}}L(h)&amp;=\mathbb{E}[|2\eta(X)-1|\mathbf{1}\{h_n(X)\neq g^\star(X)\}]\text{ (car $g^\star\in\mathcal{H}$)}\\
+&amp;\geq 2\gamma \mathbb{P}(h_n(X)\neq g^\star(X)=2\gamma\sigma_{h_n}^2\\
+\Leftrightarrow\ \sigma^2_{h_n}&amp;\leq \frac{L(h_n)-\inf_{h\in\mathcal{H}}L(h)}{2\gamma}
+\end{aligned}\end{split}\]</div>
+<p>(Pour la première égalité, voir le cours sur le classifieur de Bayes)</p>
+<p>Nous en déduisons donc l’inégalité suivante :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+L(h_n)-\inf_{h\in\mathcal{H}}L(h)&amp;\leq2\max\left(\sqrt{\frac{2\sigma_{h_n}^2\log\frac{|\mathcal{H}|}{\delta}}{n}};\frac{2\log\frac{|\mathcal{H}|}{\delta}}{3n}\right)\\
+&amp;\leq 2\max\left(\sqrt{\frac{(L(h_n)-\inf_{h\in\mathcal{H}}L(h))\log\frac{|\mathcal{H}|}{\delta}}{\gamma n}};\frac{2\log\frac{|\mathcal{H}|}{\delta}}{3n}\right)\\
+\Leftrightarrow\ L(h_n)-\inf_{h\in\mathcal{H}}L(h)&amp;\leq 2\max\left(\frac{\log\frac{|\mathcal{H}|}{\delta}}{\gamma n};\frac{2\log\frac{|\mathcal{H}|}{\delta}}{3n}\right)=\frac{2\log\frac{|\mathcal{H}|}{\delta}}{\gamma n}
+\end{aligned}\end{split}\]</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="k">def</span> <span class="nf">plot</span><span class="p">():</span>
+    <span class="n">H_size</span> <span class="o">=</span> <span class="mi">1000</span>
+    <span class="n">delta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">gamma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4511</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">H_size</span><span class="p">)</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="o">/</span><span class="n">e</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">n</span><span class="p">)),</span> 
+                 <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\delta=$</span><span class="si">{:.2f}</span><span class="s1">, $|H|=$</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">H_size</span><span class="p">)))</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">gamma</span><span class="p">:</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">H_size</span><span class="p">)</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">e</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">g</span><span class="p">),</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span> <span class="k">if</span> <span class="n">g</span><span class="o">==</span><span class="mf">0.1</span> <span class="k">else</span> <span class="s1">&#39;dotted&#39;</span><span class="p">,</span>
+                     <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\gamma=</span><span class="si">{:.1f}</span><span class="s1">$, $g^\star\in\mathcal{{H}}$, $\delta=$</span><span class="si">{:.2f}</span><span class="s1">, $|H|=$</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                         <span class="n">g</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">H_size</span><span class="p">)))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Majoration du gap de généralisation avec hypothèse de marge&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/4_VC_theory_32_0.png" src="../_images/4_VC_theory_32_0.png" />
+</div>
+</div>
+<p>On observe que ce majorant est plus rapide que lorsqu’on n’a aucune hypothèse, mais si la marge est petite, on part de plus haut et on met un peu plus de temps à “devenir meilleur”. Cependant, il existe toujours un moment où une convergence rapide est nécessairement meilleure qu’une convergence lente.</p>
+<p>Ces stratégies sont des majorants. On observe que sous l’hypohtèse de marge, le majorant est moins bon que sans hypothèse lors <span class="math notranslate nohighlight">\(n\)</span> est petit. En pratique, le majorant sans hypothèse reste valable et nous pourrions avoir une courbe ayant la forme suivante (i.e. on choisit le majorant le plus strict).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="k">def</span> <span class="nf">plot</span><span class="p">():</span>
+    <span class="n">H_size</span> <span class="o">=</span> <span class="mi">1000</span>
+    <span class="n">delta</span> <span class="o">=</span> <span class="mf">0.05</span>
+    <span class="n">gamma</span> <span class="o">=</span> <span class="mf">0.2</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4511</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="n">maj_1</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">H_size</span><span class="p">)</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="o">/</span><span class="n">delta</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">n</span><span class="p">))</span>
+    <span class="n">maj_2</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">H_size</span><span class="p">)</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">delta</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">gamma</span><span class="p">)</span>
+    
+    <span class="n">maj</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">maj_1</span><span class="p">,</span> <span class="n">maj_2</span><span class="p">]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">maj</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;Majorant combiné&#39;</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Majoration du gap de généralisation combiné lent+rapide&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/4_VC_theory_34_0.png" src="../_images/4_VC_theory_34_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="vii-la-sample-complexity">
+<h2>VII. La <em>sample complexity</em><a class="headerlink" href="#vii-la-sample-complexity" title="Permalink to this headline">¶</a></h2>
+<p>Nous avons vu dans les sections précédentes que pour une déviation <span class="math notranslate nohighlight">\(\epsilon\)</span> fixée nous pouvions majorer l’évolution de la probabilité que notre estimation empirique de l’erreur dévie d’au moins <span class="math notranslate nohighlight">\(\epsilon\)</span>. Cette probabilité diminue exponentiellement vite lorsque le jeu de données augmente. Nous avons également vu que nous pouvions considérer une probabilité fixée <span class="math notranslate nohighlight">\(1-\delta\)</span> et observer les garanties que nous pouvions avoir sur la quantité de déviation relativement à cette probabilité. Nous avons vu notamment le résultat suivant.</p>
+<hr class="docutils" />
+<p>Soit <span class="math notranslate nohighlight">\(\delta\in[0, 1]\)</span>, <span class="math notranslate nohighlight">\(\exists K&gt;0\)</span> tel que avec probabilité au moins <span class="math notranslate nohighlight">\(1-\delta\)</span>, nous avons:</p>
+<div class="math notranslate nohighlight">
+\[\sup_{h\in\mathcal{H}}|L_n(h)-L(h)|&lt;K\sqrt{\frac{d\text{ln}\Big(\frac{en}{d}\Big)-\text{ln}\big(\delta\big)}{n}},\]</div>
+<p>où <span class="math notranslate nohighlight">\(d\)</span> est la dimension VC de notre classe de fonctions.</p>
+<hr class="docutils" />
+<p>Il existe en réalité une troisième alternative permettant de visualiser ces quantités. Nous pouvons fixer <span class="math notranslate nohighlight">\(\epsilon\)</span> et <span class="math notranslate nohighlight">\(\delta\)</span> et étudier la taille du jeu de données qu’il faudrait afin de garantir que notre déviation du risque empirique soit inférieure à <span class="math notranslate nohighlight">\(\epsilon\)</span> avec probabilité au moins <span class="math notranslate nohighlight">\(1-\delta\)</span>. La fonction décrivant la <em>sample complexity</em> est:</p>
+<div class="math notranslate nohighlight">
+\[m_\mathcal{H}:(0, 1)^2\rightarrow \mathbb{N}.\]</div>
+<p>Dans le cadre général, nous voulons donc trouver <span class="math notranslate nohighlight">\(n\)</span> tel que la partie à droite de l’inégalité ci-dessus soit égale à au plus <span class="math notranslate nohighlight">\(\epsilon\)</span>. Dit autrement, nous avons donc:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+K\sqrt{\frac{d\text{ln}\Big(\frac{en}{d}\Big)-\text{ln}\big(\delta\big)}{n}}&amp;\leq \epsilon\\
+\Leftrightarrow K\frac{\sqrt{d\text{ln}\Big(\frac{en}{d}\Big)-\text{ln}\big(\delta\big)}}{\epsilon}&amp;\leq\sqrt{n}\\
+\Leftrightarrow K^\prime \frac{d\text{ln}\Big(\frac{en}{d}\Big)-\text{ln}\big(\delta\big)}{\epsilon^2}&amp;\leq n
+\end{aligned}\end{split}\]</div>
+</div>
+<div class="section" id="viii-pac-learnability-et-theoreme-fondamental-du-machine-learning">
+<h2>VIII. PAC <em>learnability</em> et théorème fondamental du <em>machine learning</em><a class="headerlink" href="#viii-pac-learnability-et-theoreme-fondamental-du-machine-learning" title="Permalink to this headline">¶</a></h2>
+<p>Les théorèmes précédents montrent des résultats où avec forte probabilité (supérieure à <span class="math notranslate nohighlight">\(1-\delta\)</span> pour <span class="math notranslate nohighlight">\(\delta\)</span> fixé), nous pouvons garantir que le minimiseur du risque empirique sera proche de la plus petite erreur que nous puissions atteindre dans <span class="math notranslate nohighlight">\(\mathcal{H}\)</span>. On parle alors de théorie PAC pour <em>Probably Approximately Correct</em>. Cela nous mène directement à la définition d’être apprenable au sens de PAC.</p>
+<div class="admonition-definition-agnostic-pac-learnability admonition">
+<p class="admonition-title">Définition (Agnostic PAC <em>learnability</em>)</p>
+<p>Soit <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> une classe de fonctions de <span class="math notranslate nohighlight">\(\mathcal{X}\)</span> dans <span class="math notranslate nohighlight">\(\mathcal{Y}\)</span>. On dit que <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> est “<em>agnostic</em> PAC <em>learnable</em>” s’il existe une fonction <span class="math notranslate nohighlight">\(m_\mathcal{H}:[0, 1]^2\rightarrow\mathbb{N}\)</span> indiquant le nombre de points nécessaires minimum dans notre jeu de données et un algorithme d’apprentissage <span class="math notranslate nohighlight">\(\mathcal{A}\)</span> tels que pour toute distribution <span class="math notranslate nohighlight">\(\mathbb{P}\)</span> sur <span class="math notranslate nohighlight">\(\mathcal{X}\times\mathcal{Y}\)</span> et <span class="math notranslate nohighlight">\(\forall \epsilon,\delta\)</span>, si <span class="math notranslate nohighlight">\(|S_n|\geq m_\mathcal{H}(\epsilon, \delta)\)</span> où <span class="math notranslate nohighlight">\(S_n\sim\mathbb{P}^n\)</span> on a avec probabilité au moins <span class="math notranslate nohighlight">\(1-\delta\)</span> (sur <span class="math notranslate nohighlight">\(S_n\)</span>) :</p>
+<div class="math notranslate nohighlight">
+\[L(\mathcal{A}(S_n))\leq \inf_{h^\prime\in\mathcal{H}}L(h^\prime)+\epsilon\]</div>
+<p>où <span class="math notranslate nohighlight">\(\mathcal{A}(S_n)\)</span> est le résultat de notre algoriothme d’apprentissage sur <span class="math notranslate nohighlight">\(S_n\)</span>.</p>
+</div>
+<p>Nous utilisons le terme “agnostique” pour souligner que nous n’avons pas d’hypothèse quant à la capacité de <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> à obtenir de bonnes performanceS. On parle de PAC <em>learnability</em> (sans “agnostique”) si <span class="math notranslate nohighlight">\(\inf_{h^\prime\in\mathcal{H}}L(h^\prime)=0\)</span>.</p>
+<p>La question qui nous vient immédiatement à l’esprit et de déterminer les cas où notre classe de fonctions est effectivement <em>agnostic PAC learnable</em>. Le théorème suivante répond à cette question.</p>
+<div class="admonition-theoreme-fondamental-de-l-apprentissage-statistique admonition">
+<p class="admonition-title">Théorème fondamental de l’apprentissage statistique</p>
+<p>Soit <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> une classe de fonctions de <span class="math notranslate nohighlight">\(\mathcal{X}\)</span> dans <span class="math notranslate nohighlight">\(\mathcal{Y}=\{0, 1\}\)</span>. Considérons le risque classique <span class="math notranslate nohighlight">\(L(h)=\mathbb{P}(h(X)\neq Y)\)</span>. Les propositions suivantes sont équivalentes :</p>
+<ol class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mathcal{H}\)</span> est <em>agnostic PAC learnable</em>,</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathcal{H}\)</span> a une dimension VC finie.</p></li>
+</ol>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">Idée de la preuve</p>
+<p>L’intuition de la preuve va être de trouver non seulement des majorant sur <span class="math notranslate nohighlight">\(m_\mathcal{H}\)</span> similaires à ceux que nous avons pu montrer précédement, mais également des minorants (i.e. on ne peut pas faire mieux) :</p>
+<div class="math notranslate nohighlight">
+\[\exists C_1, C_2\text{ (universelles) et }\epsilon,\delta,\ C_1\frac{d+\log\frac{1}{\delta}}{\epsilon^2}\leq m_\mathcal{H}(\epsilon, \delta)\leq C_2\frac{d+\log\frac{1}{\delta}}{\epsilon^2}\]</div>
+</div>
+<p>Ainsi, si la dimension VC est infinie, le minorant diverge et <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> n’est pas PAC learnable. Je vous invite à vous référer à</p>
+<p><em>Shalev-Shwartz, Shai, et Shai Ben-David. Understanding Machine Learning: From Theory to Algorithms. Cambridge: Cambridge University Press, 2014.</em></p>
+<p>pour la preuve détaillée.</p>
+</div>
+<div class="section" id="ix-decidabilite-de-l-apprentissage">
+<h2>IX. Décidabilité de l’apprentissage<a class="headerlink" href="#ix-decidabilite-de-l-apprentissage" title="Permalink to this headline">¶</a></h2>
+<p>Nous venons de voir que la dimension VC d’une classe de fonctions <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> permettait de caractériser l’apprenabilité de cette dernière. Il y a en effet une équivalence mathématique entre la finitude de la dimension VC (un critère combinatoire) et la <em>PAC leanability</em>. Ainsi, si la dimension VC est infinie, minimiser le risque empirique ne nous permet pas de faire un bon choix.</p>
+<p>De fait, démontrer la finitude de la dimension VC d’une classe de fonctions <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> est équivalent à démontrer l’apprenabilité de cette classe. Malheureusement, cela peut être indécidable.</p>
+<div class="admonition-theoreme-indecidabilite-dans-pac admonition">
+<p class="admonition-title">Théorème (Indécidabilité dans PAC)</p>
+<p>Soit <span class="math notranslate nohighlight">\(F\)</span> un <a class="reference external" href="https://fr.wikipedia.org/wiki/Syst%C3%A8me_formel">système formel</a> récursif (calculable). Il existe des classes de fonctions de <span class="math notranslate nohighlight">\(\mathcal{X}\)</span> dans <span class="math notranslate nohighlight">\(\mathcal{Y}=\{0, 1\}\)</span> notées <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> telles que :</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mathcal{H}\)</span> est <em>PAC learnable</em> sans que cela puisse être démontré dans <span class="math notranslate nohighlight">\(F\)</span> et <span class="math notranslate nohighlight">\(F\)</span> est consistent,</p></li>
+<li><p><span class="math notranslate nohighlight">\(F\)</span> n’est pas consistent et <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> n’est pas <em>PAC learnable</em>.</p></li>
+</ul>
+</div>
+<p>Pour plus d’informations quant aux théorèmes d’incomplétude de Gödel, voir cette <a class="reference external" href="https://www.youtube.com/watch?v=SBwupYwDgHg">vidéo</a>.</p>
+</div>
+<div class="section" id="x-l-approche-train-test-ou-validation-croisee">
+<h2>X. L’approche train-test (ou validation croisée)<a class="headerlink" href="#x-l-approche-train-test-ou-validation-croisee" title="Permalink to this headline">¶</a></h2>
+<p>Les résultats précédents montrent que plus le modèle (i.e. <span class="math notranslate nohighlight">\(\mathcal{H}\)</span>) est complexe, plus le risque que notre minimiseur ne soit pas un bon minimieur est grand. Cela vient du fait que plus notre modèle est complexe, plus notre estimation des performances de notre minimiseur risque d’être mauvaise…</p>
+<p>Pour cela, il est important de garder un second jeu de données de <strong>test</strong> que nous noterons <span class="math notranslate nohighlight">\(T_m\)</span> afin d’évaluer les performances de notre modèle de manière plus stricte.</p>
+<div class="admonition-exercice admonition">
+<p class="admonition-title">Exercice</p>
+<p>Soit un jeu de données de test <span class="math notranslate nohighlight">\(T_m\)</span> de taille <span class="math notranslate nohighlight">\(m\)</span>, notre minimiseur empirique <span class="math notranslate nohighlight">\(h_n\)</span> et <span class="math notranslate nohighlight">\(\delta&gt;0\)</span>. Majorez l’erreur du risque empirique de <span class="math notranslate nohighlight">\(h_n\)</span> sur <span class="math notranslate nohighlight">\(T_m\)</span> avec probabilité <span class="math notranslate nohighlight">\(1-\delta\)</span>. Servez-vous d’un des résultats précédents.</p>
+</div>
+</div>
+<div class="section" id="xi-en-conclusion">
+<h2>XI. En conclusion<a class="headerlink" href="#xi-en-conclusion" title="Permalink to this headline">¶</a></h2>
+<p>Il y a deux sources de difficulté.</p>
+<div class="section" id="a-difficulte-epistemique-incertitude-du-modele">
+<h3>A. Difficulté épistémique (incertitude du modèle)<a class="headerlink" href="#a-difficulte-epistemique-incertitude-du-modele" title="Permalink to this headline">¶</a></h3>
+<p>La première source de difficulté est celle à laquelle on pense le plus souvent :</p>
+<ul class="simple">
+<li><p>La frontière de décision est vraiment complexe,</p></li>
+<li><p>Les données sont en grande dimension,</p></li>
+<li><p>Il y a beaucoup de variables et peu de signal et nous ne savons repérer ce dernier,</p></li>
+<li><p>etc.</p></li>
+</ul>
+<p>Dans ce cas de figure, à moins d’avoir une connaissance experte, nous devons considérer un grand nombre de fonctions <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> (e.g. un grand nombre de paramètres). Ainsi, la dimension VC risque d’être importante et le risque de sur-apprentissage fort. Il nous faut donc un grand jeu de données pour compenser la taille de <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> et obtenir un bon modèle.</p>
+</div>
+<div class="section" id="b-difficulte-aleatorique-incertitude-des-donnees">
+<h3>B. Difficulté aléatorique (incertitude des données)<a class="headerlink" href="#b-difficulte-aleatorique-incertitude-des-donnees" title="Permalink to this headline">¶</a></h3>
+<p>La seconde difficulté vient de l’ambiguïté de la tâche. Dans le cadre de la classification binaire, en notant <span class="math notranslate nohighlight">\(\eta(x)=\mathbb{P}\big(Y=1|X=x\big)\)</span>, on parle d’ambiguïté lorsque <span class="math notranslate nohighlight">\(\eta(x)\)</span> est proche de <span class="math notranslate nohighlight">\(0.5\)</span>. Dans ce cas de figure, il nous faut beaucoup plus de points pour converger vers la meilleure solution de notre classe de fonctions <span class="math notranslate nohighlight">\(\mathcal{H}\)</span>.</p>
+</div>
+<div class="section" id="c-autres-mesures-de-complexite">
+<h3>C. Autres mesures de complexité<a class="headerlink" href="#c-autres-mesures-de-complexite" title="Permalink to this headline">¶</a></h3>
+<p>La dimension VC mesure la complexité d’une classe de fonctions dans le cadre d’un problème de classification binaire. Cette mesure se généralise au cas multi-classes (voire top-k) avec la dimension de Natarajan et d’autres. Les <em>fat-shattering coefficients</em> permettent de quantifier la mesure de complexité d’une classe de fonctions de <span class="math notranslate nohighlight">\(\mathcal{X}\)</span> dans <span class="math notranslate nohighlight">\(\mathbb{R}\)</span>. Ces mesures de complexités permettent de définir une notion d’apprenabilité. Il existe une équivalence entre leur finitude et la capacité à choisir une bonne approximation pour notre problème.</p>
+<div class="admonition-theoreme-apprendre-peut-etre-indecidable admonition">
+<p class="admonition-title">Théorème (Apprendre peut être indécidable)</p>
+<p>Il existe des problèmes de <em>machine learning</em> où déterminer ce genre d’équivalences n’est pas possible à moins que le système dans lequel la preuve est faite soit inconsistent (cf. incomplétude de Godël).</p>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./3_classification"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+            <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="3_bayes_classifier.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Le classifieur de Bayes ☕️</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../4_kernel_methods/0_propos_liminaire.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Les méthodes à noyaux</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+        
+        </div>
+    </div>
+    <footer class="footer">
+    <div class="container">
+      <p>
+        
+          By Servajean, Leveau & Chailan<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>

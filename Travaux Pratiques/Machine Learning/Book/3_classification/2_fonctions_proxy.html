@@ -1,0 +1,1229 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Les fonctions de perte (loss function) ☕️☕️☕️ &#8212; Machine Learning</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet">
+  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Le classifieur de Bayes ☕️" href="3_bayes_classifier.html" />
+    <link rel="prev" title="La régression logistique ☕️" href="1_logistic_regression.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-72WWYCKNK6"></script>
+<script>
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){ dataLayer.push(arguments); }
+                    gtag('js', new Date());
+                    gtag('config', 'G-72WWYCKNK6');
+                </script>
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/logo.jpg" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Machine Learning</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   Introduction
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../0_requisite/rappels_python.html">
+   Rappels de Python et Numpy
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../1_what_is_ml/0_propos_liminaire.html">
+   <em>
+    Machine Learning
+   </em>
+   , initiation
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../1_what_is_ml/1_introduction_ml.html">
+     <em>
+      Machine learning
+     </em>
+     et malédiction de la dimension
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../1_what_is_ml/2_regression_and_classification_trees.html">
+     Les arbres de régression et de classification
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../2_regression/0_propos_liminaire.html">
+   La
+   <em>
+    régression
+   </em>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_regression/1_linear_regression.html">
+     La régression linéaire ☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_regression/2_optimization.html">
+     L’optimisation ☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_regression/3_interpolation.html">
+     Interpolation ☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_regression/4_algo_proximal_lasso.html">
+     Sous-différentiel et le cas du Lasso ☕️☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_regression/5_least_square_qr.html">
+     Les moindres carrés via une décomposition QR (et plus)☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2_regression/6_ridge.html">
+     Une analyse de la régularisation Ridge ☕️☕️☕️
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="0_propos_liminaire.html">
+   La
+   <em>
+    classification
+   </em>
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="1_logistic_regression.html">
+     La régression logistique ☕️
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Les fonctions de perte (loss function) ☕️☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="3_bayes_classifier.html">
+     Le classifieur de Bayes ☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="4_VC_theory.html">
+     Un modèle formel de l’apprentissage ☕️☕️☕️☕️ (💆‍♂️)
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../4_kernel_methods/0_propos_liminaire.html">
+   Les méthodes à noyaux
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../4_kernel_methods/1_svm.html">
+     Le SVM ou l’hypothèse max-margin ☕️☕️
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../5_ensembles/0_propos_liminaire.html">
+   Les méthodes
+   <em>
+    ensemblistes
+   </em>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../5_ensembles/1_ensembles.html">
+     Méthodes ensemblistes ☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../5_ensembles/2_bayesian_linear_regression.html">
+     Bayesian linear regression ☕️☕️☕️☕️
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../6_deeplearning/0_propos_liminaire.html">
+   <em>
+    deep learning
+   </em>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../6_deeplearning/1_autodiff.html">
+     La différentiation automatique et un début de
+     <em>
+      deep learning
+     </em>
+     ☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../6_deeplearning/2_filters_representation.html">
+     Filtres et espace de représentation des réseaux de neurones ☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../6_deeplearning/3_probabilities_calibration.html">
+     Calibration des probabilités et quelques notions ☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../6_deeplearning/4_regularization_deep.html">
+     Régularisation en
+     <em>
+      deep learning
+     </em>
+     ☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../6_deeplearning/5_transfer_multitask.html">
+     <em>
+      Transfer learning
+     </em>
+     et apprentissage multi-tâches ☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../6_deeplearning/6_adversarial.html">
+     Les attaques adversaires ☕️
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../7_unsupervised/0_propos_liminaire.html">
+   L’apprentissage non-supervisé
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../7_unsupervised/1_principal_component_analysis.html">
+     L’Analyse en Composantes Principales ☕️☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../7_unsupervised/2_em_gaussin_mixture_model.html">
+     Modèle de Mélange Gaussien et algorithme
+     <em>
+      Expectation-Maximization
+     </em>
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../8_set_prediction/0_propos_liminaire.html">
+   Prédiction d’ensembles
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <label for="toctree-checkbox-8">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../8_set_prediction/1_well_defined.html">
+     Jeu d’apprentissage
+     <em>
+      set-valued
+     </em>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../8_set_prediction/2_ill_defined.html">
+     Jeu d’apprentissage uniquement multi-classes ☕️
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../biblio.html">
+   Bibliographie
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/3_classification/2_fonctions_proxy.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/maximiliense/lmiprp"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/maximiliense/lmiprp/issues/new?title=Issue%20on%20page%20%2F3_classification/2_fonctions_proxy.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/maximiliense/lmiprp/blob/master/Travaux Pratiques/Machine Learning/Book/3_classification/2_fonctions_proxy.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="../_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#i-une-premiere-minimisation-du-risque-empirique">
+   I. Une première minimisation du risque empirique
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#construction-du-jeu-de-donnees">
+     Construction du jeu de données
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#affichage-du-dataset">
+     Affichage du dataset
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#notre-classe-de-fonctions-lineaires-mathcal-h">
+     Notre classe de fonctions linéaires
+     <span class="math notranslate nohighlight">
+      \(\mathcal{H}\)
+     </span>
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#ii-construction-du-phi-risk">
+   II. Construction du
+   <span class="math notranslate nohighlight">
+    \(\phi\)
+   </span>
+   -risk
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#iii-les-proprietes-d-un-phi-risk">
+   III. Les propriétés d’un
+   <span class="math notranslate nohighlight">
+    \(\phi\)
+   </span>
+   -risk
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#a-majoration-du-risque-0-1">
+     A. Majoration du risque 0/1
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#b-convexite">
+     B. Convexité
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#c-calibre-pour-la-classification">
+     C. Calibré pour la classification
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#d-construction">
+     D. Construction
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#iv-logistic-loss-et-regression-logistique">
+   IV.
+   <em>
+    Logistic loss
+   </em>
+   et régression logistique
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#v-optimiser-votre-loss">
+   V. Optimiser votre
+   <em>
+    loss
+   </em>
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="les-fonctions-de-perte-loss-function">
+<h1>Les fonctions de perte (loss function) ☕️☕️☕️<a class="headerlink" href="#les-fonctions-de-perte-loss-function" title="Permalink to this headline">¶</a></h1>
+<div class="admonition-objectifs-de-la-sequence admonition">
+<p class="admonition-title">Objectifs de la séquence</p>
+<ul class="simple">
+<li><p>Comprendre :</p>
+<ul>
+<li><p>pourquoi on ne minimise pas en général le nombre d’erreurs,</p></li>
+<li><p>les caractéristiques des fonctions (<em>loss</em>) qu’on minimise en pratique.</p></li>
+</ul>
+</li>
+<li><p>Être capable de :</p>
+<ul>
+<li><p>proposer une <em>loss</em>,</p></li>
+<li><p>et la minimiser.</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<p>Situons-nous dans le cadre d’un problème de classification supervisé et notons <span class="math notranslate nohighlight">\(\mathcal{X}\subseteq\mathbb{R}^d\)</span> et <span class="math notranslate nohighlight">\(\mathcal{Y}=\{0, 1\}\)</span> ou <span class="math notranslate nohighlight">\(\mathcal{Y}=\{-1,+1\}\)</span> selon le contexte et afin de simplifier les notations. Notons également <span class="math notranslate nohighlight">\(X,Y\in\mathcal{X}\times\mathcal{Y}\)</span> deux variables aléatoires telles que <span class="math notranslate nohighlight">\(\mu\)</span> est la mesure de <span class="math notranslate nohighlight">\(X\)</span> et <span class="math notranslate nohighlight">\(\eta(x)=\mathbb{P}(Y=1|X=x)\)</span>. La connaissance de <span class="math notranslate nohighlight">\(\mu\)</span> et de <span class="math notranslate nohighlight">\(\eta\)</span> nous donne toutes les informations propres au processus générateur de notre problème. Nous pouvons d’ailleurs construire la mesure jointe. Soit <span class="math notranslate nohighlight">\(A\subseteq \mathcal{X}\times\mathcal{Y}\)</span>, nous avons:</p>
+<div class="math notranslate nohighlight">
+\[\mathbb{P}(X, Y \in A)=\int_{A\cap \mathcal{X}\times \{1\}}\eta(x)d\mu+\int_{A\cap \mathcal{X}\times \{0\}}(1-\eta(x))d\mu.\]</div>
+<p>Notre objectif est de trouver une application <span class="math notranslate nohighlight">\(h:\mathcal{X}\mapsto\mathcal{Y}\)</span> tel qu’un risque est minimisé. <em>A priori</em> ce que nous souhaitons faire est de minimiser le nombre d’erreurs. Pour cela, nous définissons le risque dit <span class="math notranslate nohighlight">\(0/1\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[L(h)=\mathbb{P}(h(X)\neq Y)=\mathbb{E}\big[1\{X\neq Y\}\big].\]</div>
+<p>Nous ne connaissons malheureusement ni <span class="math notranslate nohighlight">\(\mu\)</span> ni <span class="math notranslate nohighlight">\(\eta\)</span> et pour cela, nous devons estimer le risque <span class="math notranslate nohighlight">\(L\)</span> sur un jeu de données:</p>
+<div class="math notranslate nohighlight">
+\[S_n=\{(X_i, Y_i)\}_{i\leq n}\sim \mathbb{P}^n,\]</div>
+<p>qu’on supposera représentatif du problème dans le sens où les couples <span class="math notranslate nohighlight">\((X, Y)\)</span> sont iid. À partir de là, nous pouvons estimer notre risque empirique:</p>
+<div class="math notranslate nohighlight">
+\[L_n(h)=\frac{1}{n}\sum_i 1\{h(X_i)\neq Y_i\}.\]</div>
+<p>Il s’agit tout simplement de la moyenne des erreurs.</p>
+<p>Notre objectif, en tant que <em>machine learner</em> est de minimiser cette erreur. Bien sûr (#nofreelunchtheorem), nous ne pouvons pas considérer toutes les fonctions de <span class="math notranslate nohighlight">\(\mathcal{X}\)</span> dans <span class="math notranslate nohighlight">\(\mathcal{Y}\)</span>. Soit <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> la classe de fonctions que nous souhaitons considérer. Le problème à résoudre est:</p>
+<div class="math notranslate nohighlight">
+\[h_n=\text{argmin}_{h\in\mathcal{H}}L_n(h).\]</div>
+<p>C’est ce qu’on appelle le minimiseur du risque empirique. Remarquez que ce n’est pas exactement ce qu’on minimise en pratique. Nous allons voir pourquoi.</p>
+<div class="section" id="i-une-premiere-minimisation-du-risque-empirique">
+<h2>I. Une première minimisation du risque empirique<a class="headerlink" href="#i-une-premiere-minimisation-du-risque-empirique" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="construction-du-jeu-de-donnees">
+<h3>Construction du jeu de données<a class="headerlink" href="#construction-du-jeu-de-donnees" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">h_star</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">y</span><span class="p">[</span><span class="n">x</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">&gt;</span><span class="n">x</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">y</span><span class="p">[</span><span class="n">x</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">&lt;=</span><span class="n">x</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="k">return</span> <span class="n">y</span>
+
+<span class="k">def</span> <span class="nf">construct_dataset</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">X</span><span class="p">,</span> <span class="n">h_star</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">construct_dataset</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="affichage-du-dataset">
+<h3>Affichage du dataset<a class="headerlink" href="#affichage-du-dataset" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2_fonctions_proxy_9_0.png" src="../_images/2_fonctions_proxy_9_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="notre-classe-de-fonctions-lineaires-mathcal-h">
+<h3>Notre classe de fonctions linéaires <span class="math notranslate nohighlight">\(\mathcal{H}\)</span><a class="headerlink" href="#notre-classe-de-fonctions-lineaires-mathcal-h" title="Permalink to this headline">¶</a></h3>
+<p>Considérons le cas très simple des modèles linéaires. Ici, notre ensemble de fonctions <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> est l’ensemble de cardinal infini dont les frontières de décision sont les droites dans le plan :</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{H}=\{x\mapsto\text{sign}(\langle \omega, x\rangle+b):\ \omega\in\mathbb{R}^2,\ b\in\mathbb{R}\},\]</div>
+<p>où :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\text{sign}(x)=\begin{cases}+1\text{ si }x\geq 0\\-1\text{ sinon.}\end{cases}\end{split}\]</div>
+<p>où, nous avons supposé que <span class="math notranslate nohighlight">\(\mathcal{Y}=\{-1, 1\}\)</span> afin de simplifier les notations. Notre problème de minimisation devient donc :</p>
+<div class="math notranslate nohighlight">
+\[(\omega, b)=\text{argmin}_{\omega, b\in \mathbb{R}^2\times\mathbb{R}}\frac{1}{n}\sum_i \mathbf{1}\{\text{sign}(\langle \omega, x_i\rangle+b)\neq y_i\}.\]</div>
+<p>Notez que nous avons la formulation équivalente suivante :</p>
+<div class="math notranslate nohighlight">
+\[(\omega, b)=\text{argmin}_{\omega, b\in \mathbb{R}^2\times\mathbb{R}}\frac{1}{n}\sum_i \mathbf{1}\{ y_i(\langle \omega, x_i\rangle+b)&lt; 0\}.\]</div>
+<p>Comment faire cela ? La fonction à optimiser est constante par morceau et les optimiseurs à base d’information du premier ordre (i.e. dérivée, gradient) ne peuvent pas nous aider. Une stratégie est de constater que dans le plan, une droite n’a besoin que de deux points pour se positionner. À partir de deux points <span class="math notranslate nohighlight">\(x_1\)</span> et <span class="math notranslate nohighlight">\(x_2\)</span>, il est possible d’obtenir une valeur de <span class="math notranslate nohighlight">\(\omega\)</span> et de <span class="math notranslate nohighlight">\(b\)</span> en résolvant le système d’équations suivant :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{cases}\langle\omega, x_1\rangle + b=0\\\langle\omega, x_2\rangle +b=0.\end{cases}\end{split}\]</div>
+<p>Il y a évidemment une infinité de solutions (deux équations et trois inconnues). On peut résoudre ce problème en contraignant la norme de <span class="math notranslate nohighlight">\(\omega\)</span> à valoir <span class="math notranslate nohighlight">\(1\)</span>.</p>
+<p>Il suffit maintenant de tester toutes les valeurs possibles de <span class="math notranslate nohighlight">\(\omega\)</span> et de <span class="math notranslate nohighlight">\(b\)</span> s’appuyant sur des points de notre jeu de données et de prendre celle qui fait le moins d’erreurs !</p>
+<div class="admonition-exercice admonition">
+<p class="admonition-title">Exercice</p>
+<p><strong>Implémentez notre modèle de classification <span class="math notranslate nohighlight">\(h\)</span> (i.e. la fonction qui fait une prédiction quant à la classe).</strong></p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">h</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">omega</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="c1">####### Complete this part ######## or die ####################</span>
+    <span class="o">...</span>
+    <span class="o">...</span>
+    <span class="o">...</span>
+    <span class="c1">###############################################################</span>
+    <span class="k">return</span> <span class="n">predictions</span>
+</pre></div>
+</div>
+<div class="admonition-exercice admonition">
+<p class="admonition-title">Exercice</p>
+<p><strong>Implémentez une methode qui prend en paramètre deux points et retourne un vecteur <span class="math notranslate nohighlight">\(\omega\)</span> qui décrit l’orientation de l’hyperplan et le biais <span class="math notranslate nohighlight">\(b\)</span>.</strong></p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">parameterize</span><span class="p">(</span><span class="n">x_1</span><span class="p">,</span> <span class="n">x_2</span><span class="p">):</span>
+    <span class="c1">####### Complete this part ######## or die ####################</span>
+    <span class="o">...</span>
+    <span class="o">...</span>
+    <span class="o">...</span>
+    <span class="o">...</span>
+    <span class="c1">###############################################################</span>
+    <span class="k">return</span> <span class="n">omega</span><span class="p">,</span> <span class="n">b</span>
+</pre></div>
+</div>
+<div class="admonition-exercice admonition">
+<p class="admonition-title">Exercice</p>
+<p><strong>Implémentez une méthode qui calcule le risque empirique.</strong></p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">empirical_risk</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">omega</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="c1">####### Complete this part ######## or die ####################</span>
+    <span class="n">risk</span> <span class="o">=</span> <span class="o">...</span>
+    <span class="c1">###############################################################</span>
+    <span class="k">return</span> <span class="n">risk</span>
+</pre></div>
+</div>
+<div class="admonition-exercice admonition">
+<p class="admonition-title">Exercice</p>
+<p><strong>Implémentez une méthode qui calcule le minimiseur du risque empirique.</strong></p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">fit_empirical_risk</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="c1">####### Complete this part ######## or die ####################</span>
+    <span class="o">...</span>
+    <span class="o">...</span>
+    <span class="o">...</span>
+    <span class="o">...</span>
+    <span class="o">...</span>
+    <span class="o">...</span>
+    <span class="o">...</span>
+    <span class="c1">###############################################################</span>
+    <span class="k">return</span> <span class="n">best_omega</span><span class="p">,</span> <span class="n">best_b</span><span class="p">,</span> <span class="n">best_risk</span>
+</pre></div>
+</div>
+<p>Testons le code précédent.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">omega</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">fit_empirical_risk</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Obtained empirical risk:&#39;</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Affichons maintenant le séparateur ainsi calculé.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+
+<span class="n">x_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
+<span class="n">y_</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span><span class="o">-</span><span class="n">omega</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">x_</span><span class="p">)</span><span class="o">/</span><span class="n">omega</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_</span><span class="p">,</span> <span class="n">y_</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Our data and our model&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Malheureusement, tester toutes les combinaisons a un coût qui nous empêche de considérer des jeux de données trop grands et en trop grande dimension. Il y a en effet dans <span class="math notranslate nohighlight">\(\mathbb{R}^d\)</span> <span class="math notranslate nohighlight">\(n!/(d!(n-d)!)\)</span> combinaisons possibles à tester. Dans le plan, cela nous donne :</p>
+<div class="math notranslate nohighlight">
+\[\frac{n!}{2(n-2)!}=0.5n(n-1)\approx 0.5 n^2\]</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">fit_duration</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">dataset_sizes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">291</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">dataset_sizes</span><span class="p">:</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">construct_dataset</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">omega</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">fit_empirical_risk</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="n">fit_duration</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">start</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">dataset_sizes</span><span class="p">,</span> <span class="n">fit_duration</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Fit time&#39;</span><span class="p">)</span>
+
+<span class="n">scale</span> <span class="o">=</span> <span class="n">fit_duration</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="p">(</span><span class="n">dataset_sizes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">theoretical_fit_duration</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dataset_sizes</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">scale</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">dataset_sizes</span><span class="p">,</span> <span class="n">theoretical_fit_duration</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Estimated fit time&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Fit duration&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Time (s)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Dataset size&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Avec un jeu de données de taille 150000 dans le plan (petite dim),&#39;</span>\
+      <span class="s1">&#39;le temps du fit estimé est d</span><span class="se">\&#39;</span><span class="s1">environ&#39;</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">scale</span> <span class="o">*</span> <span class="mi">150000</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="mi">60</span><span class="o">/</span><span class="mi">24</span><span class="p">)),</span> <span class="s1">&#39;jours&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>On peut résoudre ce problème avec notamment deux visions différentes :</p>
+<ol class="simple">
+<li><p>On estime la loi conditionnelle <span class="math notranslate nohighlight">\(\hat{\eta}\approx\eta\)</span> et on utilise une <em>plug-in</em> rule (la même règle que pour le classifieur de Bayes) :</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[\begin{split}\hat{g}(x)=\begin{cases}1\text{ si }\hat{\eta}(x)\geq 0.5\\0\text{ sinon.}\end{cases}\end{split}\]</div>
+<ol class="simple">
+<li><p>On optimise un autre “risque” qu’on appelle un <span class="math notranslate nohighlight">\(\phi\)</span>-risk et qui nous garantit que le résultat ne sera pas trop mauvais par rapport au vrai risque.</p></li>
+</ol>
+<p>La séquence de cours sur la régression logistique montre un résultat de convergence pour le premier cas. Cette séquence aborde le deuxième point.</p>
+</div>
+</div>
+<div class="section" id="ii-construction-du-phi-risk">
+<h2>II. Construction du <span class="math notranslate nohighlight">\(\phi\)</span>-risk<a class="headerlink" href="#ii-construction-du-phi-risk" title="Permalink to this headline">¶</a></h2>
+<p>À la place de chercher à optimiser notre erreur 0/1, l’idée va être de trouver une fonction avec des propriétés mathématiques intéressantes et pouvant nous offrir certaines garanties du point de vue de la classification. Considérons ici les labels <span class="math notranslate nohighlight">\(\mathcal{Y}=\{-1, 1\}\)</span> et supposons que notre classe de fonctions ait la forme suivante :</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{H}=\{h:x\mapsto \text{sign}(g(x)),\ g:\mathcal{X}\rightarrow\mathbb{R}\}\]</div>
+<p>Il s’agit de la composition entre une fonction de score <span class="math notranslate nohighlight">\(g\)</span> et de la fonction :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\text{sign}(x)=\begin{cases}+1\text{ si }x\geq 0\\-1\text{ sinon.}\end{cases}\end{split}\]</div>
+<p>Un classifieur <span class="math notranslate nohighlight">\(h\in\mathcal{H}\)</span> est donc une fonction de <span class="math notranslate nohighlight">\(\mathcal{X}\rightarrow \{-1,+1\}\)</span>. Un <span class="math notranslate nohighlight">\(\phi\)</span>-risk est un risque “facile” à minimiser et qui garantit d’être un “bon choix” du point de vue de l’erreur 0/1.</p>
+<div class="admonition-definition-phi-risk admonition">
+<p class="admonition-title">Définition (<span class="math notranslate nohighlight">\(\phi\)</span>-risk)</p>
+<p>Un <span class="math notranslate nohighlight">\(\phi\)</span>-risk est défini comme :</p>
+<div class="math notranslate nohighlight">
+\[L^\phi(g)=\mathbb{E}\big[\phi(Yg(X))\big],\]</div>
+<p>avec les propriétés suivantes :</p>
+<ol class="simple">
+<li><p><strong>Majoration du risque 0/1</strong> : <span class="math notranslate nohighlight">\(\phi(z)\geq \mathbf{1}\{z&lt;0\}\)</span>,</p></li>
+<li><p><strong>Convexité</strong> : La fonction <span class="math notranslate nohighlight">\(\phi:\mathbb{R}\rightarrow\mathbb{R}^+\)</span> est convexe,</p></li>
+<li><p><strong>Calibrée pour la classification</strong> : La fonction <span class="math notranslate nohighlight">\(\phi\)</span> est dérivable en <span class="math notranslate nohighlight">\(0\)</span> et <span class="math notranslate nohighlight">\(\phi^\prime(0)&lt;0\)</span>.</p></li>
+</ol>
+</div>
+<p>Nous allons bien entendu détailler l’intérêt de ces propriétés. Le risque empirique associé devient alors :</p>
+<div class="math notranslate nohighlight">
+\[L_n^\phi(g)=\frac{1}{n}\sum_i \phi(Y_ig(X_i)).\]</div>
+<p>Comme nous l’avons vu dans la définition, avec la fonction <span class="math notranslate nohighlight">\(\phi\)</span> suivante :</p>
+<div class="math notranslate nohighlight">
+\[\phi(z)=\mathbf{1}\{z&lt; 0\},\]</div>
+<p>on retombe sur notre erreur <span class="math notranslate nohighlight">\(0/1\)</span>. En effet, on compte <span class="math notranslate nohighlight">\(1\)</span> si le signe de <span class="math notranslate nohighlight">\(Yg(X)\)</span> est négatif, à savoir, si notre score ne correspond pas au label et <span class="math notranslate nohighlight">\(0\)</span> sinon. D’autres choix de <span class="math notranslate nohighlight">\(\phi\)</span>-risks sont les suivants (il y en a beaucoup d’autres) :</p>
+<ul class="simple">
+<li><p><strong>Hinge loss</strong> : <span class="math notranslate nohighlight">\(\phi(z)=\text{max}(0, 1-z)\)</span>, ici  on pénalise tous les <span class="math notranslate nohighlight">\(z\)</span> tant qu’ils sont inférieur à <span class="math notranslate nohighlight">\(1\)</span>. Cette loss est notamment utilisée par le SVM qui cherche à obtenir une marge,</p></li>
+<li><p><strong>Smoothed hinge loss</strong> : <span class="math notranslate nohighlight">\(\phi(z)=\beta^{-1}\text{log}\big(1+e^{\beta(1-z)}\big)\)</span>, où <span class="math notranslate nohighlight">\(\beta&gt;0\)</span> est un paramètre. On retrouve la hinge loss comme limite lorsque <span class="math notranslate nohighlight">\(\beta\rightarrow\infty\)</span>,</p></li>
+<li><p><strong>Logistic loss</strong> : <span class="math notranslate nohighlight">\(\phi(z)=\text{log}(1+e^{-z})\)</span>, c’est la loss utilisée lorsqu’on fait une régression logistique ou de la classification binaire en <em>deep learning</em>. En effet, on a :</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\text{log}(1+e^{-yg(x)})=-\text{log}\Big(\frac{1}{1+e^{-yg(x)}}\Big)=-\big(\mathbf{1}\{y=1\}\text{log}(\sigma(g(x)))+\mathbf{1}\{y=-1\}\text{log}(1-\sigma(g(x)))\big),\]</div>
+<p>où <span class="math notranslate nohighlight">\(\sigma(z)=(1+e^{-z})^{-1}\)</span> est la fonction sigmoïd. C’est la composition de notre fonction de score <span class="math notranslate nohighlight">\(g\)</span> avec une sigmoïd avec une log-entropie négative (i.e. on veut maximiser la vraisemblance du modèle <span class="math notranslate nohighlight">\(\sigma(g(x))\)</span>. Si <span class="math notranslate nohighlight">\(g\)</span> est un modèle linéaire, alors on retombe sur la régression logistique.</p>
+<p>Visualisons ces quelques <span class="math notranslate nohighlight">\(\phi\)</span>-risk.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">zero_one_loss</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">x</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">hinge_loss</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="mi">1</span><span class="o">-</span><span class="n">x</span>
+    <span class="k">return</span> <span class="n">v</span> <span class="o">*</span> <span class="p">(</span><span class="n">v</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">v</span><span class="o">&lt;=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">logistic_loss</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">soft_hinge_loos</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">logistic_loss</span><span class="p">(</span><span class="n">beta</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span><span class="o">/</span><span class="n">beta</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">201</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">zero_one_loss</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;0/1 loss&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">hinge_loss</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Hinge loss&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">soft_hinge_loos</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Soft Hinge loss&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">logistic_loss</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Logistic loss&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\phi$-risks&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2_fonctions_proxy_32_0.png" src="../_images/2_fonctions_proxy_32_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="iii-les-proprietes-d-un-phi-risk">
+<h2>III. Les propriétés d’un <span class="math notranslate nohighlight">\(\phi\)</span>-risk<a class="headerlink" href="#iii-les-proprietes-d-un-phi-risk" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="a-majoration-du-risque-0-1">
+<h3>A. Majoration du risque 0/1<a class="headerlink" href="#a-majoration-du-risque-0-1" title="Permalink to this headline">¶</a></h3>
+<p>La définition d’un <span class="math notranslate nohighlight">\(\phi\)</span>-risk indiquait que ce dernier devait majorer l’erreur 0/1. En réalité nous pouvons alléger cette contrainte et dire qu’un <span class="math notranslate nohighlight">\(\phi\)</span>-risk doit majorer le risque 0/1 a un facteur proportionnel près. Ainsi le risque logistique ne majore pas l’erreur 0/1 car <span class="math notranslate nohighlight">\(\log(1+e^0)&lt;1\)</span>. Cependant, nous avons bien :</p>
+<div class="math notranslate nohighlight">
+\[\frac{1}{\log 2}\phi(z)\geq \mathbf{1}\{z&lt;0\}.\]</div>
+<div class="admonition-exercice admonition">
+<p class="admonition-title">Exercice</p>
+<p><strong>Intuitivement, supposons que l’on minimise l’un des <span class="math notranslate nohighlight">\(\phi\)</span>-risk sur notre problème de <em>machine learning</em> et qu’on obtienne <span class="math notranslate nohighlight">\(0\)</span> erreur à la fin. Que pouvons nous dire quant au risque <span class="math notranslate nohighlight">\(0/1\)</span> ?</strong></p>
+</div>
+<p>De manière plus générale, notre objectif reste de minimiser la quantité d’erreurs de classifications. Notons <span class="math notranslate nohighlight">\(g^\star\)</span> le classifieur de Bayes et <span class="math notranslate nohighlight">\(h_n\)</span> le minimiseur du <span class="math notranslate nohighlight">\(\phi\)</span>-risk empirique sur un jeu de données de taille <span class="math notranslate nohighlight">\(n\)</span>. Nous pouvons majorer le risque 0/1 de la manière suivante :</p>
+<div class="math notranslate nohighlight">
+\[L^{\text{0/1}}(h_n)\leq \underbrace{L^\text{0/1}(g^\star)}_{\text{Bayes risk}}+(\underbrace{\inf_{h\in\mathcal{H}}L^\text{0/1}(h)-L^\text{0/1}(g^\star)}_{\text{Approximation error}})+(\underbrace{L^\phi(h_n)-\inf_{h\in\mathcal{H}}L^\phi(h)}_{\text{Estimation error}})+(\underbrace{\inf_{h\in\mathcal{H}}L^\phi(h)-\inf_{h\in\mathcal{H}}L^\text{0/1}(h)}_{\text{Optimization error}})\]</div>
+<p>On supposera que <span class="math notranslate nohighlight">\(L^\phi\)</span> aura été recalibrée de manière à bien majorer le risque <span class="math notranslate nohighlight">\(L^{0/1}\)</span>.</p>
+<div class="admonition-exercice admonition">
+<p class="admonition-title">Exercice</p>
+<p>Décrivez chacune des erreurs.</p>
+</div>
+<div class="admonition-exercice admonition">
+<p class="admonition-title">Exercice</p>
+<p>Démontrez l’inégalité.</p>
+</div>
+</div>
+<div class="section" id="b-convexite">
+<h3>B. Convexité<a class="headerlink" href="#b-convexite" title="Permalink to this headline">¶</a></h3>
+<p>La convexité garantit un certain nombre de propriétés dont la plus intéressante, peut-être, est que si nous trouvons un minimiseur local de notre loss, alors celui-ci est également un minimiseur global. C’est donc une propriété idéale pour la minimisation.</p>
+</div>
+<div class="section" id="c-calibre-pour-la-classification">
+<h3>C. Calibré pour la classification<a class="headerlink" href="#c-calibre-pour-la-classification" title="Permalink to this headline">¶</a></h3>
+<p>La dernière propriété que nous avons évoquée est d’être calibré pour la classification. Nous avons indiqué que cela était équivalent à avoir <span class="math notranslate nohighlight">\(\phi\)</span> dérivable en <span class="math notranslate nohighlight">\(0\)</span> et <span class="math notranslate nohighlight">\(\phi^\prime(0)&lt;0\)</span>.</p>
+<p>Rappellons la notation <span class="math notranslate nohighlight">\(\eta(x)=\mathbb{P}(Y=1|X=x)\)</span> indique la <strong>vraie</strong> probabilité conditionnelle d’obtenir le label <span class="math notranslate nohighlight">\(1\)</span> sachant qu’on a observé la donnée <span class="math notranslate nohighlight">\(x\)</span>. Nous avons donc la probabilité du label <span class="math notranslate nohighlight">\(-1\)</span> avec <span class="math notranslate nohighlight">\(1-\eta(x)\)</span>. La fonction <span class="math notranslate nohighlight">\(\eta\)</span> n’est bien sûr pas connue. Cependant, nous avons :</p>
+<div class="math notranslate nohighlight">
+\[\mathbb{E}\Big[\phi(Yg(x))|X=x\Big]=\eta(x)\phi(g(x))+(1-\eta(x))\phi(-g(x))=:C_\eta(g(x)).\]</div>
+<p>C’est tout simplement l’espérance de notre <span class="math notranslate nohighlight">\(\phi\)</span>-risk lorsqu’on a observé la donnée <span class="math notranslate nohighlight">\(x\)</span>.</p>
+<p>Rappelons-nous que la fonction <span class="math notranslate nohighlight">\(g\)</span> retourne un score positif si on prédit le label <span class="math notranslate nohighlight">\(y=1\)</span> et un score négatif si on prédit le label <span class="math notranslate nohighlight">\(y=-1\)</span>. Ainsi, si <span class="math notranslate nohighlight">\(\eta(x)&gt;0.5\)</span>, alors, on veut prédire le label <span class="math notranslate nohighlight">\(1\)</span> et on veut que <span class="math notranslate nohighlight">\(g(x)&gt;0\)</span>. À l’inverse, si <span class="math notranslate nohighlight">\(\eta(x)&lt;0.5\)</span>, alors on veut prédire le label <span class="math notranslate nohighlight">\(-1\)</span> et on veut <span class="math notranslate nohighlight">\(g(x)&lt;0\)</span>. Plus formellement, nous pouvons définir cela comme suit.</p>
+<div class="admonition-definition-loss-calibree-pour-la-classification admonition">
+<p class="admonition-title">Définition (<em>loss</em> calibrée pour la classification)</p>
+<p>Un <span class="math notranslate nohighlight">\(\phi\)</span>-risk est calibré pour la classification si et seulement si :</p>
+<div class="math notranslate nohighlight">
+\[\eta&gt;0.5\Leftrightarrow\text{argmin}_{z}C_\eta(z)\subset\mathbb{R}^{\star+},\]</div>
+<div class="math notranslate nohighlight">
+\[\eta&lt;0.5\Leftrightarrow\text{argmin}_{z}C_\eta(z)\subset\mathbb{R}^{\star-}.\]</div>
+</div>
+<p>Les minimiseurs de notre <em>loss</em> (du point de vu du score), doivent avoir le même signe que <span class="math notranslate nohighlight">\(\eta-0.5\)</span>. Cela a bien entendu un effet sur la forme que peut prendre <span class="math notranslate nohighlight">\(\phi\)</span> et en particulier celui que nous illustrons par la proposition suivante.</p>
+<div class="admonition-proposition admonition">
+<p class="admonition-title">Proposition</p>
+<p><span class="math notranslate nohighlight">\(\phi\)</span> est dérivable en <span class="math notranslate nohighlight">\(0\)</span> et <span class="math notranslate nohighlight">\(\phi^\prime(0)&lt;0\)</span> si et seulement si <span class="math notranslate nohighlight">\(\phi\)</span> est calibrée pour la classification.</p>
+</div>
+<div class="caution dropdown admonition">
+<p class="admonition-title">Preuve</p>
+<p>Notons <span class="math notranslate nohighlight">\(\phi_+\)</span>, <span class="math notranslate nohighlight">\(\phi_-\)</span>, <span class="math notranslate nohighlight">\((C_\eta)_+\)</span> et <span class="math notranslate nohighlight">\((C_\eta)_-\)</span> les dérivées à gauche et à droite. Nous avons alors, pour que les inégalités soient satisfaites, <span class="math notranslate nohighlight">\((C_\eta)_+^\prime(0)&lt;0\Leftrightarrow \eta&gt;0.5\)</span> et <span class="math notranslate nohighlight">\((C_\eta)_-^\prime(0)&gt;0\Leftrightarrow \eta&lt;0.5\)</span> puisque <span class="math notranslate nohighlight">\(C_\eta\)</span> est convexe en tant que combinaison convexe de fonctions convexes. Pour se convaincre des équivalences précédentes, supposons <span class="math notranslate nohighlight">\(\eta&gt;0.5\)</span>, alors le minimum de <span class="math notranslate nohighlight">\(C_\eta(z)\)</span> doit être atteint avec <span class="math notranslate nohighlight">\(z&gt;0\)</span>. Si <span class="math notranslate nohighlight">\((C_\eta)_+^\prime(0)&lt;0\)</span>, alors le minimum est “à droite” de 0 et répond au besoin.</p>
+<p><span class="math notranslate nohighlight">\((\Leftarrow)\)</span> Supposons que les deux inégalités soient satisfaites.</p>
+<p>Nous voulons montrer (1) que <span class="math notranslate nohighlight">\(\phi\)</span> est dérivable en <span class="math notranslate nohighlight">\(0\)</span> et (2) que <span class="math notranslate nohighlight">\(\phi^\prime(0)&lt;0\)</span>.</p>
+<p>On a (attention à la dérivée) :</p>
+<div class="math notranslate nohighlight">
+\[\lim_{\eta\rightarrow 0.5^+}(C_\eta)_+^\prime(0)=\lim_{\eta\rightarrow 0.5^+}\eta\phi_+^\prime(0)-(1-\eta)\phi_-^\prime(0)=0.5\big(\phi_+^\prime(0)-\phi_-^\prime(0)\big)\leq 0.\]</div>
+<p>La dernière inégalité est vérifiée par hypothèse sur <span class="math notranslate nohighlight">\(C_\eta\)</span>. Cela nous donne donc <span class="math notranslate nohighlight">\(\phi_-^\prime(0)\geq\phi_+^\prime(0)\)</span>. Par hypothèse, <span class="math notranslate nohighlight">\(\phi\)</span> est convexe et on a toujours <span class="math notranslate nohighlight">\(\phi_-^\prime(0)\leq\phi_+^\prime(0)\)</span>. On a donc <span class="math notranslate nohighlight">\(\phi_+^\prime(0)=\phi_-^\prime(0)\)</span> et <span class="math notranslate nohighlight">\(\phi\)</span> est dérivable en <span class="math notranslate nohighlight">\(0\)</span>. C’est le premier point.</p>
+<p>Nous avons ensuite :</p>
+<div class="math notranslate nohighlight">
+\[C_\eta^\prime(0)=\eta\phi^\prime(0)-(1-\eta)\phi^\prime(0)=(2\eta-1)\phi^\prime(0).\]</div>
+<p>Si <span class="math notranslate nohighlight">\(\eta&gt;0.5\)</span>, alors <span class="math notranslate nohighlight">\(2\eta-1&gt;0\)</span> et <span class="math notranslate nohighlight">\(C_\eta^\prime(0)&lt;0\)</span>. On a alors <span class="math notranslate nohighlight">\(\phi^\prime(0)&lt;0\)</span>. On obtient le même résultat si <span class="math notranslate nohighlight">\(\eta&lt;0.5\)</span> !</p>
+<p><span class="math notranslate nohighlight">\((\Rightarrow)\)</span> Supposons que <span class="math notranslate nohighlight">\(\phi\)</span> est dérivable en <span class="math notranslate nohighlight">\(0\)</span> et que <span class="math notranslate nohighlight">\(\phi^\prime(0)&lt;0\)</span>. On obtient alors :</p>
+<div class="math notranslate nohighlight">
+\[C_\eta^\prime(0)=(2\eta-1)\phi^\prime(0)\]</div>
+<p>dont le signe est négatif si <span class="math notranslate nohighlight">\(\eta&gt;0.5\)</span> et positif si <span class="math notranslate nohighlight">\(\eta&lt;0.5\)</span>. <strong><span class="math notranslate nohighlight">\(\boxed{}\)</span></strong></p>
+</div>
+</div>
+<div class="section" id="d-construction">
+<h3>D. Construction<a class="headerlink" href="#d-construction" title="Permalink to this headline">¶</a></h3>
+<p>Maintenant que nous avons vu et décrit les propriétés d’un <span class="math notranslate nohighlight">\(\phi\)</span>-risk calibré pour la classification, nous pouvons laisser notre imagination à en créer de nouveaux.</p>
+<div class="admonition-exercice-creer-une-loss admonition">
+<p class="admonition-title">Exercice (créer une <em>loss</em>)</p>
+<p>Nous avons vu les propriétés qu’un <span class="math notranslate nohighlight">\(\phi\)</span>-risk devait respecter pour être “classification calibrated”. Inventez une nouvelle fonction de perte (i.e. <em>loss</em>).</p>
+</div>
+<div class="hint dropdown admonition">
+<p class="admonition-title">Indice</p>
+<p>Utilisez des fonctions simples, connues, convexes, etc..</p>
+</div>
+</div>
+</div>
+<div class="section" id="iv-logistic-loss-et-regression-logistique">
+<h2>IV. <em>Logistic loss</em> et régression logistique<a class="headerlink" href="#iv-logistic-loss-et-regression-logistique" title="Permalink to this headline">¶</a></h2>
+<p>La <em>logistic loss</em> est <span class="math notranslate nohighlight">\(\phi(z)=\text{log}(1+e^{-z})\)</span>. Considérons un jeu de données <span class="math notranslate nohighlight">\(S_n\)</span>, notre objectif pratique est de minimiser le <span class="math notranslate nohighlight">\(\phi\)</span>-risk empirique :</p>
+<div class="math notranslate nohighlight">
+\[L_n^\phi(g)=\frac{1}{n}\sum_i\phi(y_ig(x_i))=\frac{1}{n}\sum_i\text{log}(1+e^{-y_ig(x_i)})\]</div>
+<p>Reprenons le cas d’un modèle linéaire. Cela nous permettra de comparer les coûts calculatoires avec le vrai risque empirique. Nous avons donc :</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{H}=\{x\mapsto \text{sign}(g(x)):\ g(x)=\langle \omega, x\rangle +b,\ \omega\in\mathbb{R}^d,\ b\in\mathbb{R}\}\]</div>
+<p>L’optimisation du <span class="math notranslate nohighlight">\(\phi\)</span>-risk se fera bien sûr à partir de la fonction <span class="math notranslate nohighlight">\(g(x)\)</span> et non de <span class="math notranslate nohighlight">\(\text{sign}(g(x))\)</span>.</p>
+<p>Notre objectif est, dans un premier temps, de calculer le gradient de notre <span class="math notranslate nohighlight">\(\phi\)</span>-risk empirique. La première étape est de calculer la dérivée de la fonction <span class="math notranslate nohighlight">\(\phi(yz)\)</span> :</p>
+<div class="math notranslate nohighlight">
+\[\phi^\prime(yz)=-\frac{ye^{-yz}}{1+e^{-yz}}=-\frac{y}{1+e^{yz}}.\]</div>
+<p>Observons notamment qu’on a :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\phi^\prime((+1)z)&amp;=\frac{1}{1+e^{-z}}-1=\sigma(z)-y^{0/1}\\
+\phi^\prime((-1)z)&amp;=\frac{1}{1+e^{-z}}-0=\sigma(z)-y^{0/1}
+\end{aligned}\end{split}\]</div>
+<p>où <span class="math notranslate nohighlight">\(y^{0/1}\)</span> représente le label <span class="math notranslate nohighlight">\(0\)</span> ou <span class="math notranslate nohighlight">\(1\)</span> plutôt que <span class="math notranslate nohighlight">\(-1\)</span> et <span class="math notranslate nohighlight">\(+1\)</span>. Par simplicité de notation considérons les vecteur <span class="math notranslate nohighlight">\(x_i=[1, x_1, \ldots, x_d]^T\)</span> afin d’éviter la notation avec le biais <span class="math notranslate nohighlight">\(b\)</span>.</p>
+<p>Nous avons donc naturellement que :</p>
+<div class="math notranslate nohighlight">
+\[\nabla_\omega g(x)=x\]</div>
+<p>et donc :</p>
+<div class="math notranslate nohighlight">
+\[\nabla_\omega \phi(y_ig(x_i))=x_i\left(\frac{1}{1+e^{-\langle \omega, x_i\rangle}}-y_i^{0/1}\right),\]</div>
+<p>On retrouve le gradient que nous avons calculé lors de la précédente séquence (i.e. sur la régression logistique) où on avait :</p>
+<div class="math notranslate nohighlight">
+\[\nabla_\omega L_n(\omega)=\frac{1}{n}X^T(\sigma(X\boldsymbol{\omega})-\boldsymbol{y}^{0/1})\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">CrossEntropy</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">CrossEntropy</span><span class="o">.</span><span class="n">_format_ndarray</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">y</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pos</span> <span class="o">=</span> <span class="mi">0</span>
+        
+    <span class="k">def</span> <span class="nf">_format_ndarray</span><span class="p">(</span><span class="n">arr</span><span class="p">):</span>
+        <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span> <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="k">else</span> <span class="n">arr</span>
+        <span class="k">return</span> <span class="n">arr</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">arr</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">))</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">arr</span>
+    
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="n">y_pred</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">beta</span><span class="p">)))</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">y_pred</span>
+    
+    <span class="k">def</span> <span class="nf">_sigmoid</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">beta</span><span class="p">):</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">beta</span><span class="p">)</span>
+        <span class="n">z_max</span> <span class="o">=</span> <span class="n">z</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+        <span class="c1"># numerical stability trick</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">z</span><span class="o">-</span><span class="n">z_max</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">z</span><span class="o">-</span><span class="n">z_max</span><span class="p">)</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">z_max</span><span class="p">))</span>
+    
+    <span class="k">def</span> <span class="nf">val</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">beta</span><span class="p">):</span>
+        <span class="n">beta</span> <span class="o">=</span> <span class="n">CrossEntropy</span><span class="o">.</span><span class="n">_format_ndarray</span><span class="p">(</span><span class="n">beta</span><span class="p">)</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">CrossEntropy</span><span class="o">.</span><span class="n">_sigmoid</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="n">beta</span><span class="p">)</span>
+        <span class="n">log_p</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">p</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">p</span><span class="p">)],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">)),</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">log_p</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">_shuffle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">idx</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">grad</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">batch_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">batch_size</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="k">else</span> <span class="n">batch_size</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">idx</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_pos</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">_pos</span><span class="o">+</span><span class="n">batch_size</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pos</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pos</span><span class="o">+</span><span class="n">batch_size</span><span class="p">)</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pos</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_shuffle</span><span class="p">()</span>
+            
+        <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">CrossEntropy</span><span class="o">.</span><span class="n">_format_ndarray</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+        
+        <span class="n">beta</span> <span class="o">=</span> <span class="n">CrossEntropy</span><span class="o">.</span><span class="n">_format_ndarray</span><span class="p">(</span><span class="n">beta</span><span class="p">)</span>
+        
+        <span class="n">grad</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">CrossEntropy</span><span class="o">.</span><span class="n">_sigmoid</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">beta</span><span class="p">)</span>   <span class="o">-</span> <span class="n">y</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">grad</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">GradientDescent</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">init</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="n">CrossEntropy</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loss</span> <span class="o">=</span> <span class="n">loss</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">optimize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">1.</span><span class="p">,</span> <span class="n">nb_iterations</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="n">init</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">param_trace</span> <span class="o">=</span> <span class="p">[</span><span class="n">beta</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+        <span class="n">loss_trace</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">loss</span><span class="o">.</span><span class="n">val</span><span class="p">(</span><span class="n">beta</span><span class="p">)]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nb_iterations</span><span class="p">):</span>
+            <span class="n">beta</span> <span class="o">=</span> <span class="n">beta</span> <span class="o">-</span> <span class="n">learning_rate</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="n">beta</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">)</span>
+            <span class="n">param_trace</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">beta</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">loss_trace</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loss</span><span class="o">.</span><span class="n">val</span><span class="p">(</span><span class="n">beta</span><span class="p">))</span>
+            
+        <span class="k">return</span> <span class="n">param_trace</span><span class="p">,</span> <span class="n">loss_trace</span>
+
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">construct_dataset</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">gd</span> <span class="o">=</span> <span class="n">GradientDescent</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">params</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">gd</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">nb_iterations</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2_fonctions_proxy_40_0.png" src="../_images/2_fonctions_proxy_40_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+<span class="n">omega</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">x_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
+<span class="n">y_</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span><span class="o">-</span><span class="n">omega</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">x_</span><span class="p">)</span><span class="o">/</span><span class="n">omega</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_</span><span class="p">,</span> <span class="n">y_</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Our data and our model&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2_fonctions_proxy_41_0.png" src="../_images/2_fonctions_proxy_41_0.png" />
+</div>
+</div>
+<p>Étudions l’évolution du temps de calcul et comparons le au minimiseur du risque empirique.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">fit_duration_erm</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">fit_duration_phi_risk</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">dataset_sizes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">291</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">dataset_sizes</span><span class="p">:</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">construct_dataset</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">omega</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">fit_empirical_risk</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="n">fit_duration_erm</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">start</span><span class="p">)</span>
+    
+    <span class="n">gd</span> <span class="o">=</span> <span class="n">GradientDescent</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">params</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">gd</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">nb_iterations</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+    <span class="n">fit_duration_phi_risk</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">start</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">dataset_sizes</span><span class="p">,</span> <span class="n">fit_duration_erm</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;ERM fit time&#39;</span><span class="p">)</span>
+
+<span class="n">scale</span> <span class="o">=</span> <span class="n">fit_duration_erm</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="p">(</span><span class="n">dataset_sizes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">theoretical_fit_duration</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dataset_sizes</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">scale</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">dataset_sizes</span><span class="p">,</span> <span class="n">theoretical_fit_duration</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Estimated ERM fit time&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">dataset_sizes</span><span class="p">,</span> <span class="n">fit_duration_phi_risk</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$\phi$-risk fit time&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Fit duration&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Time (s)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Dataset size&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="admonition-question admonition">
+<p class="admonition-title">Question</p>
+<p><strong>Qu’en conclure ? Dans quel cas le minimiseur du risque empirique a-t-il toujours du sens ?</strong></p>
+</div>
+</div>
+<div class="section" id="v-optimiser-votre-loss">
+<h2>V. Optimiser votre <em>loss</em><a class="headerlink" href="#v-optimiser-votre-loss" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-exercice-optimisez-votre-loss admonition">
+<p class="admonition-title">Exercice (Optimisez votre <em>loss</em>)</p>
+<p>Dans un exercice précédent vous avez créé votre propre <em>loss</em>. Utilisez votre <em>loss</em> sur le jeu de données précédent avec un modèle linéaire :</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{H}=\{x\rightarrow\text{sign}(g(x)):\ g(x)=\langle\omega, x\rangle +b,\ \omega\in\mathbb{R}^d,b\in\mathbb{R}\}.\]</div>
+<p>où :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\text{sign}(x)=\begin{cases}+1\text{ si }x\geq 0\\-1\text{ sinon.}\end{cases}\end{split}\]</div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># pensez a ajouter une colonne de 1 si vous voulez un biais</span>
+<span class="n">X_prime</span> <span class="o">=</span>  <span class="n">np</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="o">...</span>
+<span class="n">beta</span> <span class="o">=</span> <span class="o">...</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+<span class="n">omega</span> <span class="o">=</span> <span class="n">beta</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">beta</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">x_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
+<span class="n">y_</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">b</span><span class="o">-</span><span class="n">omega</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">x_</span><span class="p">)</span><span class="o">/</span><span class="n">omega</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_</span><span class="p">,</span> <span class="n">y_</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Our data and our model&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./3_classification"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+            <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="1_logistic_regression.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">La régression logistique ☕️</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="3_bayes_classifier.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Le classifieur de Bayes ☕️</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+        
+        </div>
+    </div>
+    <footer class="footer">
+    <div class="container">
+      <p>
+        
+          By Servajean, Leveau & Chailan<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>

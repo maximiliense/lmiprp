@@ -1,0 +1,1624 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>L’optimisation ☕️☕️ &#8212; Machine Learning</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet">
+  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Interpolation ☕️☕️" href="3_interpolation.html" />
+    <link rel="prev" title="La régression linéaire ☕️" href="1_linear_regression.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-72WWYCKNK6"></script>
+<script>
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){ dataLayer.push(arguments); }
+                    gtag('js', new Date());
+                    gtag('config', 'G-72WWYCKNK6');
+                </script>
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/logo.jpg" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Machine Learning</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   Introduction
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../0_requisite/rappels_python.html">
+   Rappels de Python et Numpy
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../1_what_is_ml/0_propos_liminaire.html">
+   <em>
+    Machine Learning
+   </em>
+   , initiation
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../1_what_is_ml/1_introduction_ml.html">
+     <em>
+      Machine learning
+     </em>
+     et malédiction de la dimension
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../1_what_is_ml/2_regression_and_classification_trees.html">
+     Les arbres de régression et de classification
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="0_propos_liminaire.html">
+   La
+   <em>
+    régression
+   </em>
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="1_linear_regression.html">
+     La régression linéaire ☕️
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     L’optimisation ☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="3_interpolation.html">
+     Interpolation ☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="4_algo_proximal_lasso.html">
+     Sous-différentiel et le cas du Lasso ☕️☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="5_least_square_qr.html">
+     Les moindres carrés via une décomposition QR (et plus)☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="6_ridge.html">
+     Une analyse de la régularisation Ridge ☕️☕️☕️
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../3_classification/0_propos_liminaire.html">
+   La
+   <em>
+    classification
+   </em>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../3_classification/1_logistic_regression.html">
+     La régression logistique ☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../3_classification/2_fonctions_proxy.html">
+     Les fonctions de perte (loss function) ☕️☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../3_classification/3_bayes_classifier.html">
+     Le classifieur de Bayes ☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../3_classification/4_VC_theory.html">
+     Un modèle formel de l’apprentissage ☕️☕️☕️☕️ (💆‍♂️)
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../4_kernel_methods/0_propos_liminaire.html">
+   Les méthodes à noyaux
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../4_kernel_methods/1_svm.html">
+     Le SVM ou l’hypothèse max-margin ☕️☕️
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../5_ensembles/0_propos_liminaire.html">
+   Les méthodes
+   <em>
+    ensemblistes
+   </em>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../5_ensembles/1_ensembles.html">
+     Méthodes ensemblistes ☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../5_ensembles/2_bayesian_linear_regression.html">
+     Bayesian linear regression ☕️☕️☕️☕️
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../6_deeplearning/0_propos_liminaire.html">
+   <em>
+    deep learning
+   </em>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../6_deeplearning/1_autodiff.html">
+     La différentiation automatique et un début de
+     <em>
+      deep learning
+     </em>
+     ☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../6_deeplearning/2_filters_representation.html">
+     Filtres et espace de représentation des réseaux de neurones ☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../6_deeplearning/3_probabilities_calibration.html">
+     Calibration des probabilités et quelques notions ☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../6_deeplearning/4_regularization_deep.html">
+     Régularisation en
+     <em>
+      deep learning
+     </em>
+     ☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../6_deeplearning/5_transfer_multitask.html">
+     <em>
+      Transfer learning
+     </em>
+     et apprentissage multi-tâches ☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../6_deeplearning/6_adversarial.html">
+     Les attaques adversaires ☕️
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../7_unsupervised/0_propos_liminaire.html">
+   L’apprentissage non-supervisé
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../7_unsupervised/1_principal_component_analysis.html">
+     L’Analyse en Composantes Principales ☕️☕️☕️
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../7_unsupervised/2_em_gaussin_mixture_model.html">
+     Modèle de Mélange Gaussien et algorithme
+     <em>
+      Expectation-Maximization
+     </em>
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../8_set_prediction/0_propos_liminaire.html">
+   Prédiction d’ensembles
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <label for="toctree-checkbox-8">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../8_set_prediction/1_well_defined.html">
+     Jeu d’apprentissage
+     <em>
+      set-valued
+     </em>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../8_set_prediction/2_ill_defined.html">
+     Jeu d’apprentissage uniquement multi-classes ☕️
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../biblio.html">
+   Bibliographie
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/2_regression/2_optimization.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/maximiliense/lmiprp"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/maximiliense/lmiprp/issues/new?title=Issue%20on%20page%20%2F2_regression/2_optimization.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/maximiliense/lmiprp/blob/master/Travaux Pratiques/Machine Learning/Book/2_regression/2_optimization.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="../_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#imports-et-fonction-de-plot">
+   Imports et fonction de plot
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#i-la-descente-de-gradient-a-pas-constant">
+   I. La descente de gradient (à pas constant)
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#a-l-algorithme">
+     A. L’algorithme
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#b-convergence-de-la-descente-de-gradient">
+     B. Convergence de la descente de gradient
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#ii-la-descente-de-gradient-a-pas-optimal">
+   II. La descente de gradient à pas optimal
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#iii-la-descente-de-gradient-stochastique-sgd">
+   III. La descente de gradient stochastique (SGD)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#iv-la-methode-de-newton">
+   IV. La méthode de Newton
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#introduction">
+     Introduction
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#la-methode">
+     La méthode
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#v-la-descente-de-coordonnees">
+   V. La descente de coordonnées
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#vi-optimisation-sous-contrainte-en-plus">
+   VI. Optimisation sous contrainte (en plus ?)
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#a-introduction-aux-multiplicateurs-de-lagrange">
+     A. Introduction aux multiplicateurs de Lagrange
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#b-les-conditions-de-karush-kuhn-tucker">
+     B. Les conditions de Karush-Kuhn-Tucker
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="l-optimisation">
+<h1>L’optimisation ☕️☕️<a class="headerlink" href="#l-optimisation" title="Permalink to this headline">¶</a></h1>
+<div class="admonition-objectifs-de-la-sequence admonition">
+<p class="admonition-title">Objectifs de la séquence</p>
+<ul class="simple">
+<li><p>Être capable de :</p>
+<ul>
+<li><p>De résoudre des problèmes de la forme <span class="math notranslate nohighlight">\(x^\star=\text{argmin}_{x\in\mathbb{R}^d}f(x)\)</span>, avec  <span class="math notranslate nohighlight">\(f:\mathbb{R}^d\mapsto\mathbb{R}\)</span></p></li>
+<li><p>Comprendre et d’implémenter certains des algorithmes d’optimisation les plus connus,</p></li>
+</ul>
+</li>
+<li><p>D’être sensibilisés :</p>
+<ul>
+<li><p>Aux propriétés importantes (e.g. convexité, Lipschitz),</p></li>
+<li><p>Aux limites des algorithmes,</p></li>
+<li><p>À l’optimisation sous contraintes.</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<p>La plupart des algorithmes d’optimisation s’appuient sur des informations du premier ordre (i.e. dérivées, gradient).</p>
+<div class="admonition-gradient-orthogonal-aux-lignes-de-niveau admonition">
+<p class="admonition-title">Gradient orthogonal aux lignes de niveau</p>
+<p>Soit <span class="math notranslate nohighlight">\(c:\mathbb{R}^+\mapsto\mathbb{R}^d\)</span> un arc paramétré qui suit une ligne de niveau de <span class="math notranslate nohighlight">\(f\)</span> (un arc paramétré prend en argument le “temps” et retourne une coordonnée dans l’espace). Si <span class="math notranslate nohighlight">\(c\)</span> suit une ligne de niveau, nous avons donc :</p>
+<div class="math notranslate nohighlight">
+\[f(c(t))=f(c(0))=\text{const}.\]</div>
+<p>Cela implique que nous ayons aussi :</p>
+<div class="math notranslate nohighlight">
+\[(f(c(t)))^\prime=\langle \nabla f(c(t)), c^\prime(t)\rangle=0,\]</div>
+<p>où <span class="math notranslate nohighlight">\(\nabla f(c(t))\)</span> est le gradient en <span class="math notranslate nohighlight">\(c(t)\)</span> et <span class="math notranslate nohighlight">\(c^\prime(t)\)</span> donne la direction de l’arc paramétré (i.e. de la ligne de niveau) en <span class="math notranslate nohighlight">\(c(t)\)</span>. Les deux sont bien ainsi orthogonaux.</p>
+</div>
+<div class="admonition-le-gradient-est-la-plus-forte-pente admonition">
+<p class="admonition-title">Le gradient est la plus forte pente</p>
+<p>Soit <span class="math notranslate nohighlight">\(c:\mathbb{R}^+\mapsto\mathbb{R}^d\)</span> un arc paramétré et soit <span class="math notranslate nohighlight">\(f:\mathbb{R}^d\mapsto\mathbb{R}\)</span>. Nous étudions l’évolution de <span class="math notranslate nohighlight">\(f\)</span> le long de <span class="math notranslate nohighlight">\(c\)</span> :</p>
+<div class="math notranslate nohighlight">
+\[f(c(t)).\]</div>
+<p>L’accroissement de <span class="math notranslate nohighlight">\(f\)</span> le long de <span class="math notranslate nohighlight">\(c(t)\)</span> est donné par la dérivée :</p>
+<div class="math notranslate nohighlight">
+\[(f(c(t))^\prime=\langle \nabla f(c(t)), c^\prime(t)\rangle.\]</div>
+<p>Nous avons par Cauchy-Schwartz :</p>
+<div class="math notranslate nohighlight">
+\[\lVert\langle \nabla f(c), c^\prime\rangle\rVert \leq \lVert\nabla f(c)\rVert\lVert c^\prime\rVert,\]</div>
+<p>où le gradient et l’arc sont évalués en <span class="math notranslate nohighlight">\(t\)</span>. L’égalité est atteinte lorsque les vecteurs sont colinéaires. La plus forte pente est donc la direction du gradient.</p>
+</div>
+<div class="section" id="imports-et-fonction-de-plot">
+<h2>Imports et fonction de plot<a class="headerlink" href="#imports-et-fonction-de-plot" title="Permalink to this headline">¶</a></h2>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">cm</span>
+<span class="kn">from</span> <span class="nn">mpl_toolkits.mplot3d</span> <span class="kn">import</span> <span class="n">axes3d</span><span class="p">,</span> <span class="n">Axes3D</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># Le code ci-dessous permettra d&#39;afficher notre fonction à optimiser</span>
+
+<span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="o">%</span><span class="k">config</span> InlineBackend.print_figure_kwargs = {&#39;bbox_inches&#39;:None}
+<span class="n">matplotlib</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">12.0</span><span class="p">,</span> <span class="mf">8.0</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;ggplot&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">plot_loss_contour</span><span class="p">(</span><span class="n">obj_func</span><span class="p">,</span> <span class="n">param_trace</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">three_dim</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">rotate</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> 
+                      <span class="n">starting</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ending</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">constraint</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mgrid</span><span class="p">[</span><span class="nb">slice</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span> <span class="o">+</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">),</span>
+                    <span class="nb">slice</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span> <span class="o">+</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)]</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="n">z</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj_func</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]])</span>
+    <span class="k">if</span> <span class="n">figsize</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">12.0</span><span class="p">,</span> <span class="mf">8.0</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">three_dim</span><span class="p">:</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">Axes3D</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">auto_add_to_figure</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">add_axes</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+    
+    <span class="k">if</span> <span class="n">three_dim</span><span class="p">:</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cm</span><span class="o">.</span><span class="n">viridis</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">levels</span> <span class="o">=</span> <span class="mi">15</span><span class="p">)</span>
+    <span class="c1">#</span>
+    <span class="k">if</span> <span class="n">param_trace</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">three_dim</span><span class="p">:</span>
+            <span class="n">eps</span> <span class="o">=</span> <span class="mf">0.5</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">param_trace</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">param_trace</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">param_trace</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">eps</span><span class="p">,</span> 
+                    <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">view_init</span><span class="p">(</span><span class="mi">65</span><span class="p">,</span> <span class="n">rotate</span><span class="p">)</span>
+                
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">param_trace</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">tuple</span><span class="p">:</span>
+                <span class="n">param_trace</span> <span class="o">=</span> <span class="p">[</span><span class="n">param_trace</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">param_trace</span><span class="p">:</span>
+                <span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">list</span> <span class="k">else</span> <span class="n">p</span>
+                <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">p</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">p</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span>
+                <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">p</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">p</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">starting</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">three_dim</span><span class="p">:</span>
+            <span class="n">z</span> <span class="o">=</span> <span class="n">obj_func</span><span class="p">(</span><span class="n">starting</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">starting</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">starting</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="n">starting</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">starting</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="p">[</span><span class="n">z</span><span class="p">,</span> <span class="n">z</span><span class="o">+</span><span class="mf">0.1</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> 
+                     <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Initialisation de l</span><span class="se">\&#39;</span><span class="s1">optimisation&#39;</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">starting</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">starting</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> 
+                        <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Initialisation de l</span><span class="se">\&#39;</span><span class="s1">optimisation&#39;</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+            
+    <span class="k">if</span> <span class="n">constraint</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">three_dim</span><span class="p">:</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">constraint</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">constraint</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Contrainte&#39;</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+                
+    <span class="k">if</span> <span class="n">ending</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">three_dim</span><span class="p">:</span>
+            <span class="n">z</span> <span class="o">=</span> <span class="n">obj_func</span><span class="p">(</span><span class="n">ending</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">ending</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ending</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="n">ending</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ending</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="p">[</span><span class="n">z</span><span class="p">,</span> <span class="n">z</span><span class="o">+</span><span class="mf">0.1</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> 
+                     <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Solution de l</span><span class="se">\&#39;</span><span class="s1">optimisation&#39;</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">ending</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ending</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> 
+                        <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Solution de l</span><span class="se">\&#39;</span><span class="s1">optimisation&#39;</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">title</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="i-la-descente-de-gradient-a-pas-constant">
+<h2>I. La descente de gradient (à pas constant)<a class="headerlink" href="#i-la-descente-de-gradient-a-pas-constant" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="a-l-algorithme">
+<h3>A. L’algorithme<a class="headerlink" href="#a-l-algorithme" title="Permalink to this headline">¶</a></h3>
+<p>Considérons la fonction suivante qui admet plusieurs minimums locaux.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">x</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">y</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">7</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_loss_contour</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">three_dim</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">starting</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> 
+                  <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Carte de chaleur 2D de la fonction à optimiser&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2_optimization_7_0.png" src="../_images/2_optimization_7_0.png" />
+</div>
+</div>
+<p>Il est également possible de la représenter en 3 dimensions.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_loss_contour</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">three_dim</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">starting</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+                  <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Carte de chaleur 3D de la fonction à optimiser&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2_optimization_9_0.png" src="../_images/2_optimization_9_0.png" />
+</div>
+</div>
+<p>Dit autrement, nous considérons <span class="math notranslate nohighlight">\(f:\mathbb{R}^2\mapsto\mathbb{R}\)</span> définie par <span class="math notranslate nohighlight">\(f(x, y)=\sqrt{(x^2+y-2)^2+(x+y^2-7)^2}\)</span>. <span class="math notranslate nohighlight">\(f\)</span> est continue et infiniment dérivable.</p>
+<p>Nous avons en particulier les dérivées partielles suivantes :</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial f}{\partial x}(x, y)=\frac{2x^3+x(2y-3)+y^2-7}{\sqrt{(x^2+y-2)^2+(x+y^2-7)^2}}\]</div>
+<p>et</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial f}{\partial y}(x, y)=\frac{x^2+2xy+2y^3-13y-2}{\sqrt{(x^2+y-2)^2+(x+y^2-7)^2}}.\]</div>
+<p>Sans hypothèse sur la fonction <span class="math notranslate nohighlight">\(f\)</span>, celle-ci peut être très difficile à minimiser. Soit <span class="math notranslate nohighlight">\(x^{(0)}\in\mathbb{R}^2\)</span>, un algorithme permettant de chercher un minimum local en partant de <span class="math notranslate nohighlight">\(x^{(0)}\)</span> est la descente de gradient. Ce dernier suppose que nous avons accès aux informations du premier ordre : le gradient <span class="math notranslate nohighlight">\(\nabla f(x, y)\)</span>. Rappelons que le gradient est le vecteur construit à partir des dérivées partielles <span class="math notranslate nohighlight">\(\nabla f (x, y) = [\partial f(x,y)/\partial x, \partial f(x, y)/\partial y]^T\)</span>. Ce dernier donne le sens de la plus forte croissance de la fonction <span class="math notranslate nohighlight">\(f\)</span>. Son opposé donne la plus forte pente. L’idée de l’algorithme de descente de gradient est de suivre la direction donnée par ce dernier par petits pas. On note <span class="math notranslate nohighlight">\(\boldsymbol{x}=(x,y)\)</span>. Nous avons ainsi :</p>
+<div class="math notranslate nohighlight">
+\[\boldsymbol{x}^{(t+1)}=\boldsymbol{x}^{(t)}-\eta\nabla f(\boldsymbol{x}^{(t)})\]</div>
+<p>où <span class="math notranslate nohighlight">\(\eta&gt;0\)</span> est justement un paramètre permettant de contrôler la taille du pas.</p>
+<div class="admonition-exercice admonition">
+<p class="admonition-title">Exercice</p>
+<p><strong>Donnez le code permettant de calculer le gradient de la fonction précédente (en format vecteur ligne).</strong></p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">grad</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="c1">####### Complete this part ######## or die ####################</span>
+    <span class="o">...</span>
+    <span class="o">...</span>
+    <span class="k">return</span> <span class="o">...</span>
+    <span class="c1">###############################################################</span>
+</pre></div>
+</div>
+<div class="admonition-exercice admonition">
+<p class="admonition-title">Exercice</p>
+<p><strong>Donnez le code permettant de calculer une itération de l’algorithme de descente de gradient. Attention, on appelle le pas d’optimisation <span class="math notranslate nohighlight">\(\eta\)</span> le <em>learning rate</em>.</strong></p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">GradientDescent</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">optimize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">nb_iterations</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="c1"># beta est notre variable ! </span>
+        <span class="c1"># si elle n&#39;est pas fixée on la tire au hasard</span>
+        <span class="k">if</span> <span class="n">beta</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">beta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="n">param_trace</span> <span class="o">=</span> <span class="p">[</span><span class="n">beta</span><span class="p">]</span>
+        <span class="n">loss_trace</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span><span class="p">(</span><span class="n">beta</span><span class="p">)]</span>
+        
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nb_iterations</span><span class="p">):</span>
+            <span class="c1">####### Complete this part ######## or die ####################</span>
+            <span class="n">beta</span> <span class="o">=</span> <span class="o">...</span>
+            <span class="c1">###############################################################</span>
+            <span class="n">param_trace</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">beta</span><span class="p">)</span>
+            <span class="n">loss_trace</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">beta</span><span class="p">))</span>
+            
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">param_trace</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">loss_trace</span><span class="p">)</span>
+        
+<span class="n">gd</span> <span class="o">=</span> <span class="n">GradientDescent</span><span class="p">()</span>
+
+<span class="n">p</span><span class="p">,</span> <span class="n">l</span> <span class="o">=</span> <span class="n">gd</span><span class="o">.</span><span class="n">optimize</span><span class="p">()</span>
+
+<span class="n">plot_loss_contour</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">param_trace</span><span class="o">=</span><span class="n">p</span><span class="p">,</span> <span class="n">three_dim</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
+                  <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Carte de chaleur 2D de la fonction à optimiser&#39;</span><span class="p">)</span>
+
+<span class="n">plot_loss_contour</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">param_trace</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">p</span><span class="p">,</span> <span class="n">l</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">l</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">))],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> 
+                  <span class="n">three_dim</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Carte de chaleur 3D de la fonction à optimiser&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="b-convergence-de-la-descente-de-gradient">
+<h3>B. Convergence de la descente de gradient<a class="headerlink" href="#b-convergence-de-la-descente-de-gradient" title="Permalink to this headline">¶</a></h3>
+<p>(ici <span class="math notranslate nohighlight">\(\lVert\cdot\rVert=\lVert\cdot\rVert_2\)</span>)</p>
+<p>Soit <span class="math notranslate nohighlight">\(x^\star\)</span> la solution de notre problème d’optimisation :</p>
+<div class="math notranslate nohighlight">
+\[x^\star=\text{argmin}_{x\in\mathbb{R}^d}f(x),\]</div>
+<p>alors, <span class="math notranslate nohighlight">\(\forall x\in\mathbb{R}^d\)</span>, nous avons <span class="math notranslate nohighlight">\(f(x)-f(x^\star)\geq 0\)</span>. Notons <span class="math notranslate nohighlight">\(x^{(k)}\)</span> notre séquence d’itérés (les pas de notre algorithme de descente de gradient). On dira que notre algorithme converge si nous avons :</p>
+<div class="math notranslate nohighlight">
+\[f(x^{(k)})-f(x^\star)\leq g(t),\ \lim_{t\rightarrow \infty}g(t)=0.\]</div>
+<p>Dit autrement, si l’écart entre la valeur de notre fonction atteinte par notre algorithme et la solution optimale tend vers <span class="math notranslate nohighlight">\(0\)</span>, alors on converge. Notez que nous ne mesurons pas <span class="math notranslate nohighlight">\(\lVert x^{(k)}-x^\star\rVert\)</span>. En effet, s’il existait une infinité de solutions, alors rien ne nous garantit que nous convergerions vers le <span class="math notranslate nohighlight">\(x^\star\)</span> choisi.</p>
+<p>La convergence de l’algorithme de descente de gradient s’appuie sur une propriété appellée “continuité Lipschitz”.</p>
+<div class="admonition-definition-continuite-lipschitz admonition">
+<p class="admonition-title">Définition (continuité Lipschitz)</p>
+<p>On dit qu’une fonction <span class="math notranslate nohighlight">\(f:\mathbb{R}^d\rightarrow\mathbb{R}^p\)</span> est Lipschitz si et seulement si :</p>
+<div class="math notranslate nohighlight">
+\[\lVert f(x_1)-f(x_2)\rVert\leq K\lVert x_1-x_2\rVert,\]</div>
+<p>et on appelle <span class="math notranslate nohighlight">\(K\)</span> constante Lipchitz.</p>
+</div>
+<div class="admonition-fonction-lipschitz-et-derivee admonition">
+<p class="admonition-title">Fonction Lipschitz et dérivée</p>
+<p>Soit <span class="math notranslate nohighlight">\(f:\mathbb{R}\mapsto\mathbb{R}\)</span> une fonction K-Lipschitz. On a donc pour <span class="math notranslate nohighlight">\(h\in\mathbb{R}\)</span> :</p>
+<div class="math notranslate nohighlight">
+\[| f(x+h)-f(x)|\leq K| h|,\]</div>
+<p>ce qui est équivalent à</p>
+<div class="math notranslate nohighlight">
+\[\Big|\frac{f(x+h)-f(x)}{h}\Big|\leq K.\]</div>
+<p>Si on prend la limite de <span class="math notranslate nohighlight">\(h\)</span> en <span class="math notranslate nohighlight">\(0\)</span>, alors c’est la définition de la dérivée qui est donc majorée par <span class="math notranslate nohighlight">\(K\)</span>. Cette idée se généralise avec le gradient.</p>
+</div>
+<hr class="docutils" />
+<div class="admonition-exercice admonition">
+<p class="admonition-title">Exercice</p>
+<p><strong>Soit la fonction <span class="math notranslate nohighlight">\(f(x)=x^2\)</span> sur <span class="math notranslate nohighlight">\(\mathbb{R}\)</span>. Montrer que <span class="math notranslate nohighlight">\(f\)</span> n’est pas Lipschitz mais que <span class="math notranslate nohighlight">\(f^\prime\)</span> l’est.</strong></p>
+</div>
+<hr class="docutils" />
+<p>Notre algorithme d’optimisation suit le gradient afin de minimiser une fonction de coût. Cependant, notre fonction pourrait très bien avoir une multitudes de minimum locaux voire pas de minimum du tout. La définition suivante nous permet de définir une propriété suffisante pour qu’atteindre un minimum local soit acceptable.</p>
+<div class="admonition-definition-fonction-convexe admonition">
+<p class="admonition-title">Définition (fonction convexe)</p>
+<p>Soit <span class="math notranslate nohighlight">\(f:\mathcal{X}\mapsto\mathbb{R}\)</span>, <span class="math notranslate nohighlight">\(x, y\in\mathcal{X}\)</span> et <span class="math notranslate nohighlight">\(\lambda\in[0, 1]\)</span>. On dira que <span class="math notranslate nohighlight">\(f\)</span> est convexe si :</p>
+<div class="math notranslate nohighlight">
+\[\begin{aligned}
+f(\lambda x+ (1-\lambda)y)&amp;\leq \lambda f(x)+(1-\lambda) f(y)
+\end{aligned}\]</div>
+<p>La convexité ne garantit pas l’existence d’un minimum ni son unicité mais l’équivalence entre minimum local et minimum global.</p>
+<p>La convexité stricte est donnée par :</p>
+<div class="math notranslate nohighlight">
+\[\begin{aligned}
+f(\lambda x+ (1-\lambda)y)&amp;&lt; \lambda f(x)+(1-\lambda) f(y)
+\end{aligned}\]</div>
+<p>qui elle implique l’unicité du minimum s’il existe.</p>
+</div>
+<p>Ainsi, si notre algorihtme trouve un minimum local, alors ce dernier est soit unique - convexité stricte - ou à minima, minimise notre fonction objectif. Attention, la convexité ne garantit jamais l’existence de ce minium. Pour cela, il faut une autre propriété.</p>
+<div class="admonition-definition-fonction-coercive admonition">
+<p class="admonition-title">Définition (fonction coercive)</p>
+<p>Une fonction <span class="math notranslate nohighlight">\(f\)</span> est coercive si :</p>
+<div class="math notranslate nohighlight">
+\[\lim_{\lVert x\rVert\rightarrow\infty}f(x)=\infty.\]</div>
+<p>Si notre fonction est propre (ne vaut pas partout <span class="math notranslate nohighlight">\(+\infty\)</span> et n’atteint pas <span class="math notranslate nohighlight">\(-\infty\)</span>) et convexe, alors la coercivité implique l’existence d’un minimum. Une fonction propre strictement convexe possède donc un unique minimum.</p>
+</div>
+<p>La convexité est une propriété suffisante pour garantir la “qualité” d’un minimum. Dans la cadre des fonctions strictement convexes, la coercivité est une propriété nécessaire et suffisante pour garantir l’existence d’un minimum.</p>
+<p>Cela nous amène ainsi au théorème suivant illustrant la convergence d’un tel algorithme d’optimisation.</p>
+<div class="admonition-theoreme-convergence-de-la-descente-de-gradient admonition">
+<p class="admonition-title">Théorème (convergence de la descente de gradient)</p>
+<p>Soit <span class="math notranslate nohighlight">\(f:\mathbb{R}^d\rightarrow\mathbb{R}\)</span> notre fonction à optimiser, convexe et différentiable, <span class="math notranslate nohighlight">\(x^\star\)</span> une solution du problème et supposant <span class="math notranslate nohighlight">\(\nabla f\)</span> Lipchitz de constante <span class="math notranslate nohighlight">\(L\)</span> (<span class="math notranslate nohighlight">\(\lVert\nabla f(x_1)-\nabla f(x_2)\rVert\leq L\lVert x_1-x_2\rVert\)</span>). Fixons le pas d’optimisation <span class="math notranslate nohighlight">\(\eta \leq 1/L\)</span>. Alors, nous avons :</p>
+<div class="math notranslate nohighlight">
+\[f(x^{(k)})-f(x^\star)\leq \frac{\lVert x^{(0)}-x^\star\rVert^2}{2 k\eta},\]</div>
+<p>où, le numérateur étant constant, la partie à droite converge vers <span class="math notranslate nohighlight">\(0\)</span> à une vitesse proportionnelle à <span class="math notranslate nohighlight">\(1/k\)</span>.</p>
+</div>
+<div class="dropdown caution admonition">
+<p class="admonition-title">Preuve</p>
+<p>Soit <span class="math notranslate nohighlight">\(x_1, x_2\in\mathbb{R}^d\)</span> et notons <span class="math notranslate nohighlight">\(h=x_1-x_2\)</span>. Nous avons :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+f(x_2+h)&amp;=f(x_2)+\int_0^1\langle \nabla f(x_2+th), h\rangle dt\\
+\Leftrightarrow f(x_2+h)-f(x_2)&amp;=\int_0^1\langle \nabla f(x_2+th), h\rangle dt\\
+\Leftrightarrow f(x_2+h)-f(x_2)-\int_0^1\langle \nabla f(x_2), h\rangle dt&amp;=\int_0^1\langle \nabla f(x_2+th), h\rangle dt-\int_0^1\langle \nabla f(x_2), h\rangle dt\\
+\Leftrightarrow f(x_2+h)-f(x_2)-\langle \nabla f(x_2), h\rangle&amp;=\int_0^1\langle \nabla f(x_2+th)-\nabla f(x_2), h\rangle dt.
+\end{aligned}\end{split}\]</div>
+<p>Considérons la partie dans l’intégrale et appliquons <a class="reference external" href="https://fr.wikipedia.org/wiki/In%C3%A9galit%C3%A9_de_Cauchy-Schwarz">Cauchy-Schwartz</a> et utilisons la continuité Lipschitz</p>
+<div class="math notranslate nohighlight">
+\[\begin{aligned}
+\langle f(x_2+th)-\nabla f(x_2), h\rangle\leq \lVert f(x_2+th)-\nabla f(x_2)\rVert\lVert h\rVert \leq Lt\lVert h\rVert^2.
+\end{aligned}\]</div>
+<p>Nous avons ainsi:</p>
+<div class="math notranslate nohighlight">
+\[\begin{aligned}
+\int_0^1\langle f(x_2+th)-\nabla f(x_2), h\rangle dt&amp;\leq \int_0^1 Lt\lVert h\rVert^2dt = \frac{L}{2}\lVert h\rVert^2.
+\end{aligned}\]</div>
+<p>En combinant le tout, nous avons (1) :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align}
+f(x_2+h)-f(x_2)-\langle \nabla f(x_2), h\rangle\leq \frac{L}{2}\lVert h\rVert^2\\
+\Leftrightarrow f(x_1)\leq f(x_2)+\langle \nabla f(x_2), x_1-x_2\rangle+\frac{L}{2}\lVert x_1-x_2\rVert^2
+\end{align}\end{split}\]</div>
+<p>Reprenons notre formule et remplaçons <span class="math notranslate nohighlight">\(x^{(k+1)}=x_1\)</span> et <span class="math notranslate nohighlight">\(x^{(k)}=x_2\)</span>. Nous avons bien sûr <span class="math notranslate nohighlight">\(x^{(k+1)}=x^{(k)}-\eta\nabla f(x^{(k)})\)</span>. Nous avons :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+f(x^{(k+1)})&amp;\leq f(x^{(k)})+\langle \nabla f(x^{(k)}), x^{(k+1)}-x^{(k)}\rangle+\frac{L}{2}\lVert x^{(k+1)}-x^{(k)}\rVert^2\\
+&amp;=f(x^{(k)})+\langle \nabla f(x^{(k)}), x^{(k)}-\eta\nabla f(x^{(k)})-x^{(k)}\rangle+\frac{L}{2}\lVert x^{(k)}-\eta\nabla f(x^{(k)})-x^{(k)}\rVert^2\\
+&amp;=f(x^{(k)})-\eta\langle \nabla f(x^{(k)}), \nabla f(x^{(k)})\rangle+\frac{L\eta^2}{2}\lVert\nabla f(x^{(k)})\rVert^2\\
+&amp;=f(x^{(k)})-\eta\lVert \nabla f(x^{(k)})\rVert^2+\frac{L\eta^2}{2}\lVert\nabla f(x^{(k)})\rVert^2\\
+&amp;=f(x^{(k)})-\eta(1-\frac{L\eta}{2})\lVert\nabla f(x^{(k)})\rVert^2
+\end{aligned}\end{split}\]</div>
+<p>Rappelons que par hypothèse, nous avons <span class="math notranslate nohighlight">\(\eta\leq 1/L\)</span>. Cela implique que :</p>
+<div class="math notranslate nohighlight">
+\[-(1-\frac{L\eta}{2})=\frac{1}{2}L\eta-1\leq \frac{1}{2}-1=-\frac{1}{2}.\]</div>
+<p>Ainsi, nous avons (2) :</p>
+<div class="math notranslate nohighlight">
+\[\begin{aligned}
+f(x^{(k+1)})&amp;\leq f(x^{(k)})-\frac{\eta}{2}\lVert\nabla f(x^{(k)})\rVert^2.
+\end{aligned}\]</div>
+<p>On remarque ainsi que le pas de descente de gradient ne peut QUE décroître la fonction objectif à moins que le gradient soit nul et l’algorithme reste constant. Cela est dû à la continuité Lipschitz et au choix approprié du pas <span class="math notranslate nohighlight">\(\eta\)</span>.</p>
+<p>Rappelons que <span class="math notranslate nohighlight">\(f\)</span> est convexe impliquant les deux inégalités suivantes :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+f(x^\star)&amp;\geq f(x)+\langle \nabla f(x), x^\star-x\rangle\\
+f(x)&amp;\leq f(x^\star)+\langle \nabla f(x), x-x^\star\rangle\text{ (en multipliant par -1).}
+\end{aligned}\end{split}\]</div>
+<p>En récupérant l’inégalité (2), nous avons :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+f(x^{(k+1)})&amp;\leq f(x^{(k)})-\frac{\eta}{2}\lVert\nabla f(x^{(k)})\rVert^2\\
+&amp;\leq f(x^\star)+\langle \nabla f(x^{(k)}), x^{(k)}-x^\star\rangle-\frac{\eta}{2}\lVert\nabla f(x^{(k)})\rVert^2\\
+\Leftrightarrow f(x^{(k+1)}) - f(x^\star) &amp;\leq \frac{1}{2\eta}\big(2\eta\langle \nabla f(x^{(k)}), x^{(k)}-x^\star\rangle-\eta^2\lVert\nabla f(x^{(k)})\rVert^2\big)\\
+\Leftrightarrow f(x^{(k+1)}) - f(x^\star) &amp;\leq \frac{1}{2\eta}\big(2\eta\langle \nabla f(x^{(k)}), x^{(k)}-x^\star\rangle-\eta^2\lVert\nabla f(x^{(k)})\rVert^2\\
+&amp;\ \ - \lVert x^{(k)}-x^\star\rVert^2+\lVert x^{(k)}-x^\star\rVert^2\big)\\
+&amp;=\frac{1}{2\eta}\big(\lVert x^{(k)}-x^\star\rVert^2-\lVert x^{(k)}-\eta\nabla f(x^{(k)})-x^\star\rVert^2\big)\\
+&amp;=\frac{1}{2\eta}\big(\lVert x^{(k)}-x^\star\rVert^2-\lVert x^{(k+1)}-x^\star\rVert^2\big)
+\end{aligned}\end{split}\]</div>
+<p>L’inégalité précédente est vraie pour tout <span class="math notranslate nohighlight">\(k\in\mathbb{N}\)</span>. Nous avons donc aussi l’inégalité suivante :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\sum_{t=0}^k f(x^{(t+1)}) - f(x^\star) &amp;\leq \sum_{t=0}^k\frac{1}{2\eta}\big(\lVert x^{(t)}-x^\star\rVert^2-\lVert x^{(t+1)}-x^\star\rVert^2\big)\\
+&amp;=\frac{1}{2\eta}\big(\lVert x^{(0)}-x^\star\rVert^2\\&amp;\ \ -\lVert x^{(k+1)}-x^\star\rVert^2\big)\text{ (les termes de la somme se téléscopent)}\\
+&amp;\leq \frac{1}{2\eta}\lVert x^{(0)}-x^\star\rVert^2
+\end{aligned}\end{split}\]</div>
+<p>Nous avons ainsi :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\sum_t f(x^{(k+1)})-f(x^\star)&amp;\leq \sum_t f(x^{(t+1)}) - f(x^\star)\text{ (GD ne peut que améliorer la fonction objectif)}\\
+\Leftrightarrow f(x^{(k+1)})-f(x^\star)&amp;\leq \frac{1}{k+1}\sum_t  f(x^{(t+1)}) - f(x^\star)\leq \frac{\lVert x^{(0)}-x^\star\rVert^2}{2\eta(k+1)},
+\end{aligned}\end{split}\]</div>
+<p>ce qui conclut la preuve.</p>
+</div>
+</div>
+</div>
+<div class="section" id="ii-la-descente-de-gradient-a-pas-optimal">
+<h2>II. La descente de gradient à pas optimal<a class="headerlink" href="#ii-la-descente-de-gradient-a-pas-optimal" title="Permalink to this headline">¶</a></h2>
+<p>Dans le scénario précédent, nous avons du fixer un pas d’optimisation <span class="math notranslate nohighlight">\(\eta\)</span> arbitraire. Ce dernier doit être suffisament petit pour garantir que l’algorithme converge et suffisamment grand pour que l’optimisation se fasse. Il est possible de définir une notion de pas d’optimisation optimal. Cependant, celle-ci est souvent intractable en pratique (trouver le pas est plus couteux que l’optimisation initiale). Dans certains cas, nous pouvons néanmoins le déterminer. C’est ce que nous allons faire ici. Considérons maintenant la fonction suivante :</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="ow">is</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span><span class="o">*</span><span class="mf">0.5</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">x</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_loss_contour</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">three_dim</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">starting</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> 
+                  <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Carte de chaleur 2D de la fonction à optimiser&#39;</span><span class="p">)</span>
+<span class="n">plot_loss_contour</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">three_dim</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">starting</span><span class="o">=</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> 
+                  <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Carte de chaleur 3D de la fonction à optimiser&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2_optimization_22_0.png" src="../_images/2_optimization_22_0.png" />
+<img alt="../_images/2_optimization_22_1.png" src="../_images/2_optimization_22_1.png" />
+</div>
+</div>
+<p>L’algorithme de descente de gradient nous permet d’avancer dans la bonne direction. Cependant, le choix du pas <span class="math notranslate nohighlight">\(\eta\)</span> peut nous sembler insuffisant.</p>
+<p>Soit <span class="math notranslate nohighlight">\(\boldsymbol{\nu}=[x, y]^T\)</span>, la direction d’optimisation <span class="math notranslate nohighlight">\(\boldsymbol{d}^{(k)}=-\nabla f(\boldsymbol{\nu}^{(k)})\)</span> et la fonction <span class="math notranslate nohighlight">\(\gamma:t\mapsto f(\boldsymbol{\nu}^{(k)}+t\boldsymbol{d}^{(k)})\)</span>. La valeur de <span class="math notranslate nohighlight">\(t\)</span> qui minimise la fonction <span class="math notranslate nohighlight">\(\gamma\)</span> est un pas optimal pour une minimisation dans la direction du gradient. Sans contrainte particulière sur la fonction <span class="math notranslate nohighlight">\(f\)</span>, <span class="math notranslate nohighlight">\(\gamma\)</span> pourrait admettre un certain nombre de points critiques de natures et de valeurs différentes.</p>
+<p>Les points critiques sont les points d’annulation de la dérivée : <span class="math notranslate nohighlight">\(\{t\in\mathbb{R}:\ \gamma^\prime(t)=0\}\)</span>. On obtient assez facilement la dérivée de la manière suivante :</p>
+<div class="math notranslate nohighlight">
+\[\gamma^\prime(t)=\frac{\partial f}{\partial x}\left(\boldsymbol{\nu}^{(k)}+t\boldsymbol{d}^{(k)}\right)\frac{\partial f}{\partial x}\left(\boldsymbol{\nu}^{(k)}\right)+\frac{\partial f}{\partial y}\left(\boldsymbol{\nu}^{(k)}+t\boldsymbol{d}^{(k)}\right)\frac{\partial f}{\partial y}\left(\boldsymbol{\nu}^{(k)}\right)\]</div>
+<p>On remarque que résoudre cette équation est rapidement problématique et nécessite l’utilisation d’un autre algorithme de descente de gradient. En réalité, il y a grossièrement deux possibilités :</p>
+<ol class="simple">
+<li><p>On peut trouver une valeur <span class="math notranslate nohighlight">\(t\)</span> analytiquement et c’est le choix qu’on doit faire,</p></li>
+<li><p>Il n’est pas possible de calculer <span class="math notranslate nohighlight">\(t\)</span> et on doit le calculer numériquement. Cependant, si on doit le calculer numériquement, alors, il devient nécessaire de calculer le gradient à chaque étape, et dans ce cas, pourquoi ne pas juste se déplacer dans l’espace des paramètres avec notre vecteur <span class="math notranslate nohighlight">\(\boldsymbol{[x, y]}\)</span> ce qui nous donnerait une meilleure direction dans l’espace des paramètres…</p></li>
+</ol>
+<p>Il se trouve que la fonction définie ci-dessus est : <span class="math notranslate nohighlight">\(f(\boldsymbol{x})=\frac{1}{2}\langle Ax, x\rangle+\langle b, x\rangle\)</span> où :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}A=\begin{bmatrix} 1&amp; 0\\ 0&amp; 2\end{bmatrix}\end{split}\]</div>
+<p>est symétrique définie positive et</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}b=\begin{bmatrix}2\\1\end{bmatrix}\end{split}\]</div>
+<p>Notons</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+f(\boldsymbol{x}+t\boldsymbol{d})&amp;=\frac{1}{2}\langle A(x+t\boldsymbol{d}), x+t\boldsymbol{d}\rangle+\langle b, x+t\boldsymbol{d}\rangle\\
+&amp;=\frac{1}{2}(\langle A\boldsymbol{x},\boldsymbol{x}\rangle+t\langle A\boldsymbol{d},\boldsymbol{x}\rangle+t\langle A\boldsymbol{x},\boldsymbol{d}\rangle+t^2\langle A\boldsymbol{d},\boldsymbol{d}\rangle)+\langle \boldsymbol{b},\boldsymbol{x}\rangle+t\langle \boldsymbol{b},\boldsymbol{d}\rangle\\
+&amp;=f(\boldsymbol{x})+\frac{1}{2} t^2\langle A\boldsymbol{d},\boldsymbol{d}\rangle+t\langle A\boldsymbol{x}+\boldsymbol{b},\boldsymbol{d}\rangle
+\end{aligned}\end{split}\]</div>
+<p>Notons de plus que <span class="math notranslate nohighlight">\(\partial f(\boldsymbol{x})/\partial \boldsymbol{x}=A\boldsymbol{x}+\boldsymbol{b}=-\boldsymbol{d}\)</span>. Nous avons donc :</p>
+<div class="math notranslate nohighlight">
+\[f(\boldsymbol{x}+t\boldsymbol{d})=f(\boldsymbol{x})+\frac{1}{2} t^2\langle A\boldsymbol{d},\boldsymbol{d}\rangle-t\langle \boldsymbol{d},\boldsymbol{d}\rangle=f(\boldsymbol{x})+\frac{1}{2} t^2\langle A\boldsymbol{d},\boldsymbol{d}\rangle-\left\lVert\boldsymbol{d}\right\lVert^2 t\]</div>
+<p>La direction <span class="math notranslate nohighlight">\(\boldsymbol{d}=-\nabla f(\boldsymbol{x})\)</span> est celle qui indique la plus forte pente. La variable <span class="math notranslate nohighlight">\(t\)</span> recherchée indique la taille du pas que l’on souhaite faire. Pour cela, nous devons chercher les points critiques de la fonction <span class="math notranslate nohighlight">\(\gamma(t)=f(\boldsymbol{x}+t\boldsymbol{d})\)</span> qui sont donnés en recherchant les points d’annulation de la dérivée. De plus, <span class="math notranslate nohighlight">\(A\)</span> (la Hessienne) étant définie positive, nous savons que ces points critiques seront des minimums. Nous avons donc :</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial \gamma}{\partial t}(t)=t\langle A\boldsymbol{d}, \boldsymbol{d}\rangle - \left\lVert\boldsymbol{d}\right\lVert^2=0\]</div>
+<p>Et le point critique est donné par :</p>
+<div class="math notranslate nohighlight">
+\[t=\frac{\left\lVert\boldsymbol{d}\right\lVert^2}{\langle A\boldsymbol{d}, \boldsymbol{d}\rangle}\]</div>
+<div class="admonition-exercice admonition">
+<p class="admonition-title">Exercice</p>
+<p><strong>Donnez le code permettant de calculer le gradient (i.e. la direction d’optimisation).</strong></p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">grad</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="c1">####### Complete this part ######## or die ####################</span>
+    <span class="k">return</span> <span class="o">...</span>
+    <span class="c1">###############################################################</span>
+</pre></div>
+</div>
+<div class="admonition-exercice admonition">
+<p class="admonition-title">Exercice</p>
+<p><strong>Donnez le code permettant de calculer une itération de l’algorithme de descente de gradient avec un pas optimal.</strong></p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">OptimalStepGradientDescent</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">optimize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">nb_iterations</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">beta</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">beta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">beta</span> <span class="o">=</span> <span class="n">beta</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+            
+        <span class="n">beta2</span> <span class="o">=</span> <span class="n">beta</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+        <span class="n">param_trace</span> <span class="o">=</span> <span class="p">[</span><span class="n">beta</span><span class="p">]</span>
+        <span class="n">param_trace2</span> <span class="o">=</span> <span class="p">[</span><span class="n">beta2</span><span class="p">]</span>
+        <span class="n">loss_trace</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span><span class="p">(</span><span class="n">beta</span><span class="p">)]</span>
+        <span class="n">loss_trace2</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span><span class="p">(</span><span class="n">beta2</span><span class="p">)]</span>
+        <span class="n">it</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">stop</span> <span class="o">=</span> <span class="kc">False</span>
+        
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nb_iterations</span><span class="p">):</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="o">-</span><span class="n">grad</span><span class="p">(</span><span class="n">beta</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">d</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mf">0.</span><span class="p">:</span>
+                <span class="n">stop</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1">####### Complete this part ######## or die ####################</span>
+                <span class="n">t</span> <span class="o">=</span> <span class="o">...</span>
+                <span class="n">beta</span> <span class="o">=</span> <span class="o">...</span>
+                <span class="c1">###############################################################</span>
+                
+                <span class="n">param_trace</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">beta</span><span class="p">)</span>
+                <span class="n">loss_trace</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">beta</span><span class="p">))</span>
+            
+            <span class="c1"># cette partie du code permet de calculer le gradient classique</span>
+            <span class="c1"># afin que nous puissions le comparer avec la descente de gradient</span>
+            <span class="c1"># à pas optimal.</span>
+            <span class="n">beta2</span> <span class="o">=</span> <span class="n">beta2</span> <span class="o">-</span> <span class="n">learning_rate</span> <span class="o">*</span> <span class="n">grad</span><span class="p">(</span><span class="n">beta2</span><span class="p">)</span>
+            <span class="n">param_trace2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">beta2</span><span class="p">)</span>
+            <span class="n">loss_trace2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">beta2</span><span class="p">))</span>
+            <span class="n">it</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">param_trace</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">loss_trace</span><span class="p">),</span> 
+                <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">param_trace2</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">loss_trace2</span><span class="p">))</span>
+        
+<span class="n">gd</span> <span class="o">=</span> <span class="n">OptimalStepGradientDescent</span><span class="p">()</span>
+
+<span class="n">p1</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">gd</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">nb_iterations</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]))</span>
+
+<span class="n">plot_loss_contour</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">),</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">14.0</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">))</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<div class="admonition-exercice-dur admonition">
+<p class="admonition-title">Exercice (dur)</p>
+<p><strong>Soit <span class="math notranslate nohighlight">\(A\in\mathcal{S}_n(\mathbb{R})\)</span>, <span class="math notranslate nohighlight">\(b\in\mathbb{R}^n\)</span>. Montrer que notre fonction :</strong></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}f:\mathbb{R}^n&amp;\rightarrow \mathbb{R}\\
+x&amp;\mapsto \frac{1}{2}x^TAx-b^Tx\end{aligned}\end{split}\]</div>
+<p><strong>admet un <em>unique minimum</em> si, et seulement si <span class="math notranslate nohighlight">\(\text{Sp}(A)\subset\mathbb{R}^+\)</span> et <span class="math notranslate nohighlight">\(b\in\text{Im}(A)\)</span>.</strong></p>
+</div>
+<div class="hint dropdown admonition">
+<p class="admonition-title">Indices</p>
+<p>Rappelons que <span class="math notranslate nohighlight">\(\mathcal{S}_n(\mathbb{R})\)</span> représente les matrices réelles symétriques de taille <span class="math notranslate nohighlight">\(n\times n\)</span>, <span class="math notranslate nohighlight">\(\text{Sp}(A)\)</span> est le spectre de <span class="math notranslate nohighlight">\(A\)</span> (i.e. ses valeurs propres) et <span class="math notranslate nohighlight">\(\text{Im}(A)\)</span>, l’image de <span class="math notranslate nohighlight">\(A\)</span>.</p>
+</div>
+</div>
+<div class="section" id="iii-la-descente-de-gradient-stochastique-sgd">
+<h2>III. La descente de gradient stochastique (SGD)<a class="headerlink" href="#iii-la-descente-de-gradient-stochastique-sgd" title="Permalink to this headline">¶</a></h2>
+<p>En <em>machine learning</em>, la fonction que nous souhaitons optimiser a la forme suivante :</p>
+<div class="math notranslate nohighlight">
+\[J(\theta)=\frac{1}{n}\sum_{i=1}^n \ell(h_\theta(x_i), y_i),\]</div>
+<p>où <span class="math notranslate nohighlight">\(h_\theta\)</span> est une fonction paramétrisée par <span class="math notranslate nohighlight">\(\theta\)</span> et <span class="math notranslate nohighlight">\(\ell\)</span> une fonction qui quantifie l’erreur élémentaire de notre modèle pour un point donné. La descente de gradient nécessite l’évaluation du gradient de cette dernière :</p>
+<div class="math notranslate nohighlight">
+\[\nabla J(\theta)=\frac{1}{n}\sum_{i=1}^n \nabla \ell(h_\theta(x_i), y_i).\]</div>
+<p>Si <span class="math notranslate nohighlight">\(n\)</span> est grand, alors l’évaluation du gradient est couteuse. On pourrait même imaginer un scénario où la collecte des données s’effectue en continue et où <span class="math notranslate nohighlight">\(n\rightarrow\infty\)</span>. Le calcul du gradient serait alors tout simplement impossible. La solution consiste à ne calculer à chaque itération le gradient que sur un unique point de notre jeu de données :</p>
+<div class="math notranslate nohighlight">
+\[\hat{\nabla}J(\theta)=\nabla \ell(h_\theta(x_i), y_i),\ i\in\{1, \ldots, n\}.\]</div>
+<div class="admonition-exercice admonition">
+<p class="admonition-title">Exercice</p>
+<p><strong>Montrer que l’espérance du gradient sur un point ou sur tout le jeu de données est la même.</strong></p>
+</div>
+<p>Ainsi, l’estimation du gradient est <span class="math notranslate nohighlight">\(n\)</span> fois plus rapide que sur le jeu de données complet.</p>
+<p>Une situation intermédiaire consiste à calculer le gradient sur un batch de données de taille <span class="math notranslate nohighlight">\(b\)</span> (i.e. <em>batch size</em>) :</p>
+<div class="math notranslate nohighlight">
+\[\hat{\nabla}J(\theta)=\frac{1}{b}\sum_{i\in I_b}\nabla \ell(h_\theta(x_i), y_i),\ I_b\subseteq\{1, \ldots, n\},\ |I_b|=b.\]</div>
+<div class="admonition-exercice admonition">
+<p class="admonition-title">Exercice</p>
+<p><strong>Montrer que l’espérance du gradient calculé sur un <em>batch</em> ou sur tout le jeu de données est la même.</strong></p>
+</div>
+<p>Quelque soit la stratégie, la stratégie peut être avec ou sans remise. Les approches de type <em>deep learning</em> préfèrent souvent celle sans remise. Lorsque tout le jeu de donnée a été vu, on dit qu’il s’est passé une <em>epoch</em>. Et lorsqu’une <em>epoch</em> se termine, le jeu de données peut être re-parcouru tel quel ou mélangé avant d’être re-parcouru. La seconde stratégie est souvent préférée.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="mi">100</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition-exercice admonition">
+<p class="admonition-title">Exercice</p>
+<p><strong>Complétez le code suivant afin de pouvoir jouer sur la taille des batchs dans le calcul du gradient.</strong></p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">####### Complete this part ######## or die ####################</span>
+<span class="k">class</span> <span class="nc">LeastSquare</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="o">=</span><span class="n">X</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">LeastSquare</span><span class="o">.</span><span class="n">_format_ndarray</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">_format_ndarray</span><span class="p">(</span><span class="n">arr</span><span class="p">):</span>
+        <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span> <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="k">else</span> <span class="n">arr</span>
+        <span class="k">return</span> <span class="n">arr</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">arr</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">))</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">arr</span>
+    
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">beta</span><span class="p">):</span>
+        <span class="c1"># Cette méthode calcule la valeur de la fonction</span>
+        <span class="n">beta</span> <span class="o">=</span> <span class="n">LeastSquare</span><span class="o">.</span><span class="n">_format_ndarray</span><span class="p">(</span><span class="n">beta</span><span class="p">)</span>
+        <span class="n">prediction</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">beta</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+        <span class="n">errors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">prediction</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="n">errors</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        
+        <span class="k">return</span> <span class="n">val</span>
+    
+    <span class="k">def</span> <span class="nf">grad</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">beta</span><span class="p">):</span>
+            
+        <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span>
+
+        <span class="n">beta</span> <span class="o">=</span> <span class="n">LeastSquare</span><span class="o">.</span><span class="n">_format_ndarray</span><span class="p">(</span><span class="n">beta</span><span class="p">)</span>
+        
+        <span class="n">grad</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">X</span><span class="p">),</span> <span class="n">beta</span><span class="p">)</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span><span class="o">/</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">grad</span>
+    
+    <span class="k">def</span> <span class="nf">optimize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">nb_iterations</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="c1"># beta est notre variable ! </span>
+        <span class="c1"># si elle n&#39;est pas fixée on la tire au hasard</span>
+        <span class="k">if</span> <span class="n">beta</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">beta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="n">param_trace</span> <span class="o">=</span> <span class="p">[</span><span class="n">beta</span><span class="p">]</span>
+        <span class="n">loss_trace</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="p">(</span><span class="n">beta</span><span class="p">)]</span>
+        
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nb_iterations</span><span class="p">):</span>
+            <span class="n">beta</span> <span class="o">=</span> <span class="n">beta</span> <span class="o">-</span> <span class="n">lr</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="n">beta</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+
+            <span class="n">param_trace</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">beta</span><span class="p">)</span>
+            <span class="n">loss_trace</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">(</span><span class="n">beta</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">param_trace</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">loss_trace</span><span class="p">)</span>
+    
+<span class="c1">###############################################################</span>
+<span class="n">l</span> <span class="o">=</span> <span class="n">LeastSquare</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">plot_loss_contour</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">three_dim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plot_loss_contour</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">three_dim</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">gd</span> <span class="o">=</span> <span class="n">LeastSquare</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">sgd</span> <span class="o">=</span> <span class="n">LeastSquare</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="n">p1</span><span class="p">,</span> <span class="n">l1</span> <span class="o">=</span> <span class="n">gd</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span>
+    <span class="n">lr</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">nb_iterations</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="p">)</span>
+<span class="n">p2</span><span class="p">,</span> <span class="n">l2</span> <span class="o">=</span> <span class="n">sgd</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span>
+    <span class="n">lr</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">nb_iterations</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> 
+    <span class="n">beta</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">]),</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span>
+<span class="p">)</span>
+<span class="n">plot_loss_contour</span><span class="p">(</span><span class="n">gd</span><span class="p">,</span> <span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">),</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">14.0</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="iv-la-methode-de-newton">
+<h2>IV. La méthode de Newton<a class="headerlink" href="#iv-la-methode-de-newton" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="introduction">
+<h3>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h3>
+<p>L’élément de base de la méthode de Newton est le développement limité d’une fonction <span class="math notranslate nohighlight">\(f\)</span> en <span class="math notranslate nohighlight">\(x_0\)</span>. Soit <span class="math notranslate nohighlight">\(f\in C^n(\mathbb{R})\)</span> une fonction <span class="math notranslate nohighlight">\(n\)</span> fois dérivable de dérivée <span class="math notranslate nohighlight">\(n^{eme}\)</span> continue de <span class="math notranslate nohighlight">\(\mathbb{R}\)</span> dans <span class="math notranslate nohighlight">\(\mathbb{R}\)</span>, son développement limité à l’ordre <span class="math notranslate nohighlight">\(n\)</span> est donné par la formule suivante  :</p>
+<div class="math notranslate nohighlight">
+\[f(x)=\sum_{i=1}^n \frac{f^{(n)}(x_0)}{n!}(x-x_0)^n+o\big((x-x_0)^n\big)\]</div>
+<p>Ainsi, la tangente à notre fonction au point <span class="math notranslate nohighlight">\(x_0\)</span>, ou approximation linéaire de notre fonction en <span class="math notranslate nohighlight">\(x_0\)</span>, est donnée par :</p>
+<div class="margin sidebar">
+<p class="sidebar-title">Méthode de Newton-Raphson</p>
+<p>La méthode de Newton vient bien d’Isaac Newton ainsi que de Joseph Raphson.</p>
+</div>
+<div class="math notranslate nohighlight">
+\[f(x)\approx f(x_0)+f^\prime(x_0)(x-x_0)\]</div>
+<p>et l’approximation à l’ordre <span class="math notranslate nohighlight">\(2\)</span> par :</p>
+<div class="math notranslate nohighlight">
+\[f(x)\approx f(x_0)+f^\prime(x_0)(x-x_0)+\frac{f^{\prime\prime}(x_0)}{2}(x-x_0)^2\]</div>
+<p>Ces idées se généralisent à des fonctions <span class="math notranslate nohighlight">\(f:\mathbb{R}^n\mapsto\mathbb{R}\)</span> :</p>
+<div class="math notranslate nohighlight">
+\[f(x)\approx f(x_0)+\langle \nabla f(x_0), x-x_0\rangle + \frac{1}{2} (x-x_0)^TH_f(x-x_0)\]</div>
+</div>
+<div class="section" id="la-methode">
+<h3>La méthode<a class="headerlink" href="#la-methode" title="Permalink to this headline">¶</a></h3>
+<p>Soit <span class="math notranslate nohighlight">\(f:\mathbb{R}\mapsto\mathbb{R}\)</span> une fonction deux fois dérivables de dérivée seconde continue, l’objectif de la méthode de Newton est de minimiser <span class="math notranslate nohighlight">\(f\)</span> :</p>
+<div class="math notranslate nohighlight">
+\[\min_{x\in\mathbb{R}}f(x)\]</div>
+<p>Supposons de plus <span class="math notranslate nohighlight">\(f\)</span> strictement convexe. Cette minimisation est séquentielle est produit une suite d’itérés <span class="math notranslate nohighlight">\(\{x_0, x_1, ..., x_k\}\)</span> où <span class="math notranslate nohighlight">\(x_0\)</span> est notre point de départ. chaque itéré se rapproche un peu plus du minimiseur recherche <span class="math notranslate nohighlight">\(x^\star\)</span>.</p>
+<p>À chaque itérée, l’approximation à l’ordre <span class="math notranslate nohighlight">\(2\)</span> de <span class="math notranslate nohighlight">\(f\)</span> est elle-même une fonction (strictement) convexe et coercive. Elle admet donc un minimum que l’on peut trouver en annulant la dérivée :</p>
+<div class="math notranslate nohighlight">
+\[f(x_k+t)\approx f(x_k)+f^\prime(x_k)t+\frac{f^{\prime\prime}(x_k)}{2}t^2\]</div>
+<p>On a donc :</p>
+<div class="math notranslate nohighlight">
+\[\frac{d}{dt}(f(x_k)+f^\prime(x_k)t+\frac{f^{\prime\prime}(x_k)}{2}t^2)=f^\prime(x_k)+f^{\prime\prime}(x_k)t=0\Leftrightarrow t=-\frac{f^\prime(x_k)}{f^{\prime\prime}(x_k)}\]</div>
+<p>Ce qui nous permet de fixer l’itéré suivant : <span class="math notranslate nohighlight">\(x_{k+1}=x_k-f^\prime(x_k)/f^{\prime\prime}(x_k)\)</span>.</p>
+<p>Cette méthode se généralise bien sûr à des fonctions à plusieurs variables comme nous allons le voir lors d’une autre section.</p>
+<p>Considérons la fonction suivante :</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mf">0.85</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mi">12</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x_start</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_curve</span><span class="p">(</span><span class="n">x_start</span><span class="p">,</span> <span class="n">optimization_steps</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">301</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">12.0</span><span class="p">,</span> <span class="mf">8.0</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Function $f$&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">([</span><span class="n">x_start</span><span class="p">],</span> <span class="n">f</span><span class="p">(</span><span class="n">x_start</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Optimization starting point&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">optimization_steps</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">optimization_steps</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">optimization_steps</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> 
+                    <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Optimization steps&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Notre fonction $f$&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">plot_curve</span><span class="p">(</span><span class="n">x_start</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2_optimization_44_0.png" src="../_images/2_optimization_44_0.png" />
+</div>
+</div>
+<div class="admonition-exercice admonition">
+<p class="admonition-title">Exercice</p>
+<p><strong>Donnez le code permettant de calculer une itération de la méthode d’optimisation de Newton. Jouez ensuite avec l’affichage interactif.</strong></p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f_prime</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="o">-</span><span class="mf">1.7</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">3</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">f_prime_prime</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">2</span><span class="o">+</span><span class="mi">12</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">NewtonMethod</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">optimize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_start</span><span class="p">,</span> <span class="n">nb_iterations</span><span class="o">=</span><span class="mi">15</span><span class="p">):</span>
+        
+        
+
+        <span class="n">optimization_steps</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">x_t</span> <span class="o">=</span> <span class="n">x_start</span>
+        
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nb_iterations</span><span class="p">):</span>
+            <span class="c1">####### Complete this part ######## or die ####################</span>
+            <span class="n">x_t</span> <span class="o">=</span> <span class="o">...</span>
+            <span class="c1">###############################################################</span>
+            
+            <span class="n">optimization_steps</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">x_t</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">x_t</span><span class="p">)])</span>
+            
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">optimization_steps</span><span class="p">)</span>
+        
+<span class="n">newton</span> <span class="o">=</span> <span class="n">NewtonMethod</span><span class="p">()</span>
+
+<span class="n">optimization_steps</span> <span class="o">=</span> <span class="n">newton</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="n">nb_iterations</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">plot_curve</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="n">optimization_steps</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="v-la-descente-de-coordonnees">
+<h2>V. La descente de coordonnées<a class="headerlink" href="#v-la-descente-de-coordonnees" title="Permalink to this headline">¶</a></h2>
+<p>La descente de coordonnées ou <em>coordinate descent</em> consiste à optimiser une fonction multivariée variable par variable. Soit <span class="math notranslate nohighlight">\(f:\mathbb{R}^d\mapsto\mathbb{R}\)</span> et le problème d’optimisation suivant :</p>
+<div class="math notranslate nohighlight">
+\[x^\star=\text{argmin}_{x\in\mathbb{R}^d}f(x).\]</div>
+<p>Contrairement à la descente de gradient classique, ici, lors d’une étape d’optimisation, une unique variable est mise à jour à la fois :</p>
+<div class="math notranslate nohighlight">
+\[x^{(t)}_i=\text{argmin}_{x\in\mathbb{R}}f(x^{(t)}_1,\ldots, x_{i-1}^{(t)}, x, x_{i+1}^{(t-1)}, \ldots, x_d^{(t-1)}).\]</div>
+<p>Considérons la fonction à deux variables suivantes : <span class="math notranslate nohighlight">\(f(x, y)=5x^2-6xy+5y^2\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">5</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">2</span><span class="p">)</span><span class="o">-</span><span class="mi">6</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mi">5</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_loss_contour</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">three_dim</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">starting</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> 
+                  <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Carte de chaleur 2D de la fonction à optimiser&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2_optimization_51_0.png" src="../_images/2_optimization_51_0.png" />
+</div>
+</div>
+<p>Considérons <span class="math notranslate nohighlight">\(g_y(x)=f(x, y)\)</span> comme une fonction de <span class="math notranslate nohighlight">\(x\)</span> uniquement (i.e. <span class="math notranslate nohighlight">\(y\)</span> est fixé) et dérivons :</p>
+<div class="math notranslate nohighlight">
+\[g_y^\prime(x)=10x-6y.\]</div>
+<p>Ainsi, l’itéré suivant pour la variable <span class="math notranslate nohighlight">\(x\)</span> s’obtient de la manière suivante : <span class="math notranslate nohighlight">\(x^{(t)}=x^{(t-1)}-\eta g_y^\prime(x^{(t-1)})\)</span>. Le même raisonement s’étend de manière totalement symétrique pour obtenir l’itéré de la variable <span class="math notranslate nohighlight">\(y\)</span> (remarquez que <span class="math notranslate nohighlight">\(f(x, y)= f(y, x)\)</span>).</p>
+<div class="admonition-exercice admonition">
+<p class="admonition-title">Exercice</p>
+<p><strong>Donnez le code permettant de calculer une itération de la méthode <em>coordinate descent</em>.</strong></p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">CoordinateDescent</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">optimize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_start</span><span class="p">,</span> <span class="n">nb_iterations</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.01</span><span class="p">):</span>
+        <span class="n">optimization_steps</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">x_start</span><span class="p">)]</span>
+        <span class="n">x_t</span> <span class="o">=</span> <span class="n">x_start</span>
+        
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nb_iterations</span><span class="p">):</span>
+            <span class="c1">####### Complete this part ######## or die ####################</span>
+            <span class="n">x_t</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=...</span>
+            <span class="c1">###############################################################</span>
+
+            <span class="n">optimization_steps</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">x_t</span><span class="p">))</span>
+            
+            <span class="c1">####### Complete this part ######## or die ####################</span>
+            <span class="n">x_t</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=...</span>
+            <span class="c1">###############################################################</span>
+            
+            <span class="n">optimization_steps</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">x_t</span><span class="p">))</span>
+
+            
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">optimization_steps</span><span class="p">)</span>
+        
+<span class="n">coordinate</span> <span class="o">=</span> <span class="n">CoordinateDescent</span><span class="p">()</span>
+
+<span class="n">param_trace</span> <span class="o">=</span> <span class="n">coordinate</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span>
+    <span class="n">x_start</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">2.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">]),</span> 
+    <span class="n">nb_iterations</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> 
+    <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.1</span>
+<span class="p">)</span>
+<span class="n">plot_loss_contour</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">param_trace</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">14.0</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="vi-optimisation-sous-contrainte-en-plus">
+<h2>VI. Optimisation sous contrainte (en plus ?)<a class="headerlink" href="#vi-optimisation-sous-contrainte-en-plus" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="a-introduction-aux-multiplicateurs-de-lagrange">
+<h3>A. Introduction aux multiplicateurs de Lagrange<a class="headerlink" href="#a-introduction-aux-multiplicateurs-de-lagrange" title="Permalink to this headline">¶</a></h3>
+<p>Il est parfois nécessaire d’introduire certaines contraintes que notre solution doit satisfaire. Par exemple, on peut vouloir minimiser une fonction de coût <span class="math notranslate nohighlight">\(\mathcal{L}\)</span> et en même temps vouloir contraindre la solution <span class="math notranslate nohighlight">\(\hat{\beta}\)</span> à avoir une norme de taille fixe.</p>
+<p>Considérons le problème d’optimisation suivant :</p>
+<div class="math notranslate nohighlight">
+\[x^\star=\text{argmin}_{x\in\mathbb{R}^d}f(x)\text{ s.t. }g(x)=0,\]</div>
+<p>où <span class="math notranslate nohighlight">\(f\)</span> est la fonction objectif à respecter et <span class="math notranslate nohighlight">\(g\)</span> notre ensemble de contraintes. Supposons <span class="math notranslate nohighlight">\(g, f\in\mathcal{C}^1\)</span>. Afin de rendre plus explicite les étapes de notre raisonnement, illustrons cela au travers d’un exemple avec la fonction suivante :</p>
+<div class="math notranslate nohighlight">
+\[f(x)=\frac{1}{2}x^TAx+b^Tx,\]</div>
+<p>où</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}A=\begin{bmatrix} 1&amp; 0\\ 0&amp; 2\end{bmatrix}\end{split}\]</div>
+<p>et</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}b=\begin{bmatrix}2\\1\end{bmatrix}.\end{split}\]</div>
+<p>C’est la même fonction que nous avons optimisé tout à l’heure. Dans le cas sans contrainte, il nous suffit de dériver :</p>
+<div class="math notranslate nohighlight">
+\[f^\prime(x)=Ax+b\]</div>
+<p>puis d’annuler cette dernière :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+f^\prime(x)&amp;=0\\
+\Leftrightarrow Ax+b&amp;=0\\
+\Leftrightarrow x &amp;= -A^{-1}b.
+\end{aligned}\end{split}\]</div>
+<p>Le problème initial était convexe la solution précédente est un minimum global.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="ow">is</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span><span class="o">*</span><span class="mf">0.5</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">x</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">A</span><span class="p">),</span> <span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_loss_contour</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">three_dim</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ending</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> 
+                  <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Carte de chaleur 2D de la fonction à optimiser&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2_optimization_59_0.png" src="../_images/2_optimization_59_0.png" />
+</div>
+</div>
+<p>Considérons maintenant la contrainte <span class="math notranslate nohighlight">\(x_1=x_2\)</span> qu’on peut formuler au travers de la fonction :</p>
+<div class="math notranslate nohighlight">
+\[g(x)=c^Tx,\]</div>
+<p>où <span class="math notranslate nohighlight">\(c=[1, -1]^T\)</span>. On veut trouver le minimiseur de notre fonction sous la constrainte que les deux oordonnées de notre vecteur de solution soient identiques ! Observons tout d’abord la forme de cette contrainte.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">c_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">c_y</span> <span class="o">=</span> <span class="n">c_x</span>
+<span class="n">constraint</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">c_x</span><span class="p">,</span> <span class="n">c_y</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">plot_loss_contour</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">three_dim</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ending</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">constraint</span><span class="o">=</span><span class="n">constraint</span><span class="p">,</span>
+                  <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Carte de chaleur 2D de la fonction à optimiser&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2_optimization_61_0.png" src="../_images/2_optimization_61_0.png" />
+</div>
+</div>
+<p>Le <em>Lagrangien</em> du problème sous contrainte précédent est :</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{L}(x, \lambda)=f(x)+\lambda g(x)\]</div>
+<p>Le coefficient <span class="math notranslate nohighlight">\(\lambda\)</span> s’appelle multiplicateur de Lagrange. On cherche à trouver <span class="math notranslate nohighlight">\(x^\star\)</span> et <span class="math notranslate nohighlight">\(\lambda^\star\)</span> tel que <span class="math notranslate nohighlight">\(g(x^\star)=0\)</span> et <span class="math notranslate nohighlight">\(\mathcal{L}(x^\star,\lambda^\star)\)</span> est minimisé (i.e. on minise notre fonction <span class="math notranslate nohighlight">\(f\)</span> en conservant les contraintes satisfaites.)L’approche classique consiste à vérifier les conditions que devraient satistifaire une solution <span class="math notranslate nohighlight">\((x^\star, \lambda^\star)\)</span> au travers du Lagrangien. On parle de condition d’optimalité. Si notre contrainte est satisfaite, alors <span class="math notranslate nohighlight">\(g(x)=0\)</span> et :</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial\mathcal{L}(x^\star, \lambda^\star)}{\partial \lambda}=0.\]</div>
+<p>On remarque que c’est une condition nécessaire et suffisante garantissant que nos contraintes sont statisfaites. Cela donne dans notre exemple :</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial\mathcal{L}(x, \lambda)}{\partial \lambda}=c^Tx^=0\Leftrightarrow x_1=x_2.\]</div>
+<p>Considérons maintenant <span class="math notranslate nohighlight">\(\lambda^\star\)</span> fixe, la condition que doit satisfaire <span class="math notranslate nohighlight">\(x^\star\)</span> s’il est un minimum est :</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial \mathcal{L}(x^\star,\lambda^\star)}{\partial x}=0,\]</div>
+<p>Cela donne dans notre cas :</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial\mathcal{L}(x,\lambda)}{\partial x}=Ax+b+\lambda c=\boldsymbol{0}.\]</div>
+<p>Nous avons ainsi un système de deux équations :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{cases}x_1+2+\lambda&amp;=0\\
+2x_2+1-\lambda&amp;=0.\end{cases}\end{split}\]</div>
+<p>En nous appuyans sur la condition <span class="math notranslate nohighlight">\(x_1=x_2\)</span>, cela nous donne :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{cases}x+2+\lambda&amp;=0\\
+2x+1-\lambda&amp;=0,\end{cases}\end{split}\]</div>
+<p>que nous pouvons résoudre et qui nous donne <span class="math notranslate nohighlight">\(\lambda=-1\)</span> et <span class="math notranslate nohighlight">\(x_1=x_2=-1\)</span>.</p>
+<p>Nous aurions bien sûr pu éviter de passer par le Lagrandien sur ce problème simple mais cela était l’occasion d’un exemple. De plus, remarquons que <span class="math notranslate nohighlight">\((x^\star, \lambda^\star)\)</span> est un point selle de notre problème.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">c_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">c_y</span> <span class="o">=</span> <span class="n">c_x</span>
+<span class="n">constraint</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">c_x</span><span class="p">,</span> <span class="n">c_y</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">plot_loss_contour</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">three_dim</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ending</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">constraint</span><span class="o">=</span><span class="n">constraint</span><span class="p">,</span>
+                  <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Carte de chaleur 2D de la fonction à optimiser&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2_optimization_63_0.png" src="../_images/2_optimization_63_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="b-les-conditions-de-karush-kuhn-tucker">
+<h3>B. Les conditions de Karush-Kuhn-Tucker<a class="headerlink" href="#b-les-conditions-de-karush-kuhn-tucker" title="Permalink to this headline">¶</a></h3>
+<p>Considérons le problème d’optimisation sous contraintes suivant :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+&amp;\text{argmin}\hspace{0.5cm}f(x)\\
+&amp;\text{subject to:}\\
+&amp;\hspace{1cm}h_i(x)=0,\ i\in\{1, \ldots, m\}\\
+&amp;\hspace{1cm}g_j(x)\leq 0,\ j\in\{1, \ldots, n\}\\
+\end{aligned},\end{split}\]</div>
+<p>où <span class="math notranslate nohighlight">\(h_i\)</span> est une contrainte d’égalité et <span class="math notranslate nohighlight">\(g_j\)</span> une contrainte d’inégalité. Il s’agit du problème qu’on appellera <em>primal</em> et on notera <span class="math notranslate nohighlight">\(p^\star=f(x^\star)\)</span> où <span class="math notranslate nohighlight">\(x^\star\)</span> minimise <span class="math notranslate nohighlight">\(f\)</span> et satisfait les contraintes.</p>
+<p>Le Lagrangien associé à ce problème est donné par :</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{L}(x, \lambda,\mu)=f(x)+\lambda^T h(x)+\mu^T g(x),\]</div>
+<p>où nous avons vectorisé les notations des contraintes et où <span class="math notranslate nohighlight">\(\mu\geq 0\)</span>. Ainsi <span class="math notranslate nohighlight">\(\lambda\in\mathbb{R}^m\)</span> et <span class="math notranslate nohighlight">\(\mu\in\mathbb{R}^n\)</span>.</p>
+<p>Il est possible de construire un problème qu’on appelle <em>dual</em> de Lagrange à partir du Lagrangien et qu’on note :</p>
+<div class="math notranslate nohighlight">
+\[l(\lambda, \mu)=\text{inf}_x\ \mathcal{L}(x, \lambda, \mu).\]</div>
+<hr class="docutils" />
+<div class="admonition-proposition admonition">
+<p class="admonition-title">Proposition</p>
+<p>La fonction <span class="math notranslate nohighlight">\(l\)</span> est concave en <span class="math notranslate nohighlight">\(\lambda\)</span> et <span class="math notranslate nohighlight">\(\mu\)</span>.</p>
+</div>
+<div class="dropdown caution admonition">
+<p class="admonition-title">Preuve</p>
+<p>Soient <span class="math notranslate nohighlight">\(\lambda_1, \lambda_2\)</span> et <span class="math notranslate nohighlight">\(\mu_1, \mu_2\)</span>. Notons :</p>
+<div class="math notranslate nohighlight">
+\[\lambda=\alpha\lambda_1+(1-\alpha)\lambda_2\text{ et }\mu=\alpha\mu_1+(1-\alpha)\mu_2,\ \alpha\in[0, 1].\]</div>
+<p>Nous avons alors :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}l(\lambda, \mu)&amp;=\text{inf}_x\ f(x)+\lambda^T h(x)+\mu^T g(x)\\
+&amp;=\text{inf}_x\ f(x)+(\alpha\lambda_1+(1-\alpha)\lambda_2)^T h(x)+(\alpha\mu_1+(1-\alpha)\mu_2)^T g(x)\\
+&amp;=\text{inf}_x\ \alpha(f(x)+\lambda_1^T h(x)+\mu_1^T g(x))+(1-\alpha)(f(x)+\lambda_2^T h(x)+\mu_2^T g(x))
+\end{aligned}\end{split}\]</div>
+<p>Enfin, nous avons :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}\text{inf}_x&amp;\ \alpha(f(x)+\lambda_1^T h(x)+\mu_1^T g(x))+(1-\alpha)(f(x)+\lambda_2^T h(x)+\mu_2^T g(x))\\&amp;\geq \text{inf}_x\ \alpha(f(x)+\lambda_1^T h(x)+\mu_1^T g(x))+\text{inf}_x\ (1-\alpha)(f(x)+\lambda_2^T h(x)+\mu_2^T g(x)),\end{aligned}\end{split}\]</div>
+<p>ce qui nous donne </p>
+<div class="math notranslate nohighlight">
+\[l(\lambda, \mu)\geq \alpha l(\lambda_1,\mu_1)+(1-\alpha)l(\lambda_2,\mu_2)\]</div>
+</div>
+<p>On observe assez rapidement que si <span class="math notranslate nohighlight">\(x\)</span> respecte ses contraintes, alors <span class="math notranslate nohighlight">\(h_i(x)=0\)</span> et <span class="math notranslate nohighlight">\(g_j(x)\leq 0\)</span> et :</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{L}(x, \lambda, \mu)\leq f(x),\]</div>
+<p>ce qui implique ce qu’on appelle la dualité faible :</p>
+<div class="math notranslate nohighlight">
+\[d^\star\leq p^\star.\]</div>
+<p>où :</p>
+<div class="math notranslate nohighlight">
+\[d^\star=\text{max}_{\lambda,\mu}l(\lambda, \mu).\]</div>
+<p>Le point à noter est que le dual, en étant un problème de maximisation d’une fonction concave devient un problème de minimisation convexe.</p>
+<div class="admonition-theoreme-condition-de-slater admonition">
+<p class="admonition-title">Théorème (condition de Slater)</p>
+<p>Si <span class="math notranslate nohighlight">\(f\)</span> et <span class="math notranslate nohighlight">\(g_j \forall j\)</span> sont convexes et <span class="math notranslate nohighlight">\(h_i\forall i\)</span>  sont affines et qu’il existe un point admissible (i.e. qui satisfait les contraintes) pour lequel une des contraintes d’inégalité n’est pas saturée (i.e. <span class="math notranslate nohighlight">\(g_j(x)&lt;0\)</span>), alors la dualité forte est garantie :</p>
+<div class="math notranslate nohighlight">
+\[d^\star=p^\star.\]</div>
+</div>
+<p>Lorsque nous travaillons avec une fonction <span class="math notranslate nohighlight">\(f\)</span>, nous sommes souvent intéressés par une règle qui nous permettrait de déterminer une équivalence entre certaines propriétés et le fait d’être un minimum. Si <span class="math notranslate nohighlight">\(f\)</span> est différentiable et convexe, alors <span class="math notranslate nohighlight">\(x^\star\)</span> est minimum de <span class="math notranslate nohighlight">\(f\)</span> si et seulement si $\nabla f(x^\star)=0. Les conditions de Karush-Kuhn-Tucker généralise cette idée au cas d’un problème d’optimisation sous contrainte.</p>
+<p>Supposons maintenant <span class="math notranslate nohighlight">\(f, g_1,\ldots, g_m, h_1,\ldots, h_n\)</span> différentiables et supposons que la dualité forte tienne.</p>
+<hr class="docutils" />
+<div class="admonition-theoreme-conditions-de-karushkuhntucker admonition">
+<p class="admonition-title">Théorème (conditions de Karush–Kuhn–Tucker)</p>
+<p>Soit <span class="math notranslate nohighlight">\((x^\star, \lambda^\star, \mu^\star)\)</span> tels que les conditions suivantes sont satisfaites :</p>
+<p><strong>Stationarité :</strong></p>
+<div class="math notranslate nohighlight">
+\[\nabla f(x^\star)+{\lambda^\star}^T D h(x^\star)+{\mu^\star}^T D g(x^\star)=0,\]</div>
+<p>où <span class="math notranslate nohighlight">\(Dg\)</span> et <span class="math notranslate nohighlight">\(Dh\)</span> sont les jacobiennes.</p>
+<p><strong>faisabilité du primal :</strong></p>
+<div class="math notranslate nohighlight">
+\[g_j(x^\star)\leq 0\ \forall j\text{ et }h_i(x^\star)=0\ \forall i.\]</div>
+<p><strong>faisabilité du dual :</strong></p>
+<div class="math notranslate nohighlight">
+\[\mu^\star\geq \boldsymbol{0},\]</div>
+<p><strong>complémentarité :</strong></p>
+<div class="math notranslate nohighlight">
+\[\sum_j {\mu_j}^\star g_i(x^\star)=0\]</div>
+<p>alors, <span class="math notranslate nohighlight">\((\lambda^\star, \mu^\star)\)</span> est une solution du dual de Lagrange et <span class="math notranslate nohighlight">\(x^\star\)</span> est une solution du primal.</p>
+</div>
+<div class="dropdown caution admonition">
+<p class="admonition-title">Preuve</p>
+<p>Soit <span class="math notranslate nohighlight">\((x^\star, \lambda^\star, \mu^\star)\)</span> tels que les conditions de KKT soient satisfaites. La condition de <em>faisabilité du primal</em> nous indique que <span class="math notranslate nohighlight">\(x^\star\)</span> satisfait nos contraintes et appartient donc à l’ensemble de faisabilité.</p>
+<p>En tant que combinaison linéaire de fonctions convexes, le Lagrangien est convexe et la condition de <em>stationarité</em> implique que <span class="math notranslate nohighlight">\(x^\star\)</span> minimise le lagrangien pour <span class="math notranslate nohighlight">\(\mu^\star\)</span> et <span class="math notranslate nohighlight">\(\lambda^\star\)</span> fixés.</p>
+<p>Observons que <span class="math notranslate nohighlight">\(l(\lambda^\star, \mu^\star)=f(x^\star)\)</span> grâce à la condition de <em>complémentarité</em> et à la <em>faisabilité du primal</em>.</p>
+<p>Par <em>dualité faible</em> nous avons <span class="math notranslate nohighlight">\(f(x^\star) = d^\star\leq p^\star \leq f(x^\star)\)</span> et on a donc :</p>
+<div class="math notranslate nohighlight">
+\[l(\lambda^\star, \mu^\star)=d^\star=p^\star,\]</div>
+<p>et <span class="math notranslate nohighlight">\(x^\star\)</span> est solution du primal et <span class="math notranslate nohighlight">\((\lambda^\star, \mu^\star)\)</span> est solution du dual.</p>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./2_regression"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+            <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="1_linear_regression.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">La régression linéaire ☕️</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="3_interpolation.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Interpolation ☕️☕️</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+        
+        </div>
+    </div>
+    <footer class="footer">
+    <div class="container">
+      <p>
+        
+          By Servajean, Leveau & Chailan<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>
